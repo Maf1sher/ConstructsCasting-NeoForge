@@ -57,7 +57,7 @@ public record ManaOnHitModule(LevelingValue manaPerDamage, LevelingValue chance)
 			float manaToAdd = manaPerDamage.compute(modifier.getLevel())
 					* damageDealt
 					* (context.isExtraAttack() ? 0.25f : 1f) //if it's an extra attack from a scythe/etc, nerf mana gain since it runs per-entity
-					* ((float) context.getAttacker().getAttributeValue(AttributeRegistry.MANA_REGEN.get()));
+					* ((float) context.getAttacker().getAttributeValue(AttributeRegistry.MANA_REGEN));
 			if (ran < chance) {
 				addManaToAttacker(attacker, manaToAdd);
 			}
@@ -73,7 +73,7 @@ public record ManaOnHitModule(LevelingValue manaPerDamage, LevelingValue chance)
 		float ran = attacker.getRandom().nextFloat();
 		float chance = this.chance.compute(modifier.getLevel());
 		if (target != null) {
-			float manaToAdd = manaPerDamage.compute(modifier.getLevel()) * ProjectileWithPower.getDamage(projectile) * ((float) attacker.getAttributeValue(AttributeRegistry.MANA_REGEN.get()));
+			float manaToAdd = manaPerDamage.compute(modifier.getLevel()) * ProjectileWithPower.getDamage(projectile) * ((float) attacker.getAttributeValue(AttributeRegistry.MANA_REGEN));
 			if (ran < chance) {
 				addManaToAttacker(attacker, manaToAdd);
 			}
@@ -111,7 +111,7 @@ public record ManaOnHitModule(LevelingValue manaPerDamage, LevelingValue chance)
 
 		float manaToAdd = manaPerDamage.compute(modifier.getLevel()) //3
 				* (context.getState().getDestroySpeed(miner.level(), context.getPos())*6) // * 1.5 * 6
-				* ((float) miner.getAttributeValue(AttributeRegistry.MANA_REGEN.get())); // * 1~ish
+				* ((float) miner.getAttributeValue(AttributeRegistry.MANA_REGEN)); // * 1~ish
 		manaToAdd = Math.min(manaToAdd, 100); //hardcoded cap to not abuse, mithril is fairly fast mining
 		if (ran < chance) {
 			addManaToAttacker(miner, manaToAdd);

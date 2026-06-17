@@ -250,7 +250,7 @@ public class CCFluids {
 			tag(essenceOf("evocation")).add(evocationEssence.get());
 			tag(essenceOf("nature")).add(natureEssence.get());
 			tag(ink("squid")).add(squidInk.get());
-			tag(TagKey.create(NeoForgeRegistries.Keys.FLUID_TYPES, ResourceLocation.fromNamespaceAndPath("c", "ink"))).add(squidInk.get());
+			tag((TagKey<Fluid>)(TagKey<?>)TagKey.create(NeoForgeRegistries.Keys.FLUID_TYPES, ResourceLocation.fromNamespaceAndPath("c", "ink"))).add(squidInk.get());
 			tag(ink("common")).add(commonInk.get(), FluidRegistry.COMMON_INK.get()).addOptional(ResourceLocation.parse("create_wizardry:common_ink"));
 			tag(ink("uncommon")).add(uncommonInk.get(), FluidRegistry.UNCOMMON_INK.get()).addOptional(ResourceLocation.parse("create_wizardry:uncommon_ink"));
 			tag(ink("rare")).add(rareInk.get(), FluidRegistry.RARE_INK.get()).addOptional(ResourceLocation.parse("create_wizardry:rare_ink"));

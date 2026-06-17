@@ -1,8 +1,10 @@
 package com.snackpirate.constructscasting.modifiers;
 
+import com.snackpirate.constructscasting.ConstructsCasting;
 import com.snackpirate.constructscasting.items.CCItems;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,11 +30,10 @@ import slimeknights.tconstruct.library.utils.Util;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.UUID;
 
 //if it's sunny outside, +15% mana regen
 public class SolarChargedModifier extends SingleLevelModifier implements EquipmentChangeModifierHook, TooltipModifierHook, InventoryTickModifierHook {
-    private static final UUID uuid = UUID.nameUUIDFromBytes("attribute.constructs_casting.solar_charged".getBytes());
+    private static final ResourceLocation MODIFIER_ID = ConstructsCasting.id("solar_charged");
     private static final int minLight = 5;
     private static final float amount = 0.15f;
     @Override
@@ -71,13 +72,13 @@ public class SolarChargedModifier extends SingleLevelModifier implements Equipme
             return;
         }
         // must have regen
-        AttributeInstance attribute = living.getAttribute(AttributeRegistry.MANA_REGEN.get());
+        AttributeInstance attribute = living.getAttribute(AttributeRegistry.MANA_REGEN);
         if (attribute == null) {
             return;
         }
         // start by removing the attribute, we are likely going to give it a new number
-        if (attribute.getModifier(uuid) != null) {
-            attribute.removeModifier(uuid);
+        if (attribute.getModifier(MODIFIER_ID) != null) {
+            attribute.removeModifier(MODIFIER_ID);
         }
 
         // not above air
@@ -86,7 +87,7 @@ public class SolarChargedModifier extends SingleLevelModifier implements Equipme
         int light = getLight(level, pos);
         if (light > minLight) {
             int scaledLight = light - minLight;
-            attribute.addTransientModifier(new AttributeModifier(uuid, "attribute.constructs_casting.solar_charged", scaledLight * amount * modifier.getEffectiveLevel() / 10, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+            attribute.addTransientModifier(new AttributeModifier(MODIFIER_ID, scaledLight * amount * modifier.getEffectiveLevel() / 10, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
         }
     }
 
@@ -102,9 +103,9 @@ public class SolarChargedModifier extends SingleLevelModifier implements Equipme
             IToolStackView newTool = context.getReplacementTool();
             // damaging the tool will trigger this hook, so ensure the new tool has the same level
             if (newTool == null || newTool.getModifier(modifier.getId()).getEffectiveLevel() != modifier.getEffectiveLevel()) {
-                AttributeInstance attribute = livingEntity.getAttribute(AttributeRegistry.MANA_REGEN.get());
-                if (attribute != null && attribute.getModifier(uuid) != null) {
-                    attribute.removeModifier(uuid);
+                AttributeInstance attribute = livingEntity.getAttribute(AttributeRegistry.MANA_REGEN);
+                if (attribute != null && attribute.getModifier(MODIFIER_ID) != null) {
+                    attribute.removeModifier(MODIFIER_ID);
                 }
             }
         }

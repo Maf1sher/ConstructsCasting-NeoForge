@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap;
 import com.snackpirate.constructscasting.ConstructsCasting;
 import com.snackpirate.constructscasting.materials.CCToolStats;
 import com.snackpirate.constructscasting.modifiers.CCModifiers;
+import net.minecraft.core.Holder;
 import io.redspace.ironsspellbooks.api.magic.SpellSelectionManager;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
@@ -16,11 +17,11 @@ import io.redspace.ironsspellbooks.util.MinecraftInstanceHelper;
 import io.redspace.ironsspellbooks.util.TooltipsUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -30,8 +31,10 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 
 import org.jetbrains.annotations.Nullable;
@@ -60,7 +63,6 @@ import top.theillusivec4.curios.api.SlotContext;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ModifiableSpellbookItem extends SpellBook implements IModifiableDisplay {
@@ -84,9 +86,10 @@ public class ModifiableSpellbookItem extends SpellBook implements IModifiableDis
 	}
 
 	@Override
-	public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> lines, TooltipFlag flag) {
-		spellbookLines(itemStack, level, lines, flag, SafeClientAccess.getTooltipKey());
-		TooltipUtil.addInformation(this, itemStack, level, lines, SafeClientAccess.getTooltipKey(), flag);
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+		spellbookLines(stack, null, tooltip, flag, SafeClientAccess.getTooltipKey());
+		ToolStack tool = ToolStack.from(stack);
+		IModifiableDisplay.super.getStatInformation(tool, null, tooltip, SafeClientAccess.getTooltipKey(), flag);
 	}
 	public void spellbookLines( ItemStack itemStack,  Level level,  List<Component> lines,  TooltipFlag flag, TooltipKey key) {
 		if (key == TooltipKey.CONTROL || key == TooltipKey.SHIFT) return;
@@ -133,16 +136,15 @@ public class ModifiableSpellbookItem extends SpellBook implements IModifiableDis
                         MaterialIds.paper
                 )).updateStack(stack);
             }
-            stack.getOrCreateTag().putBoolean(TooltipUtil.KEY_DISPLAY, true);
+            CustomData.update(DataComponents.CUSTOM_DATA, stack, tag -> tag.putBoolean(TooltipUtil.KEY_DISPLAY, true));
             toolForRendering = stack;
         }
         return toolForRendering;
 	}
 
 	@Override
-	public void verifyTagAfterLoad(CompoundTag pCompoundTag) {
-		ToolStack.verifyTag(this, pCompoundTag, getToolDefinition());
-
+	public void verifyComponentsAfterLoad(ItemStack stack) {
+		ToolStack.verifyTag(this, stack, getToolDefinition());
 	}
 
 //	@Override
@@ -153,22 +155,20 @@ public class ModifiableSpellbookItem extends SpellBook implements IModifiableDis
 //	}
 
     @Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
-        ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = new ImmutableMultimap.Builder<>();
+	public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
+        ImmutableMultimap.Builder<Holder<Attribute>, AttributeModifier> attributeBuilder = new ImmutableMultimap.Builder<>();
         ToolStack tool = ToolStack.from(stack);
         int manaBonus = tool.getStats().getInt(CCToolStats.MAX_MANA);
-        attributeBuilder.put(AttributeRegistry.MAX_MANA.get(), new AttributeModifier("tool.constructs_casting.mana_bonus", manaBonus, AttributeModifier.Operation.ADD_VALUE));
+        attributeBuilder.put(AttributeRegistry.MAX_MANA, new AttributeModifier(ConstructsCasting.id("mana_bonus"), manaBonus, AttributeModifier.Operation.ADD_VALUE));
         float spBonus = ConditionalStatModifierHook.getModifiedStat(tool, slotContext.entity(), CCToolStats.SPELL_POWER);
-//                tool.getStats().get(CCToolStats.SPELL_POWER);
-        attributeBuilder.put(AttributeRegistry.SPELL_POWER.get(), new AttributeModifier("tool.constructs_casting.spell_power_bonus", spBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+        attributeBuilder.put(AttributeRegistry.SPELL_POWER, new AttributeModifier(ConstructsCasting.id("spell_power_bonus"), spBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
         float cdBonus = ConditionalStatModifierHook.getModifiedStat(tool, slotContext.entity(), CCToolStats.COOLDOWN_REDUCTION);
-//                tool.getStats().get(CCToolStats.COOLDOWN_REDUCTION);
-        attributeBuilder.put(AttributeRegistry.COOLDOWN_REDUCTION.get(), new AttributeModifier("tool.constructs_casting.cd_reduction", cdBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+        attributeBuilder.put(AttributeRegistry.COOLDOWN_REDUCTION, new AttributeModifier(ConstructsCasting.id("cd_reduction"), cdBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
 
-        for (ModifierEntry entry : tool.getModifierList()) {
+		for (ModifierEntry entry : tool.getModifierList()) {
 			entry.getHook(ModifierHooks.ATTRIBUTES).addAttributes(tool, entry, EquipmentSlot.LEGS, (attr, mod) -> {
-                AttributeModifier newMod = new AttributeModifier(mod.getId(), mod.getName() + ".spellbook", mod.getAmount(), mod.getOperation());
-                attributeBuilder.put(attr, newMod);
+                AttributeModifier newMod = new AttributeModifier(mod.id(), mod.amount(), mod.operation());
+                attributeBuilder.put(net.minecraft.core.Holder.direct(attr), newMod);
             });
 		}
 
@@ -178,18 +178,20 @@ public class ModifiableSpellbookItem extends SpellBook implements IModifiableDis
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         ToolStack tool = ToolStack.from(stack);
-        AttributeInstance maxMana = slotContext.entity().getAttribute(AttributeRegistry.MAX_MANA.get());
-        maxMana.getModifiers().stream().filter((modifier) -> modifier.getName().equals("tool.constructs_casting.mana_bonus")).forEach(maxMana::removeModifier);
-        AttributeInstance sp = slotContext.entity().getAttribute(AttributeRegistry.SPELL_POWER.get());
-        sp.getModifiers().stream().filter((modifier) -> modifier.getName().equals("tool.constructs_casting.spell_power_bonus")).forEach(sp::removeModifier);
-        AttributeInstance cd = slotContext.entity().getAttribute(AttributeRegistry.COOLDOWN_REDUCTION.get());
-        cd.getModifiers().stream().filter((modifier) -> modifier.getName().equals("tool.constructs_casting.cd_reduction")).forEach(cd::removeModifier);
+        AttributeInstance maxMana = slotContext.entity().getAttribute(AttributeRegistry.MAX_MANA);
+        maxMana.getModifiers().stream().filter((modifier) -> modifier.id().equals(ConstructsCasting.id("mana_bonus"))).forEach(maxMana::removeModifier);
+        AttributeInstance sp = slotContext.entity().getAttribute(AttributeRegistry.SPELL_POWER);
+        sp.getModifiers().stream().filter((modifier) -> modifier.id().equals(ConstructsCasting.id("spell_power_bonus"))).forEach(sp::removeModifier);
+        AttributeInstance cd = slotContext.entity().getAttribute(AttributeRegistry.COOLDOWN_REDUCTION);
+        cd.getModifiers().stream().filter((modifier) -> modifier.id().equals(ConstructsCasting.id("cd_reduction"))).forEach(cd::removeModifier);
 		EquipmentChangeContext context = new EquipmentChangeContext(slotContext.entity(), EquipmentSlot.LEGS, stack, newStack);
 		for (ModifierEntry entry : tool.getModifierList()) {
 			entry.getHook(ModifierHooks.EQUIPMENT_CHANGE).onUnequip(tool, entry, context);
             entry.getHook(ModifierHooks.ATTRIBUTES).addAttributes(tool, entry, EquipmentSlot.LEGS, (attr, mod) -> {
-                AttributeModifier newMod = new AttributeModifier(mod.getId(), mod.getName() + ".spellbook", mod.getAmount(), mod.getOperation());
-                slotContext.entity().getAttribute(attr).removeModifier(newMod);
+                AttributeModifier newMod = new AttributeModifier(mod.id(), mod.amount(), mod.operation());
+                if (slotContext.entity().getAttribute(net.minecraft.core.Holder.direct(attr)) != null) {
+                    slotContext.entity().getAttribute(net.minecraft.core.Holder.direct(attr)).removeModifier(newMod);
+                }
             });
 		}
         super.onUnequip(slotContext, newStack, stack);
@@ -197,7 +199,7 @@ public class ModifiableSpellbookItem extends SpellBook implements IModifiableDis
 
     @Override
 	public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
-		return ToolStack.from(stack).getModifierLevel(CCModifiers.ENCYCLOPEDIC.getId()) < 1;
+		return ToolStack.from(stack).getModifierLevel(CCModifiers.ENCYCLOPEDIC.getModifierId()) < 1;
 	}
 
 	protected static boolean shouldInteract(@Nullable LivingEntity player, ToolStack toolStack, InteractionHand hand) {
@@ -277,17 +279,6 @@ public class ModifiableSpellbookItem extends SpellBook implements IModifiableDis
 
 //		super.initializeSpellContainer(itemStack);
 	}
-
-    @Override
-    public void onInventoryTick(ItemStack stack, Level level, Player player, int slotIndex, int selectedIndex) {
-//		ConstructsCasting.LOGGER.info("curio tic");
-        ToolStack tool = ToolStack.from(stack);
-        for (ModifierEntry entry : tool.getModifierList()) {
-//			ConstructsCasting.LOGGER.info("tick {}", entry.getModifier().getId());
-            entry.getHook(ModifierHooks.INVENTORY_TICK).onInventoryTick(tool, entry, level, player, EquipmentSlot.LEGS.getIndex(), false, true, stack);
-        }
-        super.onInventoryTick(stack, level, player, slotIndex, selectedIndex);
-    }
 
     @Override
 	public boolean canSync(SlotContext slotContext, ItemStack stack) {

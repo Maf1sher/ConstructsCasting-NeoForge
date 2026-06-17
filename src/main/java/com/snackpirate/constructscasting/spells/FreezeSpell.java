@@ -91,9 +91,9 @@ public class FreezeSpell extends AbstractSpell {
 			//check if fluid is above molten temperature
 			BlockPos pos = data.getTargetPos();
 			//oh boy i hope this doesn't explode
-			CompoundTag tag = level.getBlockEntity(pos).getUpdateTag();
+			CompoundTag tag = level.getBlockEntity(pos).getUpdateTag(level.registryAccess());
 			tag.putInt("timer", Integer.MAX_VALUE - 5); //random ass number
-			level.getBlockEntity(pos).load(tag);
+			level.getBlockEntity(pos).loadWithComponents(tag, level.registryAccess());
 
 			MagicManager.spawnParticles(level, ParticleHelper.SNOWFLAKE, pos.getX() + 0.5, pos.getY() + 1d, pos.getZ() + 0.5, 15, .1, .1, .1, .1, true);
 		}

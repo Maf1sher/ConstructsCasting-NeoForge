@@ -92,13 +92,12 @@ public class ScrollMeltingRecipe implements IMeltingRecipe {
 		return pContainer.hasAnyMatching((stack) -> stack.is(ItemRegistry.SCROLL.get()));
 	}
 
-	@Override
 	public ResourceLocation getId() {
 		return id;
 	}
 
 	@Override
-	public RecipeSerializer<? extends Recipe<?>> getSerializer() {
+	public RecipeSerializer<?> getSerializer() {
 		return CCRecipes.scrollMeltingSerializer.get();
 	}
 

@@ -66,10 +66,10 @@ public class InvertSpell extends AbstractSpell {
 		if (!playerMagicData.getPlayerRecasts().hasRecastForSpell(getSpellId())) {
 			playerMagicData.getPlayerRecasts().addRecast(new RecastInstance(getSpellId(), spellLevel, getRecastCount(spellLevel, entity), getEffectDuration(spellLevel, entity), castSource, null), playerMagicData);
 		}
-		if (!entity.hasEffect(TinkerEffects.antigravity.get())) {
-			entity.addEffect(new MobEffectInstance(TinkerEffects.antigravity.get(), getEffectDuration(spellLevel, entity), 0));
+		if (!entity.hasEffect(TinkerEffects.antigravity)) {
+			entity.addEffect(new MobEffectInstance(TinkerEffects.antigravity, getEffectDuration(spellLevel, entity), 0));
 		} else {
-			entity.removeEffect(TinkerEffects.antigravity.get());
+			entity.removeEffect(TinkerEffects.antigravity);
 		}
 		super.onCast(level, spellLevel, entity, castSource, playerMagicData);
 	}

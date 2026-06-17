@@ -27,7 +27,7 @@ import slimeknights.tconstruct.library.tools.nbt.StatsNBT;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
 import slimeknights.tconstruct.tools.TinkerModifiers;
 import slimeknights.tconstruct.tools.TinkerToolParts;
-import slimeknights.tconstruct.tools.data.ModifierIds;
+
 import slimeknights.tconstruct.tools.stats.*;
 
 import java.util.Set;
@@ -178,10 +178,10 @@ public class CCTools {
 							.set(ToolStats.DRAW_SPEED, 1.5f)
 							.build()))
 					.module(ToolTraitsModule.builder()
-							.trait(ModifierIds.springing, 1)
+//							.trait(ModifierIds.springing, 1) // removed in TCon 1.21.1
 							.build())
 					// behavior
-					.module(ToolActionsModule.of(TinkerToolActions.SWORD_DIG))
+//					.module(ToolActionsModule.of(TinkerToolActions.SWORD_DIG))
 					.module(swordHarvest)
 					.build();
 		}

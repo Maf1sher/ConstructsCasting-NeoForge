@@ -20,13 +20,13 @@ public class ManaBarOverlayMixin {
 		ItemStack offHandItem = player.getItemInHand(InteractionHand.OFF_HAND);
 		boolean doIt = false;
 		if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof ModifiableItem) {
-			doIt = (ModifierUtil.getModifierLevel(mainHandItem, CCModifiers.CASTING.getId()) > 0 ||
+			doIt = (ModifierUtil.getModifierLevel(mainHandItem, CCModifiers.CASTING.getModifierId()) > 0 ||
 								ModifierUtil.getModifierLevel(mainHandItem, CCModifiers.ARCANE) > 0 ||
 								ModifierUtil.getModifierLevel(mainHandItem, CCModifiers.SORCEROUS) > 0 ||
 								ModifierUtil.getModifierLevel(mainHandItem, CCModifiers.MANA_UPGRADE) > 0);
 		}
 		else if (player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ModifiableItem) {
-			doIt = (ModifierUtil.getModifierLevel(offHandItem, CCModifiers.CASTING.getId()) > 0 ||
+			doIt = (ModifierUtil.getModifierLevel(offHandItem, CCModifiers.CASTING.getModifierId()) > 0 ||
 								ModifierUtil.getModifierLevel(offHandItem, CCModifiers.ARCANE) > 0 ||
 								ModifierUtil.getModifierLevel(mainHandItem, CCModifiers.SORCEROUS) > 0 ||
 								ModifierUtil.getModifierLevel(offHandItem, CCModifiers.MANA_UPGRADE) > 0);

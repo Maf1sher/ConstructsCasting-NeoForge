@@ -2,6 +2,7 @@ package com.snackpirate.constructscasting.items;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.snackpirate.constructscasting.ConstructsCasting;
 import com.snackpirate.constructscasting.materials.CCToolStats;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.core.BlockPos;
@@ -19,7 +20,7 @@ import slimeknights.mantle.client.TooltipKey;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
-import slimeknights.tconstruct.library.modifiers.hook.behavior.AttributesModifierHook;
+
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.helper.TooltipBuilder;
 import slimeknights.tconstruct.library.tools.helper.TooltipUtil;
@@ -29,7 +30,6 @@ import slimeknights.tconstruct.library.tools.stat.ToolStats;
 import slimeknights.tconstruct.tools.TinkerModifiers;
 
 import java.util.List;
-import java.util.UUID;
 
 //easiest solution to get magic stats to display
 public class ModifiableMagicStaff extends ModifiableItem {
@@ -42,17 +42,12 @@ public class ModifiableMagicStaff extends ModifiableItem {
 
 		ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = new ImmutableMultimap.Builder<>();
 		attributeBuilder.putAll(super.getAttributeModifiers(tool, slot));
-		UUID uuid = AttributesModifierHook.HELD_ARMOR_UUID[slot.getIndex()];
-//		int manaBonus = tool.getStats().getInt(CCToolStats.MAX_MANA);
-//		attributeBuilder.put(AttributeRegistry.MAX_MANA.get(), new AttributeModifier("tool.constructs_casting.mana_bonus", manaBonus, AttributeModifier.Operation.ADD_VALUE));
 		float spBonus =
-//				ConditionalStatModifierHook.getModifiedStat(tool, slotContext.entity(), CCToolStats.SPELL_POWER);
-                tool.getStats().get(CCToolStats.SPELL_POWER); //TODO: get conditional modifiers working, this method lacks entity context for some godforsaken reason
-		attributeBuilder.put(AttributeRegistry.SPELL_POWER.get(), new AttributeModifier(uuid, "tool.constructs_casting.spell_power_bonus", spBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+                tool.getStats().get(CCToolStats.SPELL_POWER);
+		attributeBuilder.put(AttributeRegistry.SPELL_POWER.get(), new AttributeModifier(ConstructsCasting.id("spell_power_bonus"), spBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
 		float cdBonus =
-//				ConditionalStatModifierHook.getModifiedStat(tool, slotContext.entity(), CCToolStats.COOLDOWN_REDUCTION);
                 tool.getStats().get(CCToolStats.COOLDOWN_REDUCTION);
-		attributeBuilder.put(AttributeRegistry.COOLDOWN_REDUCTION.get(), new AttributeModifier(uuid, "tool.constructs_casting.cd_reduction", cdBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+		attributeBuilder.put(AttributeRegistry.COOLDOWN_REDUCTION.get(), new AttributeModifier(ConstructsCasting.id("cd_reduction"), cdBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
 
 		return attributeBuilder.build();
 	}
@@ -94,7 +89,7 @@ public class ModifiableMagicStaff extends ModifiableItem {
 			builder.addOptional(ToolStats.ARMOR_TOUGHNESS);
 			builder.addOptional(ToolStats.KNOCKBACK_RESISTANCE, 10f);
 		}
-		if (tool.getModifierLevel(TinkerModifiers.blocking.getId()) > 0 || tool.getModifierLevel(TinkerModifiers.parrying.getId()) > 0) {
+		if (tool.getModifierLevel(TinkerModifiers.blocking.getModifierId()) > 0 || tool.getModifierLevel(TinkerModifiers.parrying.getModifierId()) > 0) {
 			builder.add(ToolStats.BLOCK_AMOUNT);
 			builder.add(ToolStats.BLOCK_ANGLE);
 		}

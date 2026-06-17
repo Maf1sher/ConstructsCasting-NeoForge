@@ -53,7 +53,7 @@ public record ManaProtectionModule(LevelingValue manaPerDamage, LevelingValue ma
 		if (SlotInChargeModule.isInCharge(context.getTinkerData(), SLOT_KEY, slotType)) { //only run once across all pieces of armor
 			int level = SlotInChargeModule.getLevel(context.getTinkerData(), SLOT_KEY, slotType);
 			LivingEntity entity = context.getEntity();
-			float reductionMult = Math.min(1 - maxDamageReduction.compute(level), (float) entity.getAttributeValue(TinkerAttributes.PROTECTION_CAP.get())); //90, 95
+			float reductionMult = Math.min(1 - maxDamageReduction.compute(level), (float) entity.getAttributeValue(TinkerAttributes.PROTECTION_CAP)); //90, 95
 			//reduction mult is 0.68
 			float damageToBlock = Math.min(amount, amount * (1-reductionMult));
 			float manaConsumed = damageToBlock * manaPerDamage.compute(level);

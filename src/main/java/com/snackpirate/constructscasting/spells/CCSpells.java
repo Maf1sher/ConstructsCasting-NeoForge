@@ -69,7 +69,7 @@ public class CCSpells {
 		}
 		@SubscribeEvent
 		public static void modifyEntityAttributes(EntityAttributeModificationEvent e) {
-			e.getTypes().forEach(entity -> ATTRIBUTES.getEntries().forEach(attribute -> e.add(entity, attribute.get())));
+			e.getTypes().forEach(entity -> ATTRIBUTES.getEntries().forEach(attribute -> e.add(entity, attribute)));
 		}
 
 	}

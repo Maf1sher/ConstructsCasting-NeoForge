@@ -156,7 +156,7 @@ public class CCModifiers extends AbstractModifierProvider {
 				.addModule(ConditionalMeleeDamageModule.builder().target(magicUser).eachLevel(2f))
 						.build();
 		buildModifier(SPELLBOUND)
-                .addModule(AttributeModule.builder(AttributeRegistry.SPELL_POWER.get(), AttributeModifier.Operation.ADD_MULTIPLIED_BASE).tool(ToolStackPredicate.tag(CCItems.Tags.MAGIC_TOOL).inverted()).uniqueFrom(SPELLBOUND).eachLevel(0.05f))
+                .addModule(AttributeModule.builder(AttributeRegistry.SPELL_POWER.get(), AttributeModifier.Operation.ADD_MULTIPLIED_BASE).tool(ToolStackPredicate.tag(CCItems.Tags.MAGIC_TOOL).inverted()).uniqueFrom(SPELLBOUND.location()).eachLevel(0.05f))
                 .addModule(StatBoostModule.add(CCToolStats.SPELL_POWER).toolTag(CCItems.Tags.MAGIC_TOOL).eachLevel(0.05f)).build();
 		buildModifier(ANTIFROST).addModule(ConditionalMeleeDamageModule.builder().target(LivingEntityPredicate.IS_FREEZING).eachLevel(2.0f));
 		buildModifier(MANA_UPGRADE)     .levelDisplay(ModifierLevelDisplay.DEFAULT)
@@ -165,7 +165,7 @@ public class CCModifiers extends AbstractModifierProvider {
 						.slots(notOffhand).tool(ToolStackPredicate.tag(CCItems.Tags.MOD_SPELLBOOKS).inverted()).eachLevel(80f))
 				.build();
 		buildModifier(COOLDOWN_UPGRADE) .levelDisplay(ModifierLevelDisplay.DEFAULT)
-                .addModule(AttributeModule.builder(AttributeRegistry.COOLDOWN_REDUCTION.get(), AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).tool(ToolStackPredicate.tag(CCItems.Tags.MAGIC_TOOL).inverted()).uniqueFrom(COOLDOWN_UPGRADE).eachLevel(0.05f))
+                .addModule(AttributeModule.builder(AttributeRegistry.COOLDOWN_REDUCTION.get(), AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).tool(ToolStackPredicate.tag(CCItems.Tags.MAGIC_TOOL).inverted()).uniqueFrom(COOLDOWN_UPGRADE.location()).eachLevel(0.05f))
                 .addModule(StatBoostModule.add(CCToolStats.COOLDOWN_REDUCTION).toolTag(CCItems.Tags.MAGIC_TOOL).eachLevel(0.05f)).build();
 		buildModifier(FIRE_UPGRADE)     .addModule(spellPowerModifier(FIRE_UPGRADE,      AttributeRegistry.FIRE_SPELL_POWER     .get())).build();
 		buildModifier(ICE_UPGRADE)      .addModule(spellPowerModifier(ICE_UPGRADE,       AttributeRegistry.ICE_SPELL_POWER      .get())).build();
@@ -179,7 +179,7 @@ public class CCModifiers extends AbstractModifierProvider {
 
 		buildModifier(DUMMY_SPELL_POWER_UPGRADE).build();
 
-        buildModifier(SPELL_DISPULSION).addModule(AttributeModule.builder(AttributeRegistry.SPELL_RESIST, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).uniqueFrom(SPELL_DISPULSION).eachLevel(0.075f));
+        buildModifier(SPELL_DISPULSION).addModule(AttributeModule.builder(AttributeRegistry.SPELL_RESIST, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).uniqueFrom(SPELL_DISPULSION.location()).eachLevel(0.075f));
 		buildModifier(FIRE_DISPULSION).addModule(spellDispulsionModifier(FIRE_DISPULSION, AttributeRegistry.FIRE_MAGIC_RESIST.get())).build();
 		buildModifier(ICE_DISPULSION).addModule(spellDispulsionModifier(ICE_DISPULSION, AttributeRegistry.ICE_MAGIC_RESIST.get())).build();
 		buildModifier(LIGHTNING_DISPULSION).addModule(spellDispulsionModifier(LIGHTNING_DISPULSION, AttributeRegistry.LIGHTNING_MAGIC_RESIST.get())).build();
@@ -196,7 +196,7 @@ public class CCModifiers extends AbstractModifierProvider {
 				.addModule(AttributeModule.builder(AttributeRegistry.FIRE_SPELL_POWER, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).exactLevel(2).flat(0.50f))
 
 				.addModule(AttributeModule.builder(AttributeRegistry.FIRE_SPELL_POWER, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).exactLevel(3).flat(0.85f))
-				.addModule(new RarityModule(CinderousRarity.CINDEROUS_RARITY))
+				.addModule(new RarityModule(CinderousRarity.CINDEROUS_RARITY_PROXY.getValue()))
 				.addModule(AttributeModule.builder(AttributeRegistry.SPELL_POWER, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).eachLevel(-0.1f)).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL);
 
 		buildModifier(SPELL_PROTECTION).addModule(ProtectionModule.builder().source(DamageSourcePredicate.tag(CCDamageTypes.Tags.SPELL_BASED)).eachLevel(2.5f)).build();
@@ -264,7 +264,7 @@ public class CCModifiers extends AbstractModifierProvider {
 				.build();
 		buildModifier(COMBUSTIVE)
 				.addModule(new CombustiveModule(new LevelingValue(0.3f, 0.2f))) //1 -> 6 hits, 2 -> 4 hits, 3 -> 3 hits, 4 -> 2.4, 5 -> 2
-				.addModule(new RarityModule(CinderousRarity.CINDEROUS_RARITY))
+				.addModule(new RarityModule(CinderousRarity.CINDEROUS_RARITY_PROXY.getValue()))
 				.build(); //manyullyn takes 5 hits to max out, so around 5 hits for an explosion would be nice
 		buildModifier(MANA_PROTECTION)
 				.addModule(new ManaProtectionModule(LevelingValue.flat(4), LevelingValue.eachLevel(0.04f)))
@@ -280,17 +280,17 @@ public class CCModifiers extends AbstractModifierProvider {
 	}
 
 	private static AttributeModule spellPowerModifier(ModifierId modifier, Attribute attribute) { //no spell power upgrades on offhand >:(
-		return AttributeModule.builder(attribute, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).uniqueFrom(modifier).eachLevel(0.05f);
+		return AttributeModule.builder(attribute, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).uniqueFrom(modifier.location()).eachLevel(0.05f);
 	}
 
 	private static AttributeModule spellDispulsionModifier(ModifierId modifier, Attribute attribute) {
-		return AttributeModule.builder(attribute, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).uniqueFrom(modifier).eachLevel(0.15f);
+		return AttributeModule.builder(attribute, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).uniqueFrom(modifier.location()).eachLevel(0.15f);
 	}
 	public static LivingEntityPredicate magicUser = LivingEntityPredicate.simple(
 			target -> MagicData.getPlayerMagicData(target).isCasting() ||
 					target instanceof AbstractSpellCastingMob ||
 					target instanceof IMagicSummon ||
-					target.getAttributeValue(AttributeRegistry.MAX_MANA.get()) > 100
+					target.getAttributeValue(AttributeRegistry.MAX_MANA) > 100
 	);
 
 	@Override
@@ -307,19 +307,19 @@ public class CCModifiers extends AbstractModifierProvider {
 		protected void addTags() {
 			tag(TinkerTags.Modifiers.DUAL_INTERACTION).add(CASTING.getId());
 			tag(TinkerTags.Modifiers.GENERAL_UPGRADES)
-					.add(MANA_UPGRADE, COOLDOWN_UPGRADE, EXPEDIENT, DUMMY_SPELL_POWER_UPGRADE);
-			tag(TinkerTags.Modifiers.BONUS_SLOTLESS).add(REINSCRIBED);
-			tag(TinkerTags.Modifiers.PROTECTION_DEFENSE).add(SPELL_PROTECTION);
-            tag(TinkerTags.Modifiers.GENERAL_ABILITIES).add(IMPROVEABLE, IMBUED.getId());
+					.add(MANA_UPGRADE.location(), COOLDOWN_UPGRADE.location(), EXPEDIENT.location(), DUMMY_SPELL_POWER_UPGRADE.location());
+			tag(TinkerTags.Modifiers.BONUS_SLOTLESS).add(REINSCRIBED.location());
+			tag(TinkerTags.Modifiers.PROTECTION_DEFENSE).add(SPELL_PROTECTION.location());
+            tag(TinkerTags.Modifiers.GENERAL_ABILITIES).add(IMPROVEABLE.location(), IMBUED.getId());
 			tag(TinkerTags.Modifiers.INTERACTION_ABILITIES).add(CASTING.getId());
-			tag(TinkerTags.Modifiers.BOOT_UPGRADES).add(SWIFTCASTING);
+			tag(TinkerTags.Modifiers.BOOT_UPGRADES).add(SWIFTCASTING.location());
 			tag(TinkerTags.Modifiers.LEGGING_ABILITIES).add(SPELLBOOK_STRAP.getId());
 			tag(TinkerTags.Modifiers.MELEE_ABILITIES).add(SPELLBLADE.getId());
-            tag(TinkerTags.Modifiers.CHESTPLATE_ABILITIES).add(RINGBEARER);
-			tag(TinkerTags.Modifiers.HIDDEN_FROM_RECIPE_VIEWERS).add(DUMMY_SPELL_POWER_UPGRADE);
-			tag(TinkerTags.Modifiers.EXTRACT_MODIFIER_BLACKLIST).add(DUMMY_SPELL_POWER_UPGRADE);
+            tag(TinkerTags.Modifiers.CHESTPLATE_ABILITIES).add(RINGBEARER.location());
+			tag(TinkerTags.Modifiers.HIDDEN_FROM_RECIPE_VIEWERS).add(DUMMY_SPELL_POWER_UPGRADE.location());
+			tag(TinkerTags.Modifiers.EXTRACT_MODIFIER_BLACKLIST).add(DUMMY_SPELL_POWER_UPGRADE.location());
 			tag(TinkerTags.Modifiers.BLOCK_WHILE_CHARGING).add(CASTING.getId());
-            tag(TinkerTags.Modifiers.GENERAL_ARMOR_UPGRADES).add(SLOT_IMPROVEMENT);
+            tag(TinkerTags.Modifiers.GENERAL_ARMOR_UPGRADES).add(SLOT_IMPROVEMENT.location());
 		}
 		@Override
 		public String getName() {

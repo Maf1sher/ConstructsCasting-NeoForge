@@ -1,6 +1,8 @@
 package com.snackpirate.constructscasting.items;
 
 import io.redspace.ironsspellbooks.item.armor.ExtendedArmorItem;
+import net.minecraft.core.Holder;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.item.armor.ModifiableArmorItem;
@@ -15,8 +17,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class ModifiableGeoArmorItem extends ModifiableArmorItem implements GeoItem {
 
-    private final software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    public ModifiableGeoArmorItem(ArmorMaterial materialIn, Type type, Properties builderIn, ToolDefinition toolDefinition) {
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    public ModifiableGeoArmorItem(Holder<ArmorMaterial> materialIn, ArmorItem.Type type, Properties builderIn, ToolDefinition toolDefinition) {
         super(materialIn, type, builderIn, toolDefinition);
     }
     @Override

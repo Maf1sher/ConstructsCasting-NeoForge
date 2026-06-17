@@ -1,5 +1,6 @@
 package com.snackpirate.constructscasting.modifiers;
 
+import com.snackpirate.constructscasting.ConstructsCasting;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
@@ -10,10 +11,7 @@ import slimeknights.tconstruct.library.tools.context.EquipmentChangeContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import top.theillusivec4.curios.api.CuriosApi;
 
-import java.util.UUID;
-
 public class RingbearerModifier extends Modifier implements EquipmentChangeModifierHook {
-    private static final UUID MODIFIER_UUID = UUID.fromString("64d62ea-03d8-4919-9ba5-fec06d332c72");
     @Override
     protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
         hookBuilder.addHook(this, ModifierHooks.EQUIPMENT_CHANGE);
@@ -24,7 +22,7 @@ public class RingbearerModifier extends Modifier implements EquipmentChangeModif
     public void onEquip(IToolStackView tool, ModifierEntry modifier, EquipmentChangeContext context) {
 //        ConstructsCasting.LOGGER.info("ringbearer eq");
         if (!context.getLevel().isClientSide()) {
-            CuriosApi.getCuriosInventory(context.getEntity()).ifPresent(handler -> handler.getStacksHandler("ring").ifPresent(stacks -> stacks.addTransientModifier(new AttributeModifier(MODIFIER_UUID, "name", 2, AttributeModifier.Operation.ADD_VALUE))));
+            CuriosApi.getCuriosInventory(context.getEntity()).ifPresent(handler -> handler.getStacksHandler("ring").ifPresent(stacks -> stacks.addTransientModifier(new AttributeModifier(ConstructsCasting.id("ringbearer"), 2, AttributeModifier.Operation.ADD_VALUE))));
         }
         EquipmentChangeModifierHook.super.onEquip(tool, modifier, context);
     }
@@ -33,7 +31,7 @@ public class RingbearerModifier extends Modifier implements EquipmentChangeModif
     public void onUnequip(IToolStackView tool, ModifierEntry modifier, EquipmentChangeContext context) {
 //        ConstructsCasting.LOGGER.info("ringbearer uneq");
         if (!context.getLevel().isClientSide()) {
-            CuriosApi.getCuriosInventory(context.getEntity()).ifPresent(handler -> handler.getStacksHandler("ring").ifPresent(stacks -> stacks.removeModifier(MODIFIER_UUID)));
+            CuriosApi.getCuriosInventory(context.getEntity()).ifPresent(handler -> handler.getStacksHandler("ring").ifPresent(stacks -> stacks.removeModifier(ConstructsCasting.id("ringbearer"))));
         }
         EquipmentChangeModifierHook.super.onUnequip(tool, modifier, context);
     }

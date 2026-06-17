@@ -55,7 +55,7 @@ public class CCItems {
 
 	public static final ItemObject<Item> arcaneNugget = ITEMS.register("arcane_nugget", () -> new Item(new Item.Properties().stacksTo(65)));
 	public static final ItemObject<Item> mithrilNugget = ITEMS.register("mithril_nugget", () -> new Item(new Item.Properties().stacksTo(64).rarity(Rarity.RARE)));
-	public static final ItemObject<Item> pyriumNugget = ITEMS.register("pyrium_nugget", () -> new Item(new Item.Properties().stacksTo(64).rarity(CinderousRarity.CINDEROUS_RARITY)));
+	public static final ItemObject<Item> pyriumNugget = ITEMS.register("pyrium_nugget", () -> new Item(new Item.Properties().stacksTo(64).rarity(CinderousRarity.CINDEROUS_RARITY_PROXY.getValue())));
 
 	public static final ItemObject<Item> wizardslimeBall = ITEMS.register("wizardslime_ball", () -> new Item(new Item.Properties().stacksTo(64)));
 	public static final ItemObject<Item> slimeRune = ITEMS.register("slime_rune", () -> new Item(new Item.Properties().stacksTo(64)));

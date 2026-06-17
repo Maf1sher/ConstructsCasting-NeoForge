@@ -1,5 +1,7 @@
 package com.snackpirate.constructscasting.modifiers;
 
+import com.snackpirate.constructscasting.ConstructsCasting;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import slimeknights.mantle.data.loadable.primitive.StringLoadable;
 import slimeknights.mantle.data.loadable.record.RecordLoadable;
@@ -14,7 +16,6 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.List;
-import java.util.UUID;
 
 public record BonusCurioSlotModule(String slotIdentifier, LevelingInt amount, String uuid) implements ModifierModule, EquipmentChangeModifierHook {
 	public static final RecordLoadable<BonusCurioSlotModule> LOADER = RecordLoadable.create(
@@ -32,7 +33,7 @@ public record BonusCurioSlotModule(String slotIdentifier, LevelingInt amount, St
 	public void onEquip(IToolStackView tool, ModifierEntry modifier, EquipmentChangeContext context) {
 //        ConstructsCasting.LOGGER.info("ringbearer eq");
 		if (!context.getLevel().isClientSide()) {
-			CuriosApi.getCuriosInventory(context.getEntity()).ifPresent(handler -> handler.getStacksHandler(slotIdentifier).ifPresent(stacks -> stacks.addTransientModifier(new AttributeModifier(UUID.fromString(uuid), "bonus_curio_slots", amount.compute(modifier.getEffectiveLevel()), AttributeModifier.Operation.ADD_VALUE))));
+			CuriosApi.getCuriosInventory(context.getEntity()).ifPresent(handler -> handler.getStacksHandler(slotIdentifier).ifPresent(stacks -> stacks.addTransientModifier(new AttributeModifier(ConstructsCasting.id("bonus_curio_slots"), amount.compute(modifier.getEffectiveLevel()), AttributeModifier.Operation.ADD_VALUE))));
 		}
 		EquipmentChangeModifierHook.super.onEquip(tool, modifier, context);
 	}
@@ -41,7 +42,7 @@ public record BonusCurioSlotModule(String slotIdentifier, LevelingInt amount, St
 	public void onUnequip(IToolStackView tool, ModifierEntry modifier, EquipmentChangeContext context) {
 //        ConstructsCasting.LOGGER.info("ringbearer uneq");
 		if (!context.getLevel().isClientSide()) {
-			CuriosApi.getCuriosInventory(context.getEntity()).ifPresent(handler -> handler.getStacksHandler(slotIdentifier).ifPresent(stacks -> stacks.removeModifier(UUID.fromString(uuid))));
+			CuriosApi.getCuriosInventory(context.getEntity()).ifPresent(handler -> handler.getStacksHandler(slotIdentifier).ifPresent(stacks -> stacks.removeModifier(ConstructsCasting.id("bonus_curio_slots"))));
 		}
 		EquipmentChangeModifierHook.super.onUnequip(tool, modifier, context);
 	}

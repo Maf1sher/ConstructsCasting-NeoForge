@@ -22,7 +22,7 @@ public class ConservingModifier extends SingleLevelModifier {
 			CuriosApi.getCuriosInventory(player).ifPresent((handler) -> handler.findCurios(stack -> stack.is(CCItems.Tags.MAGIC_TOOL)).forEach(slotResult -> {
 				if (slotResult.stack().getItem() instanceof ModifiableSpellbookItem) {
 //					ConstructsCasting.LOGGER.info("change mana event 2");
-					event.setManaCost(Math.max(5, event.getManaCost() - (10 * ModifierUtil.getModifierLevel(slotResult.stack(), CCModifiers.CONSERVING.getId()))));
+					event.setManaCost(Math.max(5, event.getManaCost() - (10 * ModifierUtil.getModifierLevel(slotResult.stack(), CCModifiers.CONSERVING.getModifierId()))));
 				}
 			}));
 	}
