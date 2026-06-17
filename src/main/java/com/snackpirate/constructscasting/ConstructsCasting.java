@@ -73,7 +73,6 @@ public class ConstructsCasting {
         CCEntities.register(modEventBus);
         CCSpells.register(modEventBus);
         CREATIVE_TABS.register(modEventBus);
-        modEventBus.register(new CCFluids());
     }
 
     public static ResourceLocation id(String name) {
