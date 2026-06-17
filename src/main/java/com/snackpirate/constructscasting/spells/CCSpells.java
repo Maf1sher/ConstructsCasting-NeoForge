@@ -9,11 +9,9 @@ import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.SchoolType;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.neoforged.bus.api.IEventBus;
@@ -22,8 +20,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NewRegistryEvent;
-import net.neoforged.neoforge.registries.RegistryBuilder;
 
 import java.util.function.Supplier;
 
@@ -31,19 +27,12 @@ import static io.redspace.ironsspellbooks.api.registry.SpellRegistry.SPELL_REGIS
 
 public class CCSpells {
 
-	public static final Registry<AbstractSpell> SPELL_REGISTRY = new RegistryBuilder<>(SPELL_REGISTRY_KEY).create();
 	private static final DeferredRegister<AbstractSpell> SPELLS = DeferredRegister.create(SPELL_REGISTRY_KEY, ConstructsCasting.MOD_ID);
 
 	public static void register(IEventBus eventBus) {
 		SPELLS.register(eventBus);
-		eventBus.addListener(CCSpells::registerCustomRegistries);
 		Attributes.ATTRIBUTES.register(eventBus);
 		Schools.SCHOOLS.register(eventBus);
-	}
-
-	public static void registerCustomRegistries(NewRegistryEvent event) {
-		event.register(SPELL_REGISTRY);
-		event.register(Schools.SCHOOL_REGISTRY);
 	}
 
 	public static final Supplier<AbstractSpell> FREEZE_SPELL = registerSpell(new FreezeSpell());
@@ -76,7 +65,6 @@ public class CCSpells {
 
 	public static class Schools {
 		private static final DeferredRegister<SchoolType> SCHOOLS = DeferredRegister.create(SchoolRegistry.SCHOOL_REGISTRY_KEY, ConstructsCasting.MOD_ID);
-		public static final Registry<SchoolType> SCHOOL_REGISTRY = new RegistryBuilder<>(SchoolRegistry.SCHOOL_REGISTRY_KEY).create();
 
 		public static final ResourceLocation SLIME_LOC = ConstructsCasting.id("slime");
 		public static final Supplier<SchoolType> SLIME = registerSchool(new SchoolType(SLIME_LOC,
