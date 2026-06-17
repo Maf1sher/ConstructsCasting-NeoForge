@@ -15,33 +15,28 @@ import com.snackpirate.constructscasting.spells.CCEntities;
 import com.snackpirate.constructscasting.spells.CCSpells;
 import io.redspace.ironsspellbooks.IronsSpellbooks;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.RegisterEvent;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.slf4j.Logger;
 import slimeknights.mantle.client.model.NBTKeyModel;
 import slimeknights.mantle.data.predicate.entity.LivingEntityPredicate;
 import slimeknights.mantle.registration.deferred.SynchronizedDeferredRegister;
 import slimeknights.tconstruct.TConstruct;
-import slimeknights.tconstruct.common.data.loot.BlockLootTableProvider;
 import slimeknights.tconstruct.library.client.data.material.GeneratorPartTextureJsonGenerator;
 import slimeknights.tconstruct.library.client.data.material.MaterialPartTextureGenerator;
 import slimeknights.tconstruct.library.materials.MaterialRegistry;
@@ -49,18 +44,16 @@ import slimeknights.tconstruct.library.modifiers.modules.ModifierModule;
 import slimeknights.tconstruct.tools.data.sprite.TinkerMaterialSpriteProvider;
 import slimeknights.tconstruct.tools.data.sprite.TinkerPartSpriteProvider;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 @Mod(ConstructsCasting.MOD_ID)
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ConstructsCasting.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ConstructsCasting {
     public static final String MOD_ID = "constructs_casting";
     protected static final SynchronizedDeferredRegister<CreativeModeTab> CREATIVE_TABS = SynchronizedDeferredRegister.create(Registries.CREATIVE_MODE_TAB, ConstructsCasting.MOD_ID);
 
-    public static final RegistryObject<CreativeModeTab> CREATIVE_TAB = CREATIVE_TABS.register("main", () -> CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> CREATIVE_TAB = CREATIVE_TABS.register("main", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.constructs_casting.constructs_casting"))
             .icon(() -> CCItems.platedSpellbook.get().getRenderTool())
             .displayItems(CCItems::addTabItems)
@@ -68,11 +61,9 @@ public class ConstructsCasting {
 
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public ConstructsCasting() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public ConstructsCasting(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(this::registerSerializers);
-        MinecraftForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(this);
         CCModifiers.MODIFIERS.register(modEventBus);
         CCFluids.FLUIDS.register(modEventBus);
         CCFluidEffects.MobEffects.register(modEventBus);
@@ -85,17 +76,31 @@ public class ConstructsCasting {
         CREATIVE_TABS.register(modEventBus);
         modEventBus.register(new CCFluids());
     }
+
     public static ResourceLocation id(String name) {
         return Objects.requireNonNull(ResourceLocation.tryBuild(MOD_ID, name));
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-//        LOGGER.info("HELLO FROM COMMON SETUP");
         CCModifierHooks.init();
+        registerSerializers();
         MaterialRegistry.getInstance().registerStatType(MagicBaseMaterialStats.TYPE, CCToolStats.MAGIC);
         MaterialRegistry.getInstance().registerStatType(MagicClothMaterialStats.TYPE, CCToolStats.MAGIC);
         MaterialRegistry.getInstance().registerStatType(CCMaterialStats.Statless.ADORNMENT.getType());
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> NBTKeyModel.registerExtraTexture(TConstruct.getResource("creative_slot"), "affinity", ConstructsCasting.id("gui/modifiers/affinity_slot")));
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            NBTKeyModel.registerExtraTexture(TConstruct.getResource("creative_slot"), "affinity", ConstructsCasting.id("gui/modifiers/affinity_slot"));
+        }
+    }
+
+    private void registerSerializers() {
+        ModifierModule.LOADER.register(ConstructsCasting.id("spellbook_strap"), SpellbookStrapModule.LOADER);
+        ModifierModule.LOADER.register(ConstructsCasting.id("bonus_curio_slots"), BonusCurioSlotModule.LOADER);
+        ModifierModule.LOADER.register(ConstructsCasting.id("combustive"), CombustiveModule.LOADER);
+        ModifierModule.LOADER.register(ConstructsCasting.id("mana_protection"), ManaProtectionModule.LOADER);
+        ModifierModule.LOADER.register(ConstructsCasting.id("mana_on_hit"), ManaOnHitModule.LOADER);
+        ModifierModule.LOADER.register(ConstructsCasting.id("self_damage_cast"), SelfDamageOnCastModule.LOADER);
+        ModifierModule.LOADER.register(id("venomagic"), VenomagicModule.LOADER);
+        LivingEntityPredicate.LOADER.register(ConstructsCasting.id("magic_user"), CCModifiers.magicUser.getLoader());
     }
 
     @SubscribeEvent
@@ -112,9 +117,7 @@ public class ConstructsCasting {
         CCMaterialTextures materialSprites = new CCMaterialTextures();
         CCToolSpriteProvider partSprites = new CCToolSpriteProvider(MOD_ID);
 
-        //For Tinkers' Tools
         gen.addProvider(server, new MaterialPartTextureGenerator(output, fileHelper, new TinkerPartSpriteProvider(), materialSprites));
-        //For CC Tools
         gen.addProvider(server, new MaterialPartTextureGenerator(output, fileHelper, partSprites, getOverride(), materialSprites, new TinkerMaterialSpriteProvider()));
         gen.addProvider(server, new GeneratorPartTextureJsonGenerator(output, MOD_ID, partSprites));
         gen.addProvider(server, new GeneratorPartTextureJsonGenerator(output, TConstruct.MOD_ID, partSprites));
@@ -143,7 +146,7 @@ public class ConstructsCasting {
         gen.addProvider(server, new CCDamageTypes.Tags(output, provider, MOD_ID, fileHelper));
         gen.addProvider(server, new CCModifiers.Tags(output, MOD_ID, fileHelper));
     }
-    //there's probably a way to do this automatically buuuut
+
     private static GeneratorPartTextureJsonGenerator.StatOverride getOverride() {
         GeneratorPartTextureJsonGenerator.StatOverride.Builder builder = new GeneratorPartTextureJsonGenerator.StatOverride.Builder();
         CCMaterials.tinkerClothMaterials.forEach((material) -> builder.addVariant(MagicClothMaterialStats.ID, material));
@@ -152,19 +155,4 @@ public class ConstructsCasting {
         return builder.build();
     }
 
-//    @SubscribeEvent
-    void registerSerializers(RegisterEvent event) {
-//        ConstructsCasting.LOGGER.info("register event");
-        if (event.getRegistryKey() == Registries.RECIPE_SERIALIZER) {
-//            ConstructsCasting.LOGGER.info("register serializer event");
-            ModifierModule.LOADER.register(ConstructsCasting.id("spellbook_strap"), SpellbookStrapModule.LOADER);
-            ModifierModule.LOADER.register(ConstructsCasting.id("bonus_curio_slots"), BonusCurioSlotModule.LOADER);
-            ModifierModule.LOADER.register(ConstructsCasting.id("combustive"), CombustiveModule.LOADER);
-            ModifierModule.LOADER.register(ConstructsCasting.id("mana_protection"), ManaProtectionModule.LOADER);
-            ModifierModule.LOADER.register(ConstructsCasting.id("mana_on_hit"), ManaOnHitModule.LOADER);
-            ModifierModule.LOADER.register(ConstructsCasting.id("self_damage_cast"), SelfDamageOnCastModule.LOADER);
-            ModifierModule.LOADER.register(id("venomagic"), VenomagicModule.LOADER);
-            LivingEntityPredicate.LOADER.register(ConstructsCasting.id("magic_user"), CCModifiers.magicUser.getLoader());
-        }
-    }
 }
