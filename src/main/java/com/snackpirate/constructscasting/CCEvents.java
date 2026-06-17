@@ -90,7 +90,7 @@ public class CCEvents {
 	@SubscribeEvent
 	static void enderferenceAntiSpell(SpellPreCastEvent event) {
 		Player entity = event.getEntity();
-		if (entity.hasEffect(TinkerEffects.enderference.get())) {
+		if (entity.hasEffect(TinkerEffects.enderference)) {
             String spellId = event.getSpellId();
 			if (spellId.equals("irons_spellbooks:teleport") || spellId.equals("irons_spellbooks:blood_step") || spellId.equals("irons_spellbooks:frost_step")) {
 				entity.level().playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.NEUTRAL, 2f, 0.2f + Utils.random.nextFloat() * .2f);

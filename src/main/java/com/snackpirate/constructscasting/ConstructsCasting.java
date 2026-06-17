@@ -15,6 +15,7 @@ import com.snackpirate.constructscasting.spells.CCEntities;
 import com.snackpirate.constructscasting.spells.CCSpells;
 import io.redspace.ironsspellbooks.IronsSpellbooks;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
@@ -137,7 +138,7 @@ public class ConstructsCasting {
         gen.addProvider(server, new CCFluids.CCBucketModels(output, MOD_ID));
         gen.addProvider(server, new CCFluids.Tags(output, provider, MOD_ID, fileHelper));
         gen.addProvider(server, new CCFluids.Tags.CCFluidTooltipProvider(output, MOD_ID));
-        gen.addProvider(server, new CCRecipes(output));
+        gen.addProvider(server, new CCRecipes(output, provider));
         gen.addProvider(server, new CCLootTableProvider(output));
         gen.addProvider(server, new CCFluidTransfer(output, MOD_ID));
         gen.addProvider(server, new CCMobEquipment(output, MOD_ID));

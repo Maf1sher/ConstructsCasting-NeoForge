@@ -4,7 +4,7 @@ import com.snackpirate.constructscasting.ConstructsCasting;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.network.SyncManaPacket;
-import io.redspace.ironsspellbooks.setup.PacketDistributor;
+
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -86,7 +86,7 @@ public record ManaOnHitModule(LevelingValue manaPerDamage, LevelingValue chance)
 	private static void addManaToAttacker(LivingEntity attacker, float mana) {
 		MagicData.getPlayerMagicData(attacker).addMana(mana);
 		if (attacker instanceof ServerPlayer sp) {
-			PacketDistributor.sendToPlayer(sp, new SyncManaPacket(MagicData.getPlayerMagicData(attacker)));
+			sp.connection.send(new SyncManaPacket(MagicData.getPlayerMagicData(attacker)));
 		}
 	}
 

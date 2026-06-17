@@ -5,7 +5,7 @@ import com.snackpirate.constructscasting.materials.CCToolStats;
 import com.snackpirate.constructscasting.modifiers.CCModifiers;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.common.ToolActions;
+import slimeknights.tconstruct.tools.TinkerToolActions;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.data.tinkering.AbstractToolDefinitionDataProvider;
 import slimeknights.tconstruct.library.materials.RandomMaterial;
@@ -180,7 +180,7 @@ public class CCTools {
 							.trait(TinkerModifiers.springing, 1)
 							.build())
 					// behavior
-					.module(ToolActionsModule.of(ToolActions.SWORD_DIG))
+					.module(ToolActionsModule.of(TinkerToolActions.SWORD_DIG))
 					.module(swordHarvest)
 					.build();
 		}

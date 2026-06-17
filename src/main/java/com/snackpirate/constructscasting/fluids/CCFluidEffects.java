@@ -6,7 +6,7 @@ import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.network.SyncManaPacket;
 import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
-import io.redspace.ironsspellbooks.setup.PacketDistributor;
+
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.server.level.ServerPlayer;
@@ -69,7 +69,7 @@ public class CCFluidEffects extends AbstractFluidEffectProvider {
 			MagicData playerMagicData = MagicData.getPlayerMagicData(living);
 			playerMagicData.addMana(-50 * level.value());
 			if (living instanceof ServerPlayer serverPlayer) {
-				PacketDistributor.sendToPlayer(serverPlayer, new SyncManaPacket(playerMagicData));
+				serverPlayer.connection.send(new SyncManaPacket(playerMagicData));
 			}
 		}
 		return level.value();
@@ -81,7 +81,7 @@ public class CCFluidEffects extends AbstractFluidEffectProvider {
 			MagicData playerMagicData = MagicData.getPlayerMagicData(living);
 			playerMagicData.addMana(10 * level.value());
 			if (living instanceof ServerPlayer serverPlayer) {
-				PacketDistributor.sendToPlayer(serverPlayer, new SyncManaPacket(playerMagicData));
+				serverPlayer.connection.send(new SyncManaPacket(playerMagicData));
 			}
 		}
 		return level.value();
@@ -94,20 +94,20 @@ public class CCFluidEffects extends AbstractFluidEffectProvider {
 			EFFECTS.register(eventBus);
 		}
 
-		public static DeferredHolder<MobEffect, MobEffect> magicEmpowerment = EFFECTS.register("magic_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0xc5e1ff, true).addAttributeModifier(AttributeRegistry.SPELL_POWER.get(), "e39931d9-140b-493d-8c4d-2a1e89393024", 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
-		public static DeferredHolder<MobEffect> magicVulnerability = EFFECTS.register("magic_vulnerability", () -> new TinkerEffect(MobEffectCategory.HARMFUL, 0x55617f, true).addAttributeModifier(AttributeRegistry.SPELL_RESIST.get(), "dfccaea6-24db-4bc6-ac68-2f54d1c00232", -0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
-		public static DeferredHolder<MobEffect> inkyImpairment = EFFECTS.register("inky_impairment", () -> new TinkerEffect(MobEffectCategory.HARMFUL, 0x15111f, true).addAttributeModifier(AttributeRegistry.SPELL_POWER.get(), "bfccaea6-24db-4bc6-ac68-2f54d1c00232", -0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+		public static DeferredHolder<MobEffect, MobEffect> magicEmpowerment = EFFECTS.register("magic_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0xc5e1ff, true).addAttributeModifier(AttributeRegistry.SPELL_POWER, ConstructsCasting.id("effect.magic_empowerment"), 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+		public static DeferredHolder<MobEffect, MobEffect> magicVulnerability = EFFECTS.register("magic_vulnerability", () -> new TinkerEffect(MobEffectCategory.HARMFUL, 0x55617f, true).addAttributeModifier(AttributeRegistry.SPELL_RESIST, ConstructsCasting.id("effect.magic_vulnerability"), -0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+		public static DeferredHolder<MobEffect, MobEffect> inkyImpairment = EFFECTS.register("inky_impairment", () -> new TinkerEffect(MobEffectCategory.HARMFUL, 0x15111f, true).addAttributeModifier(AttributeRegistry.SPELL_POWER, ConstructsCasting.id("effect.inky_impairment"), -0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
 
-		public static DeferredHolder<MobEffect> fireEmpowerment = EFFECTS.register("fire_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0xffa765, true).addAttributeModifier(AttributeRegistry.FIRE_SPELL_POWER.get(), "713959a9-bed7-427d-975f-809ed994cd17", 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
-		public static DeferredHolder<MobEffect> iceEmpowerment = EFFECTS.register("ice_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0x6dfff5, true).addAttributeModifier(AttributeRegistry.ICE_SPELL_POWER.get(), "32cae3f7-78fd-4ea4-b263-0884524384ae", 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
-		public static DeferredHolder<MobEffect> lightningEmpowerment = EFFECTS.register("lightning_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0xe0defc,true).addAttributeModifier(AttributeRegistry.LIGHTNING_SPELL_POWER.get(), "2b98d41e-509a-4313-a7ab-a9f2131f5149", 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
-		public static DeferredHolder<MobEffect> holyEmpowerment = EFFECTS.register("holy_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0xfffab7, true).addAttributeModifier(AttributeRegistry.HOLY_SPELL_POWER.get(), "db523eaa-ccbe-4a9e-8ecc-a4e22dc53a95", 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
-		public static DeferredHolder<MobEffect> enderEmpowerment = EFFECTS.register("ender_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0xdb74ff, true).addAttributeModifier(AttributeRegistry.ENDER_SPELL_POWER.get(), "db64740a-572f-4a52-92ba-1c32b9bdc7a5", 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
-		public static DeferredHolder<MobEffect> bloodEmpowerment = EFFECTS.register("blood_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0xff7070, true).addAttributeModifier(AttributeRegistry.BLOOD_SPELL_POWER.get(), "6a0239c2-c775-4214-8b52-31ea7bd5fbfa", 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
-		public static DeferredHolder<MobEffect> evocationEmpowerment = EFFECTS.register("evocation_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0x99ff9c, true).addAttributeModifier(AttributeRegistry.EVOCATION_SPELL_POWER.get(), "ecd54855-033c-4309-8866-3d567d6e15f0", 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
-		public static DeferredHolder<MobEffect> natureEmpowerment = EFFECTS.register("nature_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0xb0f869, true).addAttributeModifier(AttributeRegistry.NATURE_SPELL_POWER.get(), "6fdc0348-9e68-4165-9d93-43dc2fdf796e", 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
-		public static DeferredHolder<MobEffect> recoveryEmpowerment = EFFECTS.register("recovery_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0xede4e6, true).addAttributeModifier(AttributeRegistry.COOLDOWN_REDUCTION.get(), "6fdc0fff-9e68-4165-9d93-43dc2fdf796e", 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+		public static DeferredHolder<MobEffect, MobEffect> fireEmpowerment = EFFECTS.register("fire_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0xffa765, true).addAttributeModifier(AttributeRegistry.FIRE_SPELL_POWER, ConstructsCasting.id("effect.fire_empowerment"), 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+		public static DeferredHolder<MobEffect, MobEffect> iceEmpowerment = EFFECTS.register("ice_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0x6dfff5, true).addAttributeModifier(AttributeRegistry.ICE_SPELL_POWER, ConstructsCasting.id("effect.ice_empowerment"), 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+		public static DeferredHolder<MobEffect, MobEffect> lightningEmpowerment = EFFECTS.register("lightning_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0xe0defc,true).addAttributeModifier(AttributeRegistry.LIGHTNING_SPELL_POWER, ConstructsCasting.id("effect.lightning_empowerment"), 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+		public static DeferredHolder<MobEffect, MobEffect> holyEmpowerment = EFFECTS.register("holy_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0xfffab7, true).addAttributeModifier(AttributeRegistry.HOLY_SPELL_POWER, ConstructsCasting.id("effect.holy_empowerment"), 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+		public static DeferredHolder<MobEffect, MobEffect> enderEmpowerment = EFFECTS.register("ender_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0xdb74ff, true).addAttributeModifier(AttributeRegistry.ENDER_SPELL_POWER, ConstructsCasting.id("effect.ender_empowerment"), 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+		public static DeferredHolder<MobEffect, MobEffect> bloodEmpowerment = EFFECTS.register("blood_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0xff7070, true).addAttributeModifier(AttributeRegistry.BLOOD_SPELL_POWER, ConstructsCasting.id("effect.blood_empowerment"), 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+		public static DeferredHolder<MobEffect, MobEffect> evocationEmpowerment = EFFECTS.register("evocation_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0x99ff9c, true).addAttributeModifier(AttributeRegistry.EVOCATION_SPELL_POWER, ConstructsCasting.id("effect.evocation_empowerment"), 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+		public static DeferredHolder<MobEffect, MobEffect> natureEmpowerment = EFFECTS.register("nature_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0xb0f869, true).addAttributeModifier(AttributeRegistry.NATURE_SPELL_POWER, ConstructsCasting.id("effect.nature_empowerment"), 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+		public static DeferredHolder<MobEffect, MobEffect> recoveryEmpowerment = EFFECTS.register("recovery_empowerment", () -> new TinkerEffect(MobEffectCategory.BENEFICIAL, 0xede4e6, true).addAttributeModifier(AttributeRegistry.COOLDOWN_REDUCTION, ConstructsCasting.id("effect.recovery_empowerment"), 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
-		public static DeferredHolder<TinkerEffect> frostbite = EFFECTS.register("frostbite", () -> new TinkerEffect(MobEffectCategory.HARMFUL, 0x6dfff5, true));
+		public static DeferredHolder<MobEffect, TinkerEffect> frostbite = EFFECTS.register("frostbite", () -> new TinkerEffect(MobEffectCategory.HARMFUL, 0x6dfff5, true));
 	}
 }

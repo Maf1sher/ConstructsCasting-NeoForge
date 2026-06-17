@@ -34,6 +34,13 @@ repositories {
         name "BlameJared Maven"
         url "https://maven.blamejared.com"
     }
+    maven { // GeckoLib
+        name "GeckoLib Maven"
+        url "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/"
+        content {
+            includeGroup "software.bernie.geckolib"
+        }
+    }
     // Local Mantle-NeoForge build
     flatDir {
         dir '../../Tinkers-1.21.1-NeoForge/Mantle-NeoForge/build/libs'
@@ -49,14 +56,12 @@ dependencies {
     implementation fileTree(dir: '../../Tinkers-1.21.1-NeoForge/Mantle-NeoForge/build/libs', include: 'Mantle-*.jar')
     implementation fileTree(dir: '../../Tinkers-1.21.1-NeoForge/TinkersConstruct-NeoForge/build/libs', include: 'TinkersConstruct-*.jar')
 
-    // ISS API (compileOnly)
-    compileOnly "io.redspace:irons_spellbooks:${irons_spells_version}:api"
-    // ISS full mod (localRuntime)
-    localRuntime "io.redspace:irons_spellbooks:${irons_spells_version}"
-    localRuntime "io.redspace:irons_lib:${irons_lib_version}"
+    // ISS full mod (CurseMaven - includes API and non-API classes)
+    implementation "curse.maven:irons-spells-n-spellbooks-855414:8237097"
+    runtimeOnly "io.redspace:irons_lib:${irons_lib_version}"
 
     // GeckoLib
-    implementation "curse.maven:geckolib-388172:7707149"
+    implementation "software.bernie.geckolib:geckolib-neoforge-1.21:${geckolib_version}"
 
     // Curios
     implementation "curse.maven:curios-309927:6529130"
@@ -64,10 +69,10 @@ dependencies {
     // JEI
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
-    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 
     // Player Animator
-    localRuntime "curse.maven:playeranimator-658587:7389814"
+    runtimeOnly "curse.maven:playeranimator-658587:7389814"
 
     // Optional integrations (compileOnly)
     compileOnly "curse.maven:cataclysm-spellbooks-1099461:7703231"

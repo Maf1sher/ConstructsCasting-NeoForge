@@ -72,13 +72,13 @@ public class CCLang extends LanguageProvider {
         add("tool_stat.constructs_casting.extra.no_stats", "No stats");
 		addMaterial(CCMaterials.rainbowSlime, "Rainbowslime", "How are you seeing this?", "Happy pride month!");
 		add("modifier.tconstruct.embellishment.constructs_casting:rainbowslime", "Rainbowslime");
-        addModifier(CCModifiers.CASTING.getId(), "Casting", "Not for fish, unfortunately.", "Allows the tool to cast spells on right click.");
+        addModifier(CCModifiers.CASTING.getModifierId(), "Casting", "Not for fish, unfortunately.", "Allows the tool to cast spells on right click.");
 		addModifier(CCModifiers.SWIFTCASTING, "Swiftcasting", "Run 'n' Gun!", "Increases movement speed while casting spells by 40% (+20% per additional level).");
-		addModifier(CCModifiers.SPELLBLADE.getId(), "Spellblade", "Strike!", "Hitting an enemy casts the spell imbued on the tool.");
+		addModifier(CCModifiers.SPELLBLADE.getModifierId(), "Spellblade", "Strike!", "Hitting an enemy casts the spell imbued on the tool.");
 		add("constructs_casting.modifier.spellblade.requirement", "Requires Imbued to apply.");
 
-		addModifier(CCModifiers.IMBUED.getId(), "Imbued", "One more spell!", "Allows the tool to be imbued with a spell. (Hold/equip the tool to load the Imbue slot!)");
-		addModifier(CCModifiers.ENCYCLOPEDIC.getId(), "Encyclopedic", "Well read", "Allows the Spellbook to function as an encyclopedia on right click.");
+		addModifier(CCModifiers.IMBUED.getModifierId(), "Imbued", "One more spell!", "Allows the tool to be imbued with a spell. (Hold/equip the tool to load the Imbue slot!)");
+		addModifier(CCModifiers.ENCYCLOPEDIC.getModifierId(), "Encyclopedic", "Well read", "Allows the Spellbook to function as an encyclopedia on right click.");
 
 		addModifier(CCModifiers.ARCANE, "Arcane" ,"Mana-licious!", "Grants +25 max mana.");
 		addModifier(CCModifiers.ANTIMAGIC, "Antimagic", "Self-explanatory.", "Grants +2 damage against magic users.");
@@ -88,7 +88,7 @@ public class CCLang extends LanguageProvider {
 		addModifier(CCModifiers.ANTIFROST, "Antifrost", "Don't drink it!", "Grants +3 damage per level to frozen targets.");
 		add("modifier.constructs_casting.antifrost.attack_damage", "Antifrost Damage");
 		addModifier(CCModifiers.SPELLBOUND, "Spellbound", "Jack of all trades!", "Grants +5% power to all types of spells.");
-		addModifier(CCModifiers.SPELLBOOK_STRAP.getId(), "Spellbook Strap", "Twice the spells, twice the fun!", "Interacting with the leggings allows swapping your spellbook with another one in the leggings' inventory.");
+		addModifier(CCModifiers.SPELLBOOK_STRAP.getModifierId(), "Spellbook Strap", "Twice the spells, twice the fun!", "Interacting with the leggings allows swapping your spellbook with another one in the leggings' inventory.");
 		addModifier(CCModifiers.REINSCRIBED, "Reinscribed", "Oops, All Ink!", "Inks a new upgrade slot onto the tool!");
 
 		addModifier(CCModifiers.MANA_UPGRADE, "Mana Upgrade", "Mana-rific!", "Grants +80 max mana.");
@@ -244,21 +244,21 @@ public class CCLang extends LanguageProvider {
 
 		addModifier(CCModifiers.IMPROVEABLE, "Improvable", "Beautiful things that I've got", "Adds two bonus Boon slots to the tool.");
         addModifier(CCModifiers.REGROWTH, "Regrowth", "The best brown thing!", "Increases Mana Regeneration by 10%.");
-    	addModifier(CCModifiers.CONSERVING.getId(), "Conserving", "Great deals all day!", "Reduces the mana cost of casting spells by 10.");
+    	addModifier(CCModifiers.CONSERVING.getModifierId(), "Conserving", "Great deals all day!", "Reduces the mana cost of casting spells by 10.");
         addModifier(CCModifiers.EXPEDIENT, "Expedient", "In a big-time rush?", "Reduces spell cast time by 10%.");
-        addModifier(CCModifiers.SOLAR_CHARGED.getId(), "Solar Charged", "The best green thing!", "Empowers Mana Regeneration while under the sun, up to +15% in full light.");
+        addModifier(CCModifiers.SOLAR_CHARGED.getModifierId(), "Solar Charged", "The best green thing!", "Empowers Mana Regeneration while under the sun, up to +15% in full light.");
         add("modifier.constructs_casting.solar_charged.boost", "Solar Charged Mana Regen");
         addModifier(CCModifiers.THICK_SKINNED, "Thick-Skinned", "You monster", "Increases spell power and cooldowns in hot biomes, reduces spell power and cooldowns in cold biomes.");
         add("modifier.constructs_casting.thick_skinned.spell_power", "Thick-Skinned Spell Power");
         add("modifier.constructs_casting.thick_skinned.cooldown_reduction", "Thick-Skinned Cooldown Reduction");
         addModifier(CCModifiers.ICHORSPELLS, "Ichorspells", "You are filled with ichor... and determination I guess", "Increases Spell Power by 15% in exchange for -30% mana regeneration");
-        addModifier(CCModifiers.DRAGONSPELLS.getId(), "Dragonspells", "In their tongue he is Dovahtiinker, dragonsmith", "Increases Spell Power by 10% while mid-air.");
-		addModifier(CCModifiers.GASHING.getId(), "Gashing", "You haemophile", "Dealing damage with spells has a 50% chance to apply the Bleeding effect");
-        addModifier(CCModifiers.PUNCTURING.getId(), "Puncturing", "Why is magic blocked by armor anyways?", "Spell damage cancels out some of the target's armor!");
+        addModifier(CCModifiers.DRAGONSPELLS.getModifierId(), "Dragonspells", "In their tongue he is Dovahtiinker, dragonsmith", "Increases Spell Power by 10% while mid-air.");
+		addModifier(CCModifiers.GASHING.getModifierId(), "Gashing", "You haemophile", "Dealing damage with spells has a 50% chance to apply the Bleeding effect");
+        addModifier(CCModifiers.PUNCTURING.getModifierId(), "Puncturing", "Why is magic blocked by armor anyways?", "Spell damage cancels out some of the target's armor!");
         add("modifier.constructs_casting.puncturing.attack_damage", "Puncturing Damage");
-		addModifier(CCModifiers.ENDERBENDER.getId(), "Enderbender", "Hey, I've seen this one before!", "Teleporting via spell grants the Evasion effect");
-        addModifier(CCModifiers.APOPTOTIC.getId(), "Apoptotic", "This may be overpowered but who knows", "Dealing spell damage over a certain threshold heals you");
-        addModifier(CCModifiers.CALORIFIC.getId(), "Calorific", "Hot ones, and by ones I mean spells", "Spells deal multiplied damage when you are on fire");
+		addModifier(CCModifiers.ENDERBENDER.getModifierId(), "Enderbender", "Hey, I've seen this one before!", "Teleporting via spell grants the Evasion effect");
+        addModifier(CCModifiers.APOPTOTIC.getModifierId(), "Apoptotic", "This may be overpowered but who knows", "Dealing spell damage over a certain threshold heals you");
+        addModifier(CCModifiers.CALORIFIC.getModifierId(), "Calorific", "Hot ones, and by ones I mean spells", "Spells deal multiplied damage when you are on fire");
         add("modifier.constructs_casting.calorific.boost", "On-Fire Boost Max");
         addModifier(CCModifiers.RINGBEARER, "Ringbearer", "Does it give you two more fingers?", "Allows you to wear two more rings");
         addModifier(CCModifiers.SLOT_IMPROVEMENT, "Slot Improvement", "65%% more spell per spell!", "Grants +1 Spell Slot. (Cannot exceed 15 total Spell Slots)");

@@ -3,7 +3,7 @@ package com.snackpirate.constructscasting.modifiers;
 import com.snackpirate.constructscasting.ConstructsCasting;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.network.SyncManaPacket;
-import io.redspace.ironsspellbooks.setup.PacketDistributor;
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -63,7 +63,7 @@ public record ManaProtectionModule(LevelingValue manaPerDamage, LevelingValue ma
 			if (manaConsumed <= MagicData.getPlayerMagicData(entity).getMana()) { //would be nice if we didn't have enough mana then reduction would be scaled down, but i don't care
 				MagicData.getPlayerMagicData(entity).addMana(-manaConsumed);
 				if (entity instanceof ServerPlayer sp) {
-					PacketDistributor.sendToPlayer(sp, new SyncManaPacket(MagicData.getPlayerMagicData(entity)));
+					sp.connection.send(new SyncManaPacket(MagicData.getPlayerMagicData(entity)));
 				}
 				return amount * reductionMult;
 			}

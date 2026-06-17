@@ -11,8 +11,8 @@ import io.redspace.ironsspellbooks.registries.EntityRegistry;
 import io.redspace.ironsspellbooks.registries.FluidRegistry;
 import io.redspace.ironsspellbooks.registries.ItemRegistry;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -77,12 +77,14 @@ import slimeknights.tconstruct.tools.data.material.MaterialIds;
 import slimeknights.tconstruct.tools.recipe.ModifierRemovalRecipeBuilder;
 import slimeknights.tconstruct.world.TinkerWorld;
 
+import net.minecraft.core.HolderLookup;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class CCRecipes extends RecipeProvider implements IConditionBuilder, IMaterialRecipeHelper, ISmelteryRecipeHelper, IRecipeHelper, IToolRecipeHelper, ICommonRecipeHelper {
 
-    public CCRecipes(PackOutput output) {
-		super(output);
+    public CCRecipes(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+		super(output, registries);
 	}
 
 	public static final SynchronizedDeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = SynchronizedDeferredRegister.create(Registries.RECIPE_SERIALIZER, ConstructsCasting.MOD_ID);
@@ -104,7 +106,7 @@ public class CCRecipes extends RecipeProvider implements IConditionBuilder, IMat
 	}
 
 	@Override
-	protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+	protected void buildRecipes(RecipeOutput consumer) {
 		//arcanium making
 		MeltingRecipeBuilder.melting(Ingredient.of(ItemRegistry.ARCANE_INGOT.get()), new FluidStack(CCFluids.moltenArcanium.get(), FluidValues.INGOT), 800, 30)
 				.save(consumer, ConstructsCasting.id(meltingFolder + "arcane/ingot"));
@@ -570,16 +572,16 @@ public class CCRecipes extends RecipeProvider implements IConditionBuilder, IMat
 				.part(TinkerToolParts.toughHandle)
 				.save(consumer, location(recyclingFolder + "flamberge"));
         }
-	public static void runeCastingRecipe(Consumer<FinishedRecipe> consumer, FluidObject<UnplaceableFluid> essence, Item result, String recipeId) {
+	public static void runeCastingRecipe(RecipeOutput consumer, FluidObject<UnplaceableFluid> essence, Item result, String recipeId) {
 		 ItemCastingRecipeBuilder.tableRecipe(result).setCast(ItemRegistry.BLANK_RUNE.get(), true).setFluidAndTime(new FluidStack(essence.get(), 1000)).save(consumer, ConstructsCasting.id(castingFolder + recipeId));
 	}
-	public static void essenceRecipe(Consumer<FinishedRecipe> consumer, FluidObject<?> essence, TagKey<Fluid> alloyIngredient, int amount, String recipeId) {
+	public static void essenceRecipe(RecipeOutput consumer, FluidObject<?> essence, TagKey<Fluid> alloyIngredient, int amount, String recipeId) {
 		AlloyRecipeBuilder.alloy(FluidOutput.fromFluid(essence.get(), FluidValues.BOTTLE), 700).addInput(CCFluids.arcaneEssence.get(), FluidValues.BOTTLE).addInput(alloyIngredient, amount).save(consumer, ConstructsCasting.id(alloyFolder + recipeId));
 	}
-	public static void inkFillingRecipe(Consumer<FinishedRecipe> consumer, Item inkBottle, TagKey<Fluid> ink, String rarity) {
+	public static void inkFillingRecipe(RecipeOutput consumer, Item inkBottle, TagKey<Fluid> ink, String rarity) {
 		ItemCastingRecipeBuilder.tableRecipe(inkBottle).setFluid(ink,FluidValues.BOTTLE).setCast(Items.GLASS_BOTTLE, true).setCoolingTime(1).save(consumer, ConstructsCasting.id(castingFolder + "ink_" + rarity));
 	}
-	public static void incrementalModifierRecipe(Consumer<FinishedRecipe> consumer, ModifierId modifier, Ingredient runeItem, Ingredient orbItem, String id, boolean isSpellPower) {
+	public static void incrementalModifierRecipe(RecipeOutput consumer, ModifierId modifier, Ingredient runeItem, Ingredient orbItem, String id, boolean isSpellPower) {
 		Ingredient multiuse = DifferenceIngredient.of(Ingredient.of(TinkerTags.Items.MODIFIABLE), Ingredient.of(TinkerTags.Items.SINGLE_USE));
 		Ingredient none = DifferenceIngredient.of(Ingredient.of(TinkerTags.Items.MODIFIABLE), Ingredient.of(TinkerTags.Items.MODIFIABLE));
 		IncrementalModifierRecipeBuilder.modifier(modifier)
