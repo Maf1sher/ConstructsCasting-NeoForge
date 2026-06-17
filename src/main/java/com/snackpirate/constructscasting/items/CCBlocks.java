@@ -11,10 +11,9 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.data.BlockTagsProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.ForgeBlockTagsProvider;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.mantle.item.BlockTooltipItem;
 import slimeknights.mantle.registration.object.ItemObject;
@@ -50,7 +49,7 @@ public class CCBlocks {
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(arcaneBlock.get(), exiliteBlock.get(), mithrilBlock.get(), pyriumBlock.get());
 			tag(BlockTags.NEEDS_IRON_TOOL).add(arcaneBlock.get(), exiliteBlock.get());
 			tag(BlockTags.NEEDS_DIAMOND_TOOL).add(mithrilBlock.get(), pyriumBlock.get());
-			tag(net.minecraftforge.common.Tags.Blocks.STORAGE_BLOCKS).add(arcaneBlock.get(), exiliteBlock.get(), pyriumBlock.get(), mithrilBlock.get());
+			tag(net.neoforged.neoforge.common.Tags.Blocks.STORAGE_BLOCKS).add(arcaneBlock.get(), exiliteBlock.get(), pyriumBlock.get(), mithrilBlock.get());
 			tag(BlockTags.BEACON_BASE_BLOCKS).add(arcaneBlock.get(), exiliteBlock.get(), pyriumBlock.get(), mithrilBlock.get());
 		}
 	}

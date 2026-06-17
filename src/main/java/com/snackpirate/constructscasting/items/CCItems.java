@@ -20,8 +20,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fluids.FluidStack;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.mantle.registration.object.ItemObject;
 import slimeknights.tconstruct.common.TinkerTags;
@@ -193,14 +193,14 @@ public class CCItems {
 //			tag(SLIME_FOCUS).add(wizardslimeBall.get());
 //			tag(ItemTags.create(IronsSpellbooks.id("school_focus"))).add(wizardslimeBall.get());
 //			tag(ItemTags.create(IronsSpellbooks.id("inscribed_rune"))).add(slimeRune.get());
-			tag(ItemTags.create(ResourceLocation.parse("forge:ingots/arcane"))).add(ItemRegistry.ARCANE_INGOT.get());
+			tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "ingots/arcane"))).add(ItemRegistry.ARCANE_INGOT.get());
 
-			tag(ItemTags.create(ResourceLocation.parse("forge:ingots/exilite"))).add(exiliteIngot.get());
-			tag(ItemTags.create(ResourceLocation.parse("forge:nuggets/exilite"))).add(exiliteNugget.get());
+			tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "ingots/exilite"))).add(exiliteIngot.get());
+			tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "nuggets/exilite"))).add(exiliteNugget.get());
 
-			tag(ItemTags.create(ResourceLocation.parse("forge:nuggets/mithril"))).add(mithrilNugget.get());
-			tag(ItemTags.create(ResourceLocation.parse("forge:nuggets/pyrium"))).add(pyriumNugget.get());
-			tag(ItemTags.create(ResourceLocation.parse("forge:nuggets/arcane"))).add(arcaneNugget.get());
+			tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "nuggets/mithril"))).add(mithrilNugget.get());
+			tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "nuggets/pyrium"))).add(pyriumNugget.get());
+			tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "nuggets/arcane"))).add(arcaneNugget.get());
 
 			tag(TinkerTags.Items.BONUS_SLOTS).addTags(MOD_SPELLBOOKS, MOD_STAFFS); //jewelry will probably be stat/trait-only
 			tag(ItemTags.create(ResourceLocation.parse("curios:spellbook"))).addTag(MOD_SPELLBOOKS);

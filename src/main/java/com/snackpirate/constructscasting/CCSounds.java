@@ -1,20 +1,20 @@
 package com.snackpirate.constructscasting;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 public class CCSounds {
-	private static final DeferredRegister<SoundEvent> EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ConstructsCasting.MOD_ID);
+	private static final DeferredRegister<SoundEvent> EVENTS = DeferredRegister.create(Registries.SOUND_EVENT, ConstructsCasting.MOD_ID);
 
 	public static void register(IEventBus eventBus) {
 		EVENTS.register(eventBus);
 	}
-	private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
+	private static DeferredHolder<SoundEvent, SoundEvent> registerSoundEvent(String name) {
 		return EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(ConstructsCasting.id(name)));
 	}
 
-	public static RegistryObject<SoundEvent> SLIME_CAST = registerSoundEvent("cast.generic.slime");
+	public static DeferredHolder<SoundEvent, SoundEvent> SLIME_CAST = registerSoundEvent("cast.generic.slime");
 }

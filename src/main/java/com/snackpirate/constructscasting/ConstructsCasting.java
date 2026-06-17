@@ -83,6 +83,7 @@ public class ConstructsCasting {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         CCModifierHooks.init();
+        CCFluids.registerFluidEffects();
         registerSerializers();
         MaterialRegistry.getInstance().registerStatType(MagicBaseMaterialStats.TYPE, CCToolStats.MAGIC);
         MaterialRegistry.getInstance().registerStatType(MagicClothMaterialStats.TYPE, CCToolStats.MAGIC);

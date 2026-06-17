@@ -4,7 +4,6 @@ import com.snackpirate.constructscasting.ConstructsCasting;
 import io.redspace.ironsspellbooks.api.spells.SpellRarity;
 import io.redspace.ironsspellbooks.registries.FluidRegistry;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.FluidTagsProvider;
 import net.minecraft.resources.ResourceKey;
@@ -14,12 +13,11 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraftforge.common.SoundActions;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.registries.RegisterEvent;
+import net.neoforged.neoforge.common.SoundActions;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.mantle.datagen.MantleTags;
 import slimeknights.mantle.fluid.UnplaceableFluid;
@@ -55,13 +53,13 @@ public class CCFluids {
 
 	public static final FluidObject<UnplaceableFluid> cinderEssence = essence("cinder_essence");
 
-	public static FlowingFluidObject<ForgeFlowingFluid> potatoStew = FLUIDS.register("potato_stew").type(cool().temperature(400)).bucket().block(MapColor.WATER, 0).flowing();
-	public static FlowingFluidObject<ForgeFlowingFluid> poisonousPotatoStew = FLUIDS.register("poisonous_potato_stew").type(cool().temperature(400)).bucket().block(MapColor.WATER, 0).flowing();
+	public static FlowingFluidObject<BaseFlowingFluid> potatoStew = FLUIDS.register("potato_stew").type(cool().temperature(400)).bucket().block(MapColor.WATER, 0).flowing();
+	public static FlowingFluidObject<BaseFlowingFluid> poisonousPotatoStew = FLUIDS.register("poisonous_potato_stew").type(cool().temperature(400)).bucket().block(MapColor.WATER, 0).flowing();
 
-	public static FlowingFluidObject<ForgeFlowingFluid> moltenArcanium = FLUIDS.register("molten_arcanium").type(hot()).bucket().block(BurningLiquidBlock.createBurning(MapColor.COLOR_ORANGE, 12, 10, 2f)).flowing();
-	public static FlowingFluidObject<ForgeFlowingFluid> moltenExilite = FLUIDS.register("molten_exilite").type(hot()).bucket().block(BurningLiquidBlock.createBurning(MapColor.COLOR_ORANGE, 12, 10, 3f)).flowing();
-	public static FlowingFluidObject<ForgeFlowingFluid> moltenMithril = FLUIDS.register("molten_mithril").type(hot().temperature(1475)).bucket().block(BurningLiquidBlock.createBurning(MapColor.COLOR_ORANGE, 15, 10, 3f)).commonTag(null).flowing();
-	public static FlowingFluidObject<ForgeFlowingFluid> moltenPyrium = FLUIDS.register("molten_pyrium").type(hot().temperature(1475)).bucket().block(BurningLiquidBlock.createBurning(MapColor.COLOR_ORANGE, 12, 10, 5f)).commonTag(null).flowing();
+	public static FlowingFluidObject<BaseFlowingFluid> moltenArcanium = FLUIDS.register("molten_arcanium").type(hot()).bucket().block(BurningLiquidBlock.createBurning(MapColor.COLOR_ORANGE, 12, 10, 2f)).flowing();
+	public static FlowingFluidObject<BaseFlowingFluid> moltenExilite = FLUIDS.register("molten_exilite").type(hot()).bucket().block(BurningLiquidBlock.createBurning(MapColor.COLOR_ORANGE, 12, 10, 3f)).flowing();
+	public static FlowingFluidObject<BaseFlowingFluid> moltenMithril = FLUIDS.register("molten_mithril").type(hot().temperature(1475)).bucket().block(BurningLiquidBlock.createBurning(MapColor.COLOR_ORANGE, 15, 10, 3f)).commonTag(null).flowing();
+	public static FlowingFluidObject<BaseFlowingFluid> moltenPyrium = FLUIDS.register("molten_pyrium").type(hot().temperature(1475)).bucket().block(BurningLiquidBlock.createBurning(MapColor.COLOR_ORANGE, 12, 10, 5f)).commonTag(null).flowing();
 
 
 	public static final FluidObject<UnplaceableFluid> squidInk =     FLUIDS.register("squid_ink")    .type(cool().temperature(100)).commonTag("ink")   .bucket().unplacable();
@@ -71,7 +69,7 @@ public class CCFluids {
 	public static final FluidObject<UnplaceableFluid> epicInk =      FLUIDS.register("epic_ink")     .type(cool().temperature(100)).commonTag("ink/epic")     .bucket().unplacable();
 	public static final FluidObject<UnplaceableFluid> legendaryInk = FLUIDS.register("legendary_ink").type(cool().temperature(100)).commonTag("ink/legendary").bucket().unplacable();
 
-	public static final FlowingFluidObject<ForgeFlowingFluid> moltenArcaneSalvage = FLUIDS.register("molten_arcane_salvage").type(hot()).bucket().block(MapColor.TERRACOTTA_WHITE, 12).flowing();
+	public static final FlowingFluidObject<BaseFlowingFluid> moltenArcaneSalvage = FLUIDS.register("molten_arcane_salvage").type(hot()).bucket().block(MapColor.TERRACOTTA_WHITE, 12).flowing();
 	//------compat------
 	//arcane essence + crystallized coral?
 	//ugh why does it have to be multiple colors
@@ -120,13 +118,9 @@ public class CCFluids {
 	}
 
 
-	@SubscribeEvent
-	void registerSerializers(RegisterEvent event) {
-		if (event.getRegistryKey() == Registries.RECIPE_SERIALIZER) {
-//			ConstructsCasting.LOGGER.info("recipe serializer event");
-			FluidEffect.ENTITY_EFFECTS.register(ConstructsCasting.id("deplete_mana"), CCFluidEffects.DEPLETE_MANA.getLoader());
-			FluidEffect.ENTITY_EFFECTS.register(ConstructsCasting.id("add_mana"), CCFluidEffects.ADD_MANA.getLoader());
-		}
+	public static void registerFluidEffects() {
+		FluidEffect.ENTITY_EFFECTS.register(ConstructsCasting.id("deplete_mana"), CCFluidEffects.DEPLETE_MANA.getLoader());
+		FluidEffect.ENTITY_EFFECTS.register(ConstructsCasting.id("add_mana"), CCFluidEffects.ADD_MANA.getLoader());
 	}
 
 //datagen all below here
@@ -256,7 +250,7 @@ public class CCFluids {
 			tag(essenceOf("evocation")).add(evocationEssence.get());
 			tag(essenceOf("nature")).add(natureEssence.get());
 			tag(ink("squid")).add(squidInk.get());
-			tag(TagKey.create(ResourceKey.createRegistryKey(ResourceLocation.parse("forge:fluid_type")),ResourceLocation.parse("forge:ink"))).add(squidInk.get());
+			tag(TagKey.create(NeoForgeRegistries.Keys.FLUID_TYPES, ResourceLocation.fromNamespaceAndPath("c", "ink"))).add(squidInk.get());
 			tag(ink("common")).add(commonInk.get(), FluidRegistry.COMMON_INK.get()).addOptional(ResourceLocation.parse("create_wizardry:common_ink"));
 			tag(ink("uncommon")).add(uncommonInk.get(), FluidRegistry.UNCOMMON_INK.get()).addOptional(ResourceLocation.parse("create_wizardry:uncommon_ink"));
 			tag(ink("rare")).add(rareInk.get(), FluidRegistry.RARE_INK.get()).addOptional(ResourceLocation.parse("create_wizardry:rare_ink"));
