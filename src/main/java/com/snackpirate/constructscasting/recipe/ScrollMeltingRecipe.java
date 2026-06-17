@@ -5,6 +5,7 @@ import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.api.spells.SchoolType;
 import io.redspace.ironsspellbooks.registries.ItemRegistry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -97,7 +98,7 @@ public class ScrollMeltingRecipe implements IMeltingRecipe {
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends Recipe<?>> getSerializer() {
 		return CCRecipes.scrollMeltingSerializer.get();
 	}
 

@@ -41,7 +41,7 @@ public class CCToolSpriteProvider extends AbstractPartSpriteProvider {
 		buildTool("flamberge")
 				.withLarge()
 				.addHead("blade")
-				.addPart("guard", PlatingMaterialStats.LEGGINGS.getId())
+				.addPart("guard", PlatingMaterialStats.LEGGINGS.getStatId())
 				.addHandle("handle");
 		addPart("spellbook_plating", CCMaterialStats.Statless.ADORNMENT.getIdentifier());
 		addPart("spellbook_cover", MagicBaseMaterialStats.ID);

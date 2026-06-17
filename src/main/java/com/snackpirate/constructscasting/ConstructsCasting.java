@@ -139,7 +139,7 @@ public class ConstructsCasting {
         gen.addProvider(server, new CCFluids.Tags(output, provider, MOD_ID, fileHelper));
         gen.addProvider(server, new CCFluids.Tags.CCFluidTooltipProvider(output, MOD_ID));
         gen.addProvider(server, new CCRecipes(output, provider));
-        gen.addProvider(server, new CCLootTableProvider(output));
+        gen.addProvider(server, new CCLootTableProvider(output, provider));
         gen.addProvider(server, new CCFluidTransfer(output, MOD_ID));
         gen.addProvider(server, new CCMobEquipment(output, MOD_ID));
         gen.addProvider(server, new CCLootInjections(output, IronsSpellbooks.MODID));

@@ -3,6 +3,7 @@ package com.snackpirate.constructscasting.materials;
 import com.snackpirate.constructscasting.ConstructsCasting;
 import com.snackpirate.constructscasting.modifiers.CCModifiers;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Tiers;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -24,6 +25,7 @@ import slimeknights.tconstruct.tools.data.ModifierIds;
 import slimeknights.tconstruct.tools.data.material.MaterialIds;
 import slimeknights.tconstruct.tools.stats.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static net.minecraft.world.item.Tiers.NETHERITE;
@@ -340,12 +342,16 @@ public class CCMaterials extends AbstractMaterialDataProvider {
 
 		@Override
 		protected void addTags() {
-			tag(TinkerTags.Materials.GENERAL).add(arcanium, arcaneCloth, mithril, frostRod);
-			tag(TinkerTags.Materials.MELEE).add(exilite, pyrium, frozenBone);
-			tag(TinkerTags.Materials.EXCLUDE_FROM_LOOT).add(pyrium); //pyrium is exclusively gated to tyros
-			tag(TinkerTags.Materials.BLAZING_BLOOD).add(mithril);
-			tag(TinkerTags.Materials.DISTANT).add(pyrium);
-			tag(TinkerTags.Materials.NETHER_GATED).add(hogskin, pyrium);
+			tag(TinkerTags.Materials.GENERAL).add(loc(arcanium, arcaneCloth, mithril, frostRod));
+			tag(TinkerTags.Materials.MELEE).add(loc(exilite, pyrium, frozenBone));
+			tag(TinkerTags.Materials.EXCLUDE_FROM_LOOT).add(loc(pyrium)); //pyrium is exclusively gated to tyros
+			tag(TinkerTags.Materials.BLAZING_BLOOD).add(loc(mithril));
+			tag(TinkerTags.Materials.DISTANT).add(loc(pyrium));
+			tag(TinkerTags.Materials.NETHER_GATED).add(loc(hogskin, pyrium));
+		}
+
+		private static ResourceLocation[] loc(MaterialId... ids) {
+			return Arrays.stream(ids).map(MaterialId::location).toArray(ResourceLocation[]::new);
 		}
 
 		@Override
