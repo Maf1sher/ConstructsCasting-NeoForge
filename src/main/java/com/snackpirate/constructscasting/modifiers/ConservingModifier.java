@@ -5,13 +5,13 @@ import com.snackpirate.constructscasting.items.CCItems;
 import com.snackpirate.constructscasting.items.ModifiableSpellbookItem;
 import io.redspace.ironsspellbooks.api.events.SpellOnCastEvent;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import slimeknights.tconstruct.library.modifiers.impl.SingleLevelModifier;
 import slimeknights.tconstruct.library.tools.helper.ModifierUtil;
 import top.theillusivec4.curios.api.CuriosApi;
 
-@Mod.EventBusSubscriber(modid = ConstructsCasting.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = ConstructsCasting.MOD_ID)
 public class ConservingModifier extends SingleLevelModifier {
 
     @SubscribeEvent

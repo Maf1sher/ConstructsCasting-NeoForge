@@ -1,5 +1,6 @@
 package com.snackpirate.constructscasting.modifiers;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -8,7 +9,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 import slimeknights.mantle.client.TooltipKey;
 import slimeknights.mantle.data.predicate.item.ItemPredicate;
 import slimeknights.tconstruct.library.modifiers.Modifier;
@@ -28,7 +28,7 @@ public class SpellbookStrapModifier extends Modifier implements KeybindInteractM
 	protected void registerHooks(ModuleHookMap.Builder hookBuilder) {
 		super.registerHooks(hookBuilder);
 		hookBuilder.addHook(this, ModifierHooks.ARMOR_INTERACT);
-		hookBuilder.addModule(InventoryModule.builder().pattern(new Pattern("constructs_casting:spellbook")).filter(ItemPredicate.tag(TagKey.create(ForgeRegistries.Keys.ITEMS, ResourceLocation.tryBuild("curios", "spellbook")))).slotsPerLevel(1));
+		hookBuilder.addModule(InventoryModule.builder().pattern(new Pattern("constructs_casting:spellbook")).filter(ItemPredicate.tag(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("curios", "spellbook")))).slotsPerLevel(1));
 		hookBuilder.addModule(InventoryMenuModule.SHIFT);
 //		hookBuilder.addModule(new VolatileFlagModule(ToolInventoryCapability.INCLUDE_OFFHAND));
 	}

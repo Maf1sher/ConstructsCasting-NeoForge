@@ -16,8 +16,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Rarity;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import slimeknights.mantle.data.predicate.damage.DamageSourcePredicate;
 import slimeknights.mantle.data.predicate.entity.LivingEntityPredicate;
 import slimeknights.tconstruct.common.TinkerTags;
@@ -50,7 +50,7 @@ import java.util.stream.Stream;
 import static slimeknights.tconstruct.library.json.math.ModifierFormula.MULTIPLIER;
 import static slimeknights.tconstruct.library.json.math.ModifierFormula.VALUE;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = ConstructsCasting.MOD_ID)
+@EventBusSubscriber(modid = ConstructsCasting.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class CCModifiers extends AbstractModifierProvider {
 	public static final ModifierDeferredRegister MODIFIERS = ModifierDeferredRegister.create(ConstructsCasting.MOD_ID);
 
@@ -144,28 +144,28 @@ public class CCModifiers extends AbstractModifierProvider {
 	protected void addModifiers() {
 		buildModifier(ARCANE).levelDisplay(ModifierLevelDisplay.DEFAULT)
 				.addModule(StatBoostModule.add(CCToolStats.MAX_MANA).toolTag(CCItems.Tags.MAGIC_TOOL).eachLevel(50f))
-				.addModule(AttributeModule.builder(AttributeRegistry.MAX_MANA.get(), AttributeModifier.Operation.ADDITION).tool(ToolStackPredicate.or(ToolStackPredicate.tag(CCItems.Tags.MAGIC_TOOL), ToolStackPredicate.tag(TinkerTags.Items.ARMOR)).inverted()).eachLevel(25f))
-				.addModule(AttributeModule.builder(AttributeRegistry.MAX_MANA.get(), AttributeModifier.Operation.ADDITION).tool(ToolStackPredicate.tag(TinkerTags.Items.ARMOR)).eachLevel(50f))
+				.addModule(AttributeModule.builder(AttributeRegistry.MAX_MANA.get(), AttributeModifier.Operation.ADD_VALUE).tool(ToolStackPredicate.or(ToolStackPredicate.tag(CCItems.Tags.MAGIC_TOOL), ToolStackPredicate.tag(TinkerTags.Items.ARMOR)).inverted()).eachLevel(25f))
+				.addModule(AttributeModule.builder(AttributeRegistry.MAX_MANA.get(), AttributeModifier.Operation.ADD_VALUE).tool(ToolStackPredicate.tag(TinkerTags.Items.ARMOR)).eachLevel(50f))
 				.build();
 
 		buildModifier(SWIFTCASTING).levelDisplay(ModifierLevelDisplay.DEFAULT)
-                .addModule(AttributeModule.builder(AttributeRegistry.CASTING_MOVESPEED.get(), AttributeModifier.Operation.MULTIPLY_BASE)
+                .addModule(AttributeModule.builder(AttributeRegistry.CASTING_MOVESPEED.get(), AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
 					.tooltipStyle(AttributeModule.TooltipStyle.ATTRIBUTE).amount(0.2f, 0.2f))
 				.build();
 		buildModifier(ANTIMAGIC)
 				.addModule(ConditionalMeleeDamageModule.builder().target(magicUser).eachLevel(2f))
 						.build();
 		buildModifier(SPELLBOUND)
-                .addModule(AttributeModule.builder(AttributeRegistry.SPELL_POWER.get(), AttributeModifier.Operation.MULTIPLY_BASE).tool(ToolStackPredicate.tag(CCItems.Tags.MAGIC_TOOL).inverted()).uniqueFrom(SPELLBOUND).eachLevel(0.05f))
+                .addModule(AttributeModule.builder(AttributeRegistry.SPELL_POWER.get(), AttributeModifier.Operation.ADD_MULTIPLIED_BASE).tool(ToolStackPredicate.tag(CCItems.Tags.MAGIC_TOOL).inverted()).uniqueFrom(SPELLBOUND).eachLevel(0.05f))
                 .addModule(StatBoostModule.add(CCToolStats.SPELL_POWER).toolTag(CCItems.Tags.MAGIC_TOOL).eachLevel(0.05f)).build();
 		buildModifier(ANTIFROST).addModule(ConditionalMeleeDamageModule.builder().target(LivingEntityPredicate.IS_FREEZING).eachLevel(2.0f));
 		buildModifier(MANA_UPGRADE)     .levelDisplay(ModifierLevelDisplay.DEFAULT)
 				.addModule(StatBoostModule.add(CCToolStats.MAX_MANA).toolTag(CCItems.Tags.MOD_SPELLBOOKS).eachLevel(80f))
-				.addModule(AttributeModule.builder(AttributeRegistry.MAX_MANA.get(), AttributeModifier.Operation.ADDITION)
+				.addModule(AttributeModule.builder(AttributeRegistry.MAX_MANA.get(), AttributeModifier.Operation.ADD_VALUE)
 						.slots(notOffhand).tool(ToolStackPredicate.tag(CCItems.Tags.MOD_SPELLBOOKS).inverted()).eachLevel(80f))
 				.build();
 		buildModifier(COOLDOWN_UPGRADE) .levelDisplay(ModifierLevelDisplay.DEFAULT)
-                .addModule(AttributeModule.builder(AttributeRegistry.COOLDOWN_REDUCTION.get(), AttributeModifier.Operation.MULTIPLY_BASE).slots(notOffhand).tool(ToolStackPredicate.tag(CCItems.Tags.MAGIC_TOOL).inverted()).uniqueFrom(COOLDOWN_UPGRADE).eachLevel(0.05f))
+                .addModule(AttributeModule.builder(AttributeRegistry.COOLDOWN_REDUCTION.get(), AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).tool(ToolStackPredicate.tag(CCItems.Tags.MAGIC_TOOL).inverted()).uniqueFrom(COOLDOWN_UPGRADE).eachLevel(0.05f))
                 .addModule(StatBoostModule.add(CCToolStats.COOLDOWN_REDUCTION).toolTag(CCItems.Tags.MAGIC_TOOL).eachLevel(0.05f)).build();
 		buildModifier(FIRE_UPGRADE)     .addModule(spellPowerModifier(FIRE_UPGRADE,      AttributeRegistry.FIRE_SPELL_POWER     .get())).build();
 		buildModifier(ICE_UPGRADE)      .addModule(spellPowerModifier(ICE_UPGRADE,       AttributeRegistry.ICE_SPELL_POWER      .get())).build();
@@ -179,7 +179,7 @@ public class CCModifiers extends AbstractModifierProvider {
 
 		buildModifier(DUMMY_SPELL_POWER_UPGRADE).build();
 
-        buildModifier(SPELL_DISPULSION).addModule(AttributeModule.builder(AttributeRegistry.SPELL_RESIST, AttributeModifier.Operation.MULTIPLY_BASE).uniqueFrom(SPELL_DISPULSION).eachLevel(0.075f));
+        buildModifier(SPELL_DISPULSION).addModule(AttributeModule.builder(AttributeRegistry.SPELL_RESIST, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).uniqueFrom(SPELL_DISPULSION).eachLevel(0.075f));
 		buildModifier(FIRE_DISPULSION).addModule(spellDispulsionModifier(FIRE_DISPULSION, AttributeRegistry.FIRE_MAGIC_RESIST.get())).build();
 		buildModifier(ICE_DISPULSION).addModule(spellDispulsionModifier(ICE_DISPULSION, AttributeRegistry.ICE_MAGIC_RESIST.get())).build();
 		buildModifier(LIGHTNING_DISPULSION).addModule(spellDispulsionModifier(LIGHTNING_DISPULSION, AttributeRegistry.LIGHTNING_MAGIC_RESIST.get())).build();
@@ -191,13 +191,13 @@ public class CCModifiers extends AbstractModifierProvider {
 		buildModifier(ELDRITCH_DISPULSION).addModule(spellDispulsionModifier(ELDRITCH_DISPULSION, AttributeRegistry.ELDRITCH_MAGIC_RESIST.get())).build();
 
         buildModifier(FIRE_SPECIALIZATION)
-				.addModule(AttributeModule.builder(AttributeRegistry.FIRE_SPELL_POWER, AttributeModifier.Operation.MULTIPLY_BASE).slots(notOffhand).exactLevel(1).flat(0.23f))
+				.addModule(AttributeModule.builder(AttributeRegistry.FIRE_SPELL_POWER, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).exactLevel(1).flat(0.23f))
 
-				.addModule(AttributeModule.builder(AttributeRegistry.FIRE_SPELL_POWER, AttributeModifier.Operation.MULTIPLY_BASE).slots(notOffhand).exactLevel(2).flat(0.50f))
+				.addModule(AttributeModule.builder(AttributeRegistry.FIRE_SPELL_POWER, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).exactLevel(2).flat(0.50f))
 
-				.addModule(AttributeModule.builder(AttributeRegistry.FIRE_SPELL_POWER, AttributeModifier.Operation.MULTIPLY_BASE).slots(notOffhand).exactLevel(3).flat(0.85f))
+				.addModule(AttributeModule.builder(AttributeRegistry.FIRE_SPELL_POWER, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).exactLevel(3).flat(0.85f))
 				.addModule(new RarityModule(CinderousRarity.CINDEROUS_RARITY))
-				.addModule(AttributeModule.builder(AttributeRegistry.SPELL_POWER, AttributeModifier.Operation.MULTIPLY_BASE).slots(notOffhand).eachLevel(-0.1f)).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL);
+				.addModule(AttributeModule.builder(AttributeRegistry.SPELL_POWER, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).eachLevel(-0.1f)).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL);
 
 		buildModifier(SPELL_PROTECTION).addModule(ProtectionModule.builder().source(DamageSourcePredicate.tag(CCDamageTypes.Tags.SPELL_BASED)).eachLevel(2.5f)).build();
 //		buildModifier(SPELLBOOK_STRAP).priority(95)
@@ -207,8 +207,8 @@ public class CCModifiers extends AbstractModifierProvider {
 //				.addModule(new VolatileFlagModule(ToolInventoryCapability.INCLUDE_OFFHAND));
 		buildModifier(IMPROVEABLE).addModule(ModifierSlotModule.slot(AFFINITY_SLOT).eachLevel(2)).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL).build();
 		buildModifier(RINGBEARER).addModule(new BonusCurioSlotModule("ring", new LevelingInt(0, 2), "64d62ea-03d8-4919-9ba5-fec06d332c72"));
-		buildModifier(REGROWTH).addModule(AttributeModule.builder(AttributeRegistry.MANA_REGEN, AttributeModifier.Operation.MULTIPLY_BASE).slots(notOffhand).eachLevel(0.1f)).levelDisplay(ModifierLevelDisplay.DEFAULT).build();
-	    buildModifier(EXPEDIENT).addModule(AttributeModule.builder(AttributeRegistry.CAST_TIME_REDUCTION, AttributeModifier.Operation.MULTIPLY_BASE).slots(notOffhand).eachLevel(0.1f)).levelDisplay(ModifierLevelDisplay.DEFAULT).build();
+		buildModifier(REGROWTH).addModule(AttributeModule.builder(AttributeRegistry.MANA_REGEN, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).eachLevel(0.1f)).levelDisplay(ModifierLevelDisplay.DEFAULT).build();
+	    buildModifier(EXPEDIENT).addModule(AttributeModule.builder(AttributeRegistry.CAST_TIME_REDUCTION, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).eachLevel(0.1f)).levelDisplay(ModifierLevelDisplay.DEFAULT).build();
         buildModifier(THICK_SKINNED)
                 .levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
                 .addModule(ConditionalStatModule.stat(CCToolStats.SPELL_POWER)
@@ -230,7 +230,7 @@ public class CCModifiers extends AbstractModifierProvider {
                         .variable(VALUE).add()
                         .build());
         buildModifier(ICHORSPELLS)
-                .addModule(AttributeModule.builder(AttributeRegistry.MANA_REGEN, AttributeModifier.Operation.MULTIPLY_TOTAL).eachLevel(-0.3f))
+                .addModule(AttributeModule.builder(AttributeRegistry.MANA_REGEN, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL).eachLevel(-0.3f))
                 .addModule(StatBoostModule.add(CCToolStats.SPELL_POWER).eachLevel(0.15f))
                 .levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
                 .build();
@@ -260,7 +260,7 @@ public class CCModifiers extends AbstractModifierProvider {
 		).map(ResourceLocation::parse).toList();
 		buildModifier(BLOODTHIRSTY).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL)
 				.addModule(new SelfDamageOnCastModule(summonSpells, LevelingValue.eachLevel(2)))
-				.addModule(AttributeModule.builder(AttributeRegistry.SUMMON_DAMAGE, AttributeModifier.Operation.MULTIPLY_BASE).eachLevel(0.15f))
+				.addModule(AttributeModule.builder(AttributeRegistry.SUMMON_DAMAGE, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).eachLevel(0.15f))
 				.build();
 		buildModifier(COMBUSTIVE)
 				.addModule(new CombustiveModule(new LevelingValue(0.3f, 0.2f))) //1 -> 6 hits, 2 -> 4 hits, 3 -> 3 hits, 4 -> 2.4, 5 -> 2
@@ -280,11 +280,11 @@ public class CCModifiers extends AbstractModifierProvider {
 	}
 
 	private static AttributeModule spellPowerModifier(ModifierId modifier, Attribute attribute) { //no spell power upgrades on offhand >:(
-		return AttributeModule.builder(attribute, AttributeModifier.Operation.MULTIPLY_BASE).slots(notOffhand).uniqueFrom(modifier).eachLevel(0.05f);
+		return AttributeModule.builder(attribute, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).uniqueFrom(modifier).eachLevel(0.05f);
 	}
 
 	private static AttributeModule spellDispulsionModifier(ModifierId modifier, Attribute attribute) {
-		return AttributeModule.builder(attribute, AttributeModifier.Operation.MULTIPLY_BASE).slots(notOffhand).uniqueFrom(modifier).eachLevel(0.15f);
+		return AttributeModule.builder(attribute, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).uniqueFrom(modifier).eachLevel(0.15f);
 	}
 	public static LivingEntityPredicate magicUser = LivingEntityPredicate.simple(
 			target -> MagicData.getPlayerMagicData(target).isCasting() ||
