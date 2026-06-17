@@ -144,10 +144,6 @@ public class CCEvents {
 		}
     }
 
-	@EventBusSubscriber(modid = ConstructsCasting.MOD_ID, value = Dist.CLIENT)
-	public static class ForgeClientEvents {
-	}
-
 	@EventBusSubscriber(modid = ConstructsCasting.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ModClientEvents {
 		@SubscribeEvent
