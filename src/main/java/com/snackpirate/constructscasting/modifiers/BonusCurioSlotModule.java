@@ -32,7 +32,7 @@ public record BonusCurioSlotModule(String slotIdentifier, LevelingInt amount, St
 	public void onEquip(IToolStackView tool, ModifierEntry modifier, EquipmentChangeContext context) {
 //        ConstructsCasting.LOGGER.info("ringbearer eq");
 		if (!context.getLevel().isClientSide()) {
-			CuriosApi.getCuriosInventory(context.getEntity()).ifPresent(handler -> handler.getStacksHandler(slotIdentifier).ifPresent(stacks -> stacks.addTransientModifier(new AttributeModifier(UUID.fromString(uuid), "bonus_curio_slots", amount.compute(modifier.getEffectiveLevel()), AttributeModifier.Operation.ADDITION))));
+			CuriosApi.getCuriosInventory(context.getEntity()).ifPresent(handler -> handler.getStacksHandler(slotIdentifier).ifPresent(stacks -> stacks.addTransientModifier(new AttributeModifier(UUID.fromString(uuid), "bonus_curio_slots", amount.compute(modifier.getEffectiveLevel()), AttributeModifier.Operation.ADD_VALUE))));
 		}
 		EquipmentChangeModifierHook.super.onEquip(tool, modifier, context);
 	}

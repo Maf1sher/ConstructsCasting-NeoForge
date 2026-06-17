@@ -33,7 +33,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.neoforged.neoforge.common.capabilities.ICapabilityProvider;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.mantle.client.SafeClientAccess;
 import slimeknights.mantle.client.TooltipKey;
@@ -162,13 +162,13 @@ public class ModifiableSpellbookItem extends SpellBook implements IModifiableDis
         ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = new ImmutableMultimap.Builder<>();
         ToolStack tool = ToolStack.from(stack);
         int manaBonus = tool.getStats().getInt(CCToolStats.MAX_MANA);
-        attributeBuilder.put(AttributeRegistry.MAX_MANA.get(), new AttributeModifier("tool.constructs_casting.mana_bonus", manaBonus, AttributeModifier.Operation.ADDITION));
+        attributeBuilder.put(AttributeRegistry.MAX_MANA.get(), new AttributeModifier("tool.constructs_casting.mana_bonus", manaBonus, AttributeModifier.Operation.ADD_VALUE));
         float spBonus = ConditionalStatModifierHook.getModifiedStat(tool, slotContext.entity(), CCToolStats.SPELL_POWER);
 //                tool.getStats().get(CCToolStats.SPELL_POWER);
-        attributeBuilder.put(AttributeRegistry.SPELL_POWER.get(), new AttributeModifier("tool.constructs_casting.spell_power_bonus", spBonus, AttributeModifier.Operation.MULTIPLY_BASE));
+        attributeBuilder.put(AttributeRegistry.SPELL_POWER.get(), new AttributeModifier("tool.constructs_casting.spell_power_bonus", spBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
         float cdBonus = ConditionalStatModifierHook.getModifiedStat(tool, slotContext.entity(), CCToolStats.COOLDOWN_REDUCTION);
 //                tool.getStats().get(CCToolStats.COOLDOWN_REDUCTION);
-        attributeBuilder.put(AttributeRegistry.COOLDOWN_REDUCTION.get(), new AttributeModifier("tool.constructs_casting.cd_reduction", cdBonus, AttributeModifier.Operation.MULTIPLY_BASE));
+        attributeBuilder.put(AttributeRegistry.COOLDOWN_REDUCTION.get(), new AttributeModifier("tool.constructs_casting.cd_reduction", cdBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
 
         for (ModifierEntry entry : tool.getModifierList()) {
 			entry.getHook(ModifierHooks.ATTRIBUTES).addAttributes(tool, entry, EquipmentSlot.LEGS, (attr, mod) -> {

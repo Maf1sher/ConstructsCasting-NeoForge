@@ -44,15 +44,15 @@ public class ModifiableMagicStaff extends ModifiableItem {
 		attributeBuilder.putAll(super.getAttributeModifiers(tool, slot));
 		UUID uuid = AttributesModifierHook.HELD_ARMOR_UUID[slot.getIndex()];
 //		int manaBonus = tool.getStats().getInt(CCToolStats.MAX_MANA);
-//		attributeBuilder.put(AttributeRegistry.MAX_MANA.get(), new AttributeModifier("tool.constructs_casting.mana_bonus", manaBonus, AttributeModifier.Operation.ADDITION));
+//		attributeBuilder.put(AttributeRegistry.MAX_MANA.get(), new AttributeModifier("tool.constructs_casting.mana_bonus", manaBonus, AttributeModifier.Operation.ADD_VALUE));
 		float spBonus =
 //				ConditionalStatModifierHook.getModifiedStat(tool, slotContext.entity(), CCToolStats.SPELL_POWER);
                 tool.getStats().get(CCToolStats.SPELL_POWER); //TODO: get conditional modifiers working, this method lacks entity context for some godforsaken reason
-		attributeBuilder.put(AttributeRegistry.SPELL_POWER.get(), new AttributeModifier(uuid, "tool.constructs_casting.spell_power_bonus", spBonus, AttributeModifier.Operation.MULTIPLY_BASE));
+		attributeBuilder.put(AttributeRegistry.SPELL_POWER.get(), new AttributeModifier(uuid, "tool.constructs_casting.spell_power_bonus", spBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
 		float cdBonus =
 //				ConditionalStatModifierHook.getModifiedStat(tool, slotContext.entity(), CCToolStats.COOLDOWN_REDUCTION);
                 tool.getStats().get(CCToolStats.COOLDOWN_REDUCTION);
-		attributeBuilder.put(AttributeRegistry.COOLDOWN_REDUCTION.get(), new AttributeModifier(uuid, "tool.constructs_casting.cd_reduction", cdBonus, AttributeModifier.Operation.MULTIPLY_BASE));
+		attributeBuilder.put(AttributeRegistry.COOLDOWN_REDUCTION.get(), new AttributeModifier(uuid, "tool.constructs_casting.cd_reduction", cdBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
 
 		return attributeBuilder.build();
 	}

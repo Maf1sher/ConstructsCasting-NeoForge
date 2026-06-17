@@ -86,7 +86,7 @@ public class SolarChargedModifier extends SingleLevelModifier implements Equipme
         int light = getLight(level, pos);
         if (light > minLight) {
             int scaledLight = light - minLight;
-            attribute.addTransientModifier(new AttributeModifier(uuid, "attribute.constructs_casting.solar_charged", scaledLight * amount * modifier.getEffectiveLevel() / 10, AttributeModifier.Operation.MULTIPLY_BASE));
+            attribute.addTransientModifier(new AttributeModifier(uuid, "attribute.constructs_casting.solar_charged", scaledLight * amount * modifier.getEffectiveLevel() / 10, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
         }
     }
 

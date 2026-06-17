@@ -24,7 +24,7 @@ public class RingbearerModifier extends Modifier implements EquipmentChangeModif
     public void onEquip(IToolStackView tool, ModifierEntry modifier, EquipmentChangeContext context) {
 //        ConstructsCasting.LOGGER.info("ringbearer eq");
         if (!context.getLevel().isClientSide()) {
-            CuriosApi.getCuriosInventory(context.getEntity()).ifPresent(handler -> handler.getStacksHandler("ring").ifPresent(stacks -> stacks.addTransientModifier(new AttributeModifier(MODIFIER_UUID, "name", 2, AttributeModifier.Operation.ADDITION))));
+            CuriosApi.getCuriosInventory(context.getEntity()).ifPresent(handler -> handler.getStacksHandler("ring").ifPresent(stacks -> stacks.addTransientModifier(new AttributeModifier(MODIFIER_UUID, "name", 2, AttributeModifier.Operation.ADD_VALUE))));
         }
         EquipmentChangeModifierHook.super.onEquip(tool, modifier, context);
     }

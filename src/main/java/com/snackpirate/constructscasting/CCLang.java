@@ -11,7 +11,7 @@ import com.snackpirate.constructscasting.spells.CCSpells;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraftforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.common.data.LanguageProvider;
 import slimeknights.mantle.registration.object.FluidObject;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
 import slimeknights.tconstruct.library.modifiers.ModifierId;
