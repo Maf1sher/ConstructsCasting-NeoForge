@@ -1,12 +1,10 @@
-
 plugins {
+    id 'java'
     id 'eclipse'
     id 'idea'
-    id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
-    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
-    id 'org.spongepowered.mixin' version '0.7.+'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '2.0.140'
 }
-
 
 group = mod_group_id
 version = mod_version
@@ -15,155 +13,104 @@ base {
     archivesName = mod_id
 }
 
-java {
-    toolchain.languageVersion = JavaLanguageVersion.of(17)
-}
-
-minecraft {
-    mappings channel: mapping_channel, version: parchment_version
-    copyIdeResources = true
-    runs {
-        configureEach {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                "${mod_id}" {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        client {
-            property 'forge.enabledGameTestNamespaces', mod_id
-            property("mixin.env.remapRefMap", "true")
-            property("mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg")
-        }
-        client2 {
-            parent runs.client
-            args '--username', 'Dev2'
-        }
-
-
-        server {
-            property 'forge.enabledGameTestNamespaces', mod_id
-            args '--nogui'
-            property("mixin.env.remapRefMap", "true")
-            property("mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg")
-        }
-        gameTestServer {
-            property 'forge.enabledGameTestNamespaces', mod_id
-        }
-
-        data {
-            workingDirectory project.file('run-data')
-            property("mixin.env.remapRefMap", "true")
-            property("mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg")
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', 'tconstruct', '--existing-mod', 'irons_spellbooks'
-        }
-    }
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-}
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    mavenCentral()
     maven {
-        url = 'https://dvs1.progwml6.com/files/maven'
-        content {
-            includeGroup "slimeknights.tconstruct"
-            includeGroup "slimeknights.mantle"
-        }
-    }
-    maven {
-        url = "https://code.redspace.io/releases"
-    }
-    maven {
-        url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/"
-        content {
-            includeGroup "software.bernie.geckolib"
-        }
-    }
-    maven {
-        url = "https://maven.theillusivec4.top"
-        content {
-            includeGroup "top.theillusivec4.curios"
-            includeGroup "top.theillusivec4.caelus"
-        }
-    }
-    maven {
-        url = "https://cursemaven.com"
+        name "CurseMaven"
+        url "https://www.cursemaven.com"
         content {
             includeGroup "curse.maven"
         }
     }
     maven {
-        url = "https://maven.blamejared.com"
-        content {
-            includeGroup "mezz.jei"
-        }
+        name "Iron's Maven - Release"
+        url "https://code.redspace.io/releases"
     }
-    maven {
-        url = "https://maven.kosmx.dev/"
-        content {
-            includeGroup "dev.kosmx.player-anim"
-        }
+    maven { // JEI
+        name "BlameJared Maven"
+        url "https://maven.blamejared.com"
     }
-    mavenCentral()
+    // Local Mantle-NeoForge build
+    flatDir {
+        dir '../../Tinkers-1.21.1-NeoForge/Mantle-NeoForge/build/libs'
+    }
+    // Local TCon-NeoForge build
+    flatDir {
+        dir '../../Tinkers-1.21.1-NeoForge/TinkersConstruct-NeoForge/build/libs'
+    }
 }
 
 dependencies {
-    // FORGE ******************************************************************************************************
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    // TCon + Mantle (local builds)
+    implementation fileTree(dir: '../../Tinkers-1.21.1-NeoForge/Mantle-NeoForge/build/libs', include: 'Mantle-*.jar')
+    implementation fileTree(dir: '../../Tinkers-1.21.1-NeoForge/TinkersConstruct-NeoForge/build/libs', include: 'TinkersConstruct-*.jar')
 
-    // MIXINS *****************************************************************************************************
-    annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
+    // ISS API (compileOnly)
+    compileOnly "io.redspace:irons_spellbooks:${irons_spells_version}:api"
+    // ISS full mod (localRuntime)
+    localRuntime "io.redspace:irons_spellbooks:${irons_spells_version}"
+    localRuntime "io.redspace:irons_lib:${irons_lib_version}"
 
-    //TINKERS CONSTRUCT & MANTLE
-    implementation fg.deobf("slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}")
-    implementation fg.deobf("slimeknights.tconstruct:TConstruct:${minecraft_version}-${tic_version}")
+    // GeckoLib
+    implementation "curse.maven:geckolib-388172:7707149"
 
-    // IRONS SPELLS N SPELLBOOKS **********************************************************************************
-    compileOnly fg.deobf("io.redspace:irons_spellbooks:${irons_spells_version}:api")
-    implementation fg.deobf("io.redspace:irons_spellbooks:${irons_spells_version}")
-    implementation fg.deobf("io.redspace:irons_lib:${irons_lib_version}")
+    // Curios
+    implementation "curse.maven:curios-309927:6529130"
 
-    // MIXINS *****************************************************************************************************
-    annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
+    // JEI
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 
-    // GECKOLIB ***************************************************************************************************
-    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${geckolib_version}")
+    // Player Animator
+    localRuntime "curse.maven:playeranimator-658587:7389814"
 
-    // PLAYER ANIMATOR ********************************************************************************************
-    implementation fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:${player_animator_version}")
-
-    // LIB *****************************************************************************************************
-    implementation fg.deobf("io.redspace:irons_lib:${irons_lib_version}")
-
-    // JEI ********************************************************************************************************
-    compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}-common-api:${jei_version}")
-    compileOnly fg.deobf("mezz.jei:jei-${jei_mc_version}-forge-api:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${jei_mc_version}-forge:${jei_version}")
-    //runtimeOnly fg.deobf("curse.maven:just-enough-effect-descriptions-jeed-532286:4599099")
-
-    // CURIOS *****************************************************************************************************
-//    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
-    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
-//      runtimeOnly fg.deobf("curse.maven:alshanexs-familiars-1171602:7413465")
-//    runtimeOnly fg.deobf("curse.maven:azurelib-817423:6849107")
-//    runtimeOnly fg.deobf("curse.maven:lionfish-api-1001614:5922047")
-//    runtimeOnly fg.deobf("curse.maven:lendercataclysm-551586:6849032")
-//    runtimeOnly fg.deobf("curse.maven:citadel-331936:6702068")
-//    runtimeOnly fg.deobf("curse.maven:alexs-caves-924854:5848216")
-//    runtimeOnly fg.deobf("curse.maven:cataclysm-spellbooks-1099461:6769871")
-//    runtimeOnly fg.deobf("curse.maven:to-tweaks-irons-spells-1046916:6901041")
-
+    // Optional integrations (compileOnly)
+    compileOnly "curse.maven:cataclysm-spellbooks-1099461:7703231"
+    compileOnly "curse.maven:alshanexs-familiars-1171602:8059472"
 }
+
+neoForge {
+    version = neoforge_version
+
+    parchment {
+        minecraftVersion = parchment_minecraft
+        mappingsVersion = parchment_version
+    }
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+            programArguments.add('--nogui')
+        }
+        data {
+            data()
+            programArguments.addAll('--mod', 'constructs_casting', '--all',
+                '--output', file('src/generated/resources/').getAbsolutePath(),
+                '--existing', file('src/main/resources/').getAbsolutePath(),
+                '--existing-mod', 'tconstruct',
+                '--existing-mod', 'irons_spellbooks')
+        }
+    }
+
+    mods {
+        constructs_casting {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
 tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [
             minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
-            forge_version: forge_version, forge_version_range: forge_version_range,
+            neoforge_version: neoforge_version, neoforge_version_range: neoforge_version_range,
             loader_version_range: loader_version_range,
             mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
             mod_authors: mod_authors, mod_description: mod_description,
@@ -171,32 +118,25 @@ tasks.named('processResources', ProcessResources).configure {
 
     inputs.properties replaceProperties
 
-    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
         expand replaceProperties + [project: project]
-    }}
+    }
+}
 
-// Example for how to get properties into the manifest for reading at runtime.
 tasks.named('jar', Jar).configure {
     manifest {
         attributes([
                 "Specification-Title": mod_id,
                 "Specification-Vendor": mod_authors,
-                "Specification-Version": "1", // We are version 1 of ourselves
+                "Specification-Version": "1",
                 "Implementation-Title": project.name,
                 "Implementation-Version": project.jar.archiveVersion,
                 "Implementation-Vendor": mod_authors,
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
-
-    // This is the preferred method to reobfuscate your jar file
-    finalizedBy 'reobfJar'
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
-}
-mixin {
-    add sourceSets.main, 'mixins.constructscasting.refmap.json'
-//    config 'mixins.constructscasting.json'
+    options.encoding = 'UTF-8'
 }
