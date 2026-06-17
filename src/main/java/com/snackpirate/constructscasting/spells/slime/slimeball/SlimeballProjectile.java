@@ -10,26 +10,23 @@ import io.redspace.ironsspellbooks.entity.mobs.AntiMagicSusceptible;
 import io.redspace.ironsspellbooks.entity.spells.AbstractMagicProjectile;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public class SlimeballProjectile extends AbstractMagicProjectile implements IEntityAdditionalSpawnData, AntiMagicSusceptible {
+public class SlimeballProjectile extends AbstractMagicProjectile implements AntiMagicSusceptible {
 	private static final EntityDataAccessor<Integer> BOUNCES = SynchedEntityData.defineId(SlimeballProjectile.class, EntityDataSerializers.INT);
 
 	public SlimeballProjectile(EntityType<? extends Projectile> pEntityType, Level pLevel) {
@@ -100,22 +97,6 @@ public class SlimeballProjectile extends AbstractMagicProjectile implements IEnt
 		} else {
 			discard();
 		}
-	}
-
-	/**
-	 * @param buffer The packet data stream
-	 */
-	@Override
-	public void writeSpawnData(FriendlyByteBuf buffer) {
-		buffer.writeInt(getBounces());
-	}
-
-	/**
-	 * @param additionalData The packet data stream
-	 */
-	@Override
-	public void readSpawnData(FriendlyByteBuf additionalData) {
-		setBounces(additionalData.readInt());
 	}
 
 	@Override
