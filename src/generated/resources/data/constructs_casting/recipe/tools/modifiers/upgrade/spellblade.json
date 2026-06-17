@@ -1,0 +1,23 @@
+{
+  "type": "tconstruct:modifier",
+  "allow_crystal": true,
+  "inputs": [
+    {
+      "tag": "c:ingots/steel"
+    },
+    {
+      "item": "irons_spellbooks:mithril_ingot"
+    },
+    {
+      "tag": "c:ingots/steel"
+    }
+  ],
+  "level": 1,
+  "result": "constructs_casting:spellblade",
+  "slots": {
+    "upgrades": 1
+  },
+  "tools": {
+    "tag": "tconstruct:modifiable/held"
+  }
+}

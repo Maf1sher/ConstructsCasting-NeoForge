@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "constructs_casting:pyrium_ingot",
+  "key": {
+    "#": {
+      "tag": "forge:nuggets/pyrium"
+    },
+    "*": {
+      "item": "constructs_casting:pyrium_nugget"
+    }
+  },
+  "pattern": [
+    "###",
+    "#*#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "irons_spellbooks:pyrium_ingot"
+  }
+}

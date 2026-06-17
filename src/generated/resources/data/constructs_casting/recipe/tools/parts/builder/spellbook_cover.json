@@ -1,0 +1,8 @@
+{
+  "type": "tconstruct:part_builder",
+  "cost": 2,
+  "pattern": "constructs_casting:spellbook_cover",
+  "result": {
+    "item": "constructs_casting:spellbook_cover"
+  }
+}

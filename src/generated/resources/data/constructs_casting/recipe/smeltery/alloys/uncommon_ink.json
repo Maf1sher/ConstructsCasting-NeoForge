@@ -1,0 +1,18 @@
+{
+  "type": "tconstruct:alloy",
+  "inputs": [
+    {
+      "amount": 750,
+      "tag": "constructs_casting:common_ink"
+    },
+    {
+      "amount": 90,
+      "tag": "c:molten_copper"
+    }
+  ],
+  "result": {
+    "amount": 250,
+    "fluid": "irons_spellbooks:uncommon_ink"
+  },
+  "temperature": 300
+}

@@ -63,6 +63,8 @@ public class ConstructsCasting {
 
     public ConstructsCasting(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
+        registerSerializers();
+        CCFluids.registerFluidEffects();
         CCModifiers.MODIFIERS.register(modEventBus);
         CCFluids.FLUIDS.register(modEventBus);
         CCFluidEffects.MobEffects.register(modEventBus);
@@ -81,8 +83,6 @@ public class ConstructsCasting {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         CCModifierHooks.init();
-        CCFluids.registerFluidEffects();
-        registerSerializers();
         MaterialRegistry.getInstance().registerStatType(MagicBaseMaterialStats.TYPE, CCToolStats.MAGIC);
         MaterialRegistry.getInstance().registerStatType(MagicClothMaterialStats.TYPE, CCToolStats.MAGIC);
         MaterialRegistry.getInstance().registerStatType(CCMaterialStats.Statless.ADORNMENT.getType());

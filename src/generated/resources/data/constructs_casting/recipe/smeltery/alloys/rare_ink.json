@@ -1,0 +1,18 @@
+{
+  "type": "tconstruct:alloy",
+  "inputs": [
+    {
+      "amount": 750,
+      "tag": "constructs_casting:uncommon_ink"
+    },
+    {
+      "amount": 90,
+      "tag": "c:molten_iron"
+    }
+  ],
+  "result": {
+    "amount": 250,
+    "fluid": "irons_spellbooks:rare_ink"
+  },
+  "temperature": 300
+}

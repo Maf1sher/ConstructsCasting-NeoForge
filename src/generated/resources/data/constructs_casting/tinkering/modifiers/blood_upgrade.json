@@ -5,7 +5,7 @@
       "type": "tconstruct:attribute",
       "attribute": "irons_spellbooks:blood_spell_power",
       "each_level": 0.05,
-      "operation": "multiply_base",
+      "operation": "add_multiplied_base",
       "slots": [
         "mainhand",
         "feet",

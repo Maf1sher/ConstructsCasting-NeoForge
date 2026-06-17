@@ -15,7 +15,7 @@
       "type": "tconstruct:attribute",
       "attribute": "irons_spellbooks:max_mana",
       "each_level": 80.0,
-      "operation": "addition",
+      "operation": "add_value",
       "slots": [
         "mainhand",
         "feet",

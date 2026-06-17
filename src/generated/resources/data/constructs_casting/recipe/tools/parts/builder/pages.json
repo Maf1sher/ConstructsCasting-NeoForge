@@ -1,0 +1,8 @@
+{
+  "type": "tconstruct:part_builder",
+  "cost": 3,
+  "pattern": "constructs_casting:pages",
+  "result": {
+    "item": "constructs_casting:pages"
+  }
+}

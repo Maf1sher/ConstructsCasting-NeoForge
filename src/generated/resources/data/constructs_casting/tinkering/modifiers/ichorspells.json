@@ -5,14 +5,15 @@
       "type": "tconstruct:attribute",
       "attribute": "irons_spellbooks:mana_regen",
       "each_level": -0.3,
-      "operation": "multiply_total",
+      "operation": "add_multiplied_total",
       "slots": [
         "mainhand",
         "offhand",
         "feet",
         "legs",
         "chest",
-        "head"
+        "head",
+        "body"
       ]
     },
     {

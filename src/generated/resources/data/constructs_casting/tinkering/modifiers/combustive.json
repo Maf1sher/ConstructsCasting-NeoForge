@@ -10,7 +10,7 @@
     },
     {
       "type": "tconstruct:rarity",
-      "rarity": "irons_spellbooks_cinderous"
+      "rarity": "irons_spellbooks_rarity_cinderous"
     }
   ],
   "tooltip_display": "always"

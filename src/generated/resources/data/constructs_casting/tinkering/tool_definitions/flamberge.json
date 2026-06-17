@@ -60,24 +60,9 @@
       }
     },
     {
-      "type": "tconstruct:traits",
-      "traits": [
-        {
-          "level": 1,
-          "name": "tconstruct:springing"
-        }
-      ]
-    },
-    {
-      "type": "tconstruct:tool_actions",
-      "tool_actions": [
-        "sword_dig"
-      ]
-    },
-    {
       "type": "tconstruct:is_effective",
       "predicate_type": "mantle:tag",
-      "tag": "forge:mineable/sword"
+      "tag": "c:mineable/sword"
     },
     {
       "type": "tconstruct:mining_speed_modifier",

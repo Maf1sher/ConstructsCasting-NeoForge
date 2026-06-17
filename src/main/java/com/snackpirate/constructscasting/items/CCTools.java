@@ -177,10 +177,7 @@ public class CCTools {
 							.set(ToolStats.DURABILITY, 2f)
 							.set(ToolStats.DRAW_SPEED, 1.5f)
 							.build()))
-					.module(ToolTraitsModule.builder()
 //							.trait(ModifierIds.springing, 1) // removed in TCon 1.21.1
-							.build())
-					// behavior
 //					.module(ToolActionsModule.of(TinkerToolActions.SWORD_DIG))
 					.module(swordHarvest)
 					.build();

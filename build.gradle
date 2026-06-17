@@ -49,6 +49,10 @@ repositories {
     flatDir {
         dir '../../Tinkers-1.21.1-NeoForge/TinkersConstruct-NeoForge/build/libs'
     }
+    // Local mods (GeckoLib 4.8.4 runtime jar)
+    flatDir {
+        dir "${System.getProperty('user.home')}/Documents/curseforge/minecraft/Instances/Tinkers-NeoForge/mods"
+    }
 }
 
 dependencies {
@@ -60,8 +64,8 @@ dependencies {
     implementation "curse.maven:irons-spells-n-spellbooks-855414:8237097"
     runtimeOnly "io.redspace:irons_lib:${irons_lib_version}"
 
-    // GeckoLib
-    implementation "software.bernie.geckolib:geckolib-neoforge-1.21:${geckolib_version}"
+    // GeckoLib (local runtime version used by ISS)
+    implementation "software.bernie.geckolib:geckolib-neoforge-1.21.1:4.8.4"
 
     // Curios
     implementation "curse.maven:curios-309927:6529130"
