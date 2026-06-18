@@ -4,7 +4,7 @@
   "group": "constructs_casting:exilite_block",
   "key": {
     "#": {
-      "tag": "forge:ingots/exilite"
+      "tag": "c:ingots/exilite"
     },
     "*": {
       "item": "constructs_casting:exilite_ingot"

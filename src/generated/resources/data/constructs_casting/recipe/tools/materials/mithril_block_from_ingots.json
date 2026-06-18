@@ -4,7 +4,7 @@
   "group": "constructs_casting:mithril_block",
   "key": {
     "#": {
-      "tag": "forge:ingots/mithril"
+      "tag": "c:ingots/mithril"
     },
     "*": {
       "item": "irons_spellbooks:mithril_ingot"

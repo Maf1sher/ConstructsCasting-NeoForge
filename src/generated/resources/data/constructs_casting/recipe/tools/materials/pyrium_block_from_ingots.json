@@ -4,7 +4,7 @@
   "group": "constructs_casting:pyrium_block",
   "key": {
     "#": {
-      "tag": "forge:ingots/pyrium"
+      "tag": "c:ingots/pyrium"
     },
     "*": {
       "item": "irons_spellbooks:pyrium_ingot"

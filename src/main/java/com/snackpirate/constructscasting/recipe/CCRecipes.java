@@ -121,12 +121,12 @@ public class CCRecipes extends RecipeProvider implements IConditionBuilder, IMat
 		MaterialRecipeBuilder.materialRecipe(CCMaterials.arcanium).setIngredient(CCItems.arcaneNugget.get()).setValue(1).setNeeded(9).save(consumer, location(materialFolder + "arcanium/nugget"));
 		nuggetCasting(consumer, CCFluids.moltenArcanium, CCItems.arcaneNugget.get(), castingFolder + "arcane_nugget");
 		MeltingRecipeBuilder.melting(Ingredient.of(CCItems.arcaneNugget), new FluidStack(CCFluids.moltenArcanium.get(), FluidValues.NUGGET), 1175, 6).save(consumer, location(meltingFolder + "arcane/nugget"));
-		packingRecipe(consumer, RecipeCategory.MISC, "ingot", ItemRegistry.ARCANE_INGOT.get(), "nugget", CCItems.arcaneNugget, ItemTags.create(ResourceLocation.parse("forge:nuggets/arcane")), materialFolder);
+		packingRecipe(consumer, RecipeCategory.MISC, "ingot", ItemRegistry.ARCANE_INGOT.get(), "nugget", CCItems.arcaneNugget, ItemTags.create(ResourceLocation.parse("c:nuggets/arcane")), materialFolder);
 
 		MaterialRecipeBuilder.materialRecipe(CCMaterials.arcanium).setIngredient(CCBlocks.arcaneBlock).setValue(9).setNeeded(1).save(consumer, location(materialFolder + "arcane/block"));
 		ItemCastingRecipeBuilder.basinRecipe(CCBlocks.arcaneBlock).setFluidAndTime(CCFluids.moltenArcanium, FluidValues.METAL_BLOCK).save(consumer, location(castingFolder + "arcane/block"));
 		MeltingRecipeBuilder.melting(Ingredient.of(CCBlocks.arcaneBlock), CCFluids.moltenArcanium, FluidValues.METAL_BLOCK).save(consumer, location(meltingFolder + "arcane/block"));
-		packingRecipe(consumer, RecipeCategory.MISC, "block", CCBlocks.arcaneBlock.get(), "ingot", ItemRegistry.ARCANE_INGOT.get(), ItemTags.create(ResourceLocation.parse("forge:ingots/arcane")), materialFolder);
+		packingRecipe(consumer, RecipeCategory.MISC, "block", CCBlocks.arcaneBlock.get(), "ingot", ItemRegistry.ARCANE_INGOT.get(), ItemTags.create(ResourceLocation.parse("c:ingots/arcane")), materialFolder);
 
 		//exilite making
 		materialMeltingCasting(consumer, CCMaterials.exilite, CCFluids.moltenExilite, FluidValues.INGOT, materialFolder);
@@ -146,7 +146,7 @@ public class CCRecipes extends RecipeProvider implements IConditionBuilder, IMat
 		MaterialRecipeBuilder.materialRecipe(CCMaterials.exilite).setIngredient(CCBlocks.exiliteBlock).setValue(9).setNeeded(1).save(consumer, location(materialFolder + "exiilte/block"));
 		ItemCastingRecipeBuilder.basinRecipe(CCBlocks.exiliteBlock).setFluidAndTime(CCFluids.moltenExilite, FluidValues.METAL_BLOCK).save(consumer, location(castingFolder + "exilite/block"));
 		MeltingRecipeBuilder.melting(Ingredient.of(CCBlocks.exiliteBlock), CCFluids.moltenExilite, FluidValues.METAL_BLOCK).save(consumer, location(meltingFolder + "exilite/block"));
-		packingRecipe(consumer, RecipeCategory.MISC, "block", CCBlocks.exiliteBlock.get(), "ingot", CCItems.exiliteIngot, ItemTags.create(ResourceLocation.parse("forge:ingots/exilite")), materialFolder);
+		packingRecipe(consumer, RecipeCategory.MISC, "block", CCBlocks.exiliteBlock.get(), "ingot", CCItems.exiliteIngot, ItemTags.create(ResourceLocation.parse("c:ingots/exilite")), materialFolder);
 
 
 		//arcane salvage making
@@ -170,11 +170,11 @@ public class CCRecipes extends RecipeProvider implements IConditionBuilder, IMat
 		MaterialRecipeBuilder.materialRecipe(CCMaterials.mithril).setIngredient(CCItems.mithrilNugget.get()).setValue(1).setNeeded(9).save(consumer, location(materialFolder + "mithril/nugget"));
 		nuggetCasting(consumer, CCFluids.moltenMithril, CCItems.mithrilNugget, castingFolder);
 		MeltingRecipeBuilder.melting(Ingredient.of(CCItems.mithrilNugget), CCFluids.moltenMithril, FluidValues.NUGGET).save(consumer, location(meltingFolder + "mithril/nugget"));
-		packingRecipe(consumer, RecipeCategory.MISC, "ingot", ItemRegistry.MITHRIL_INGOT.get(), "nugget", CCItems.mithrilNugget, ItemTags.create(ResourceLocation.parse("forge:nuggets/mithril")), materialFolder);
+		packingRecipe(consumer, RecipeCategory.MISC, "ingot", ItemRegistry.MITHRIL_INGOT.get(), "nugget", CCItems.mithrilNugget, ItemTags.create(ResourceLocation.parse("c:nuggets/mithril")), materialFolder);
 		MaterialRecipeBuilder.materialRecipe(CCMaterials.mithril).setIngredient(CCBlocks.mithrilBlock).setValue(9).setNeeded(1).save(consumer, location(materialFolder + "mithril/block"));
 		ItemCastingRecipeBuilder.basinRecipe(CCBlocks.mithrilBlock).setFluidAndTime(CCFluids.moltenMithril, FluidValues.METAL_BLOCK).save(consumer, location(castingFolder + "mithril/block"));
 		MeltingRecipeBuilder.melting(Ingredient.of(CCBlocks.mithrilBlock), CCFluids.moltenMithril, FluidValues.METAL_BLOCK).save(consumer, location(meltingFolder + "mithril/block"));
-		packingRecipe(consumer, RecipeCategory.MISC, "block", CCBlocks.mithrilBlock.get(), "ingot", ItemRegistry.MITHRIL_INGOT.get(), ItemTags.create(ResourceLocation.parse("forge:ingots/mithril")), materialFolder);
+		packingRecipe(consumer, RecipeCategory.MISC, "block", CCBlocks.mithrilBlock.get(), "ingot", ItemRegistry.MITHRIL_INGOT.get(), ItemTags.create(ResourceLocation.parse("c:ingots/mithril")), materialFolder);
 
 
 		MeltingRecipeBuilder.melting(Ingredient.of(ItemRegistry.PYRIUM_INGOT.get()), new FluidStack(CCFluids.moltenPyrium.get(), FluidValues.INGOT), 1175, 60).save(consumer, location(meltingFolder + "pyrium/ingot"));
@@ -185,12 +185,12 @@ public class CCRecipes extends RecipeProvider implements IConditionBuilder, IMat
 		MaterialRecipeBuilder.materialRecipe(CCMaterials.pyrium).setIngredient(CCItems.pyriumNugget.get()).setValue(1).setNeeded(9).save(consumer, location(materialFolder + "pyrium/nugget"));
 		nuggetCasting(consumer, CCFluids.moltenPyrium, CCItems.pyriumNugget.get(), castingFolder + "pyrium_nugget");
 		MeltingRecipeBuilder.melting(Ingredient.of(CCItems.pyriumNugget), new FluidStack(CCFluids.moltenPyrium.get(), FluidValues.NUGGET), 1175, 6).save(consumer, location(meltingFolder + "pyrium/nugget"));
-		packingRecipe(consumer, RecipeCategory.MISC, "ingot", ItemRegistry.PYRIUM_INGOT.get(), "nugget", CCItems.pyriumNugget, ItemTags.create(ResourceLocation.parse("forge:nuggets/pyrium")), materialFolder);
+		packingRecipe(consumer, RecipeCategory.MISC, "ingot", ItemRegistry.PYRIUM_INGOT.get(), "nugget", CCItems.pyriumNugget, ItemTags.create(ResourceLocation.parse("c:nuggets/pyrium")), materialFolder);
 
 		MaterialRecipeBuilder.materialRecipe(CCMaterials.pyrium).setIngredient(CCBlocks.pyriumBlock).setValue(9).setNeeded(1).save(consumer, location(materialFolder + "pyrium/block"));
 		ItemCastingRecipeBuilder.basinRecipe(CCBlocks.pyriumBlock).setFluidAndTime(CCFluids.moltenPyrium, FluidValues.METAL_BLOCK).save(consumer, location(castingFolder + "pyrium/block"));
 		MeltingRecipeBuilder.melting(Ingredient.of(CCBlocks.pyriumBlock), CCFluids.moltenPyrium, FluidValues.METAL_BLOCK).save(consumer, location(meltingFolder + "pyrium/block"));
-		packingRecipe(consumer, RecipeCategory.MISC, "block", CCBlocks.pyriumBlock.get(), "ingot", ItemRegistry.PYRIUM_INGOT.get(), ItemTags.create(ResourceLocation.parse("forge:ingots/pyrium")), materialFolder);
+		packingRecipe(consumer, RecipeCategory.MISC, "block", CCBlocks.pyriumBlock.get(), "ingot", ItemRegistry.PYRIUM_INGOT.get(), ItemTags.create(ResourceLocation.parse("c:ingots/pyrium")), materialFolder);
 
 
 		materialMeltingCasting(consumer, MaterialIds.quartz, TinkerFluids.moltenQuartz, FluidValues.GEM, materialFolder); //to permit casting of quartz faceted gem/spellbook
@@ -359,7 +359,7 @@ public class CCRecipes extends RecipeProvider implements IConditionBuilder, IMat
 		}
         ModifierRecipeBuilder.modifier(CCModifiers.RINGBEARER)
                 .addInput(Ingredient.of(getItemTag("curios", "ring")))
-                .addInput(getItemTag("forge", "ingots/steel"))
+                .addInput(getItemTag("c", "ingots/steel"))
                 .addInput(Ingredient.of(getItemTag("curios", "ring")))
                 .setSlots(SlotType.ABILITY, 1)
                 .setTools(TinkerTags.Items.CHESTPLATES)

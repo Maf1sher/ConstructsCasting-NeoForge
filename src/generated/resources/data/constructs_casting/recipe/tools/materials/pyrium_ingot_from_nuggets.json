@@ -4,7 +4,7 @@
   "group": "constructs_casting:pyrium_ingot",
   "key": {
     "#": {
-      "tag": "forge:nuggets/pyrium"
+      "tag": "c:nuggets/pyrium"
     },
     "*": {
       "item": "constructs_casting:pyrium_nugget"

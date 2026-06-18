@@ -4,7 +4,7 @@
   "group": "constructs_casting:mithril_ingot",
   "key": {
     "#": {
-      "tag": "forge:nuggets/mithril"
+      "tag": "c:nuggets/mithril"
     },
     "*": {
       "item": "constructs_casting:mithril_nugget"
