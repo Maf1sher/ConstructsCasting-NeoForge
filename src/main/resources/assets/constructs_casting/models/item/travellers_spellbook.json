@@ -1,6 +1,6 @@
 {
   "loader": "tconstruct:tool",
-  "parent": "forge:item/default",
+  "parent": "neoforge:item/default",
   "textures": {
     "binding": "constructs_casting:item/tool/travellers_spellbook/binding",
     "cover":   "constructs_casting:item/tool/travellers_spellbook/cover",

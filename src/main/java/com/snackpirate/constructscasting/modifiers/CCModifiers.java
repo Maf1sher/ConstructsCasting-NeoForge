@@ -236,7 +236,7 @@ public class CCModifiers extends AbstractModifierProvider {
                 .addModule(StatBoostModule.add(CCToolStats.SPELL_SLOTS).eachLevel(1f))
                 .levelDisplay(ModifierLevelDisplay.DEFAULT)
                 .build();
-		buildModifier(FROSTBITE).priority(150).addModule(MobEffectModule.builder(CCFluidEffects.MobEffects.frostbite).time(RandomLevelingValue.random(5 * 20, 5 * 20)).chance(LevelingValue.flat(0.15f)).build());
+		buildModifier(FROSTBITE).priority(150).addModule(MobEffectModule.builder(CCFluidEffects.MobEffects.frostbite).time(RandomLevelingValue.random(5 * 20, 5 * 20)).chance(LevelingValue.flat(0.15f)).buildWeapon());
 		ModifierSlotModule UPGRADE = ModifierSlotModule.slot(SlotType.UPGRADE).eachLevel(1);
 		buildModifier(REINSCRIBED).tooltipDisplay(BasicModifier.TooltipDisplay.TINKER_STATION).levelDisplay(ModifierLevelDisplay.SINGLE_LEVEL).addModule(UPGRADE);
 		List<ResourceLocation> summonSpells = Stream.of( //hardcoded because FUCK YOU
