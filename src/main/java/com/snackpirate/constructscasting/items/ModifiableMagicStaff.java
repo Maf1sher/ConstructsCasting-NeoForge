@@ -8,11 +8,14 @@ import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -26,6 +29,7 @@ import slimeknights.tconstruct.library.tools.helper.TooltipBuilder;
 import slimeknights.tconstruct.library.tools.helper.TooltipUtil;
 import slimeknights.tconstruct.library.tools.item.ModifiableItem;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
 import slimeknights.tconstruct.tools.TinkerModifiers;
 
@@ -38,8 +42,44 @@ public class ModifiableMagicStaff extends ModifiableItem {
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(IToolStackView tool, EquipmentSlot slot) {
+	public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack) {
+		ItemAttributeModifiers base = super.getDefaultAttributeModifiers(stack);
+		if (!ToolStack.isInitialized(stack)) {
+			return base;
+		}
+		ToolStack tool = ToolStack.from(stack);
 
+		ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
+		for (ItemAttributeModifiers.Entry entry : base.modifiers()) {
+			builder.add(entry.attribute(), entry.modifier(), entry.slot());
+		}
+
+		float spBonus = tool.getStats().get(CCToolStats.SPELL_POWER);
+		if (spBonus != 0) {
+			builder.add(
+					AttributeRegistry.SPELL_POWER,
+					new AttributeModifier(ConstructsCasting.id("spell_power_bonus"),
+							spBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+					EquipmentSlotGroup.HAND
+			);
+		}
+
+		float cdBonus = tool.getStats().get(CCToolStats.COOLDOWN_REDUCTION);
+		if (cdBonus != 0) {
+			builder.add(
+					AttributeRegistry.COOLDOWN_REDUCTION,
+					new AttributeModifier(ConstructsCasting.id("cd_reduction"),
+							cdBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+					EquipmentSlotGroup.HAND
+			);
+		}
+
+		return builder.build();
+	}
+
+	// used by TooltipUtil.addAttributes for tooltip display; NOT called by the attribute pipeline in NeoForge
+	@Override
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(IToolStackView tool, EquipmentSlot slot) {
 		ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = new ImmutableMultimap.Builder<>();
 		attributeBuilder.putAll(super.getAttributeModifiers(tool, slot));
 		float spBonus =
