@@ -146,12 +146,11 @@ public class ModifiableSpellbookItem extends SpellBook implements IModifiableDis
 		ToolStack.verifyTag(this, stack, getToolDefinition());
 	}
 
-//	@Override
-//	public void onCraftedBy(ItemStack pStack, Level pLevel, Player pPlayer) {
-//        ConstructsCasting.LOGGER.info("on crafted by");
-//        this.initializeSpellContainer(pStack);
-//		ToolStack.ensureInitialized(pStack, getToolDefinition());
-//	}
+	@Override
+	public void onCraftedBy(ItemStack stack, Level level, Player player) {
+		ToolStack.ensureInitialized(stack, getToolDefinition());
+		initializeSpellContainer(stack);
+	}
 
     @Override
 	public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
