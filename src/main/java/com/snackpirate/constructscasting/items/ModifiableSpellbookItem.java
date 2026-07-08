@@ -87,8 +87,7 @@ public class ModifiableSpellbookItem extends SpellBook implements IModifiableDis
 	@Override
 	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
 		spellbookLines(stack, null, tooltip, flag, SafeClientAccess.getTooltipKey());
-		ToolStack tool = ToolStack.from(stack);
-		IModifiableDisplay.super.getStatInformation(tool, null, tooltip, SafeClientAccess.getTooltipKey(), flag);
+		TooltipUtil.addInformation(this, stack, context.level(), tooltip, SafeClientAccess.getTooltipKey(), flag);
 	}
 	public void spellbookLines( ItemStack itemStack,  Level level,  List<Component> lines,  TooltipFlag flag, TooltipKey key) {
 		if (key == TooltipKey.CONTROL || key == TooltipKey.SHIFT) return;
@@ -144,6 +143,7 @@ public class ModifiableSpellbookItem extends SpellBook implements IModifiableDis
 	@Override
 	public void verifyComponentsAfterLoad(ItemStack stack) {
 		ToolStack.verifyTag(this, stack, getToolDefinition());
+		ToolStack.ensureInitialized(stack, getToolDefinition());
 	}
 
 	@Override

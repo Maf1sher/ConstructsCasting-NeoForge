@@ -16,6 +16,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.ItemLike;
@@ -33,6 +34,7 @@ import slimeknights.tconstruct.library.recipe.FluidValues;
 import slimeknights.tconstruct.library.recipe.modifiers.ModifierRecipeLookup;
 import slimeknights.tconstruct.library.tools.helper.ToolBuildHandler;
 import slimeknights.tconstruct.library.tools.item.ModifiableItem;
+import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.tools.part.ToolPartItem;
 import slimeknights.tconstruct.shared.TinkerFood;
 import slimeknights.tconstruct.tools.TinkerModifiers;
@@ -98,8 +100,12 @@ public class CCItems {
 		output.accept(mithrilNugget);
 		output.accept(CCBlocks.pyriumBlock);
 		output.accept(pyriumNugget);
-        output.accept(slimySpellbook);
 //        output.accept(eldritchStaff);
+
+		// ensure statless spellbook (slimy) is initialized in creative tab
+		ItemStack slimyInitialized = new ItemStack(CCItems.slimySpellbook.get());
+		ToolStack.ensureInitialized(slimyInitialized, CCTools.CCToolDefinitions.SLIMY_SPELLBOOK);
+		output.accept(slimyInitialized);
 
         output.accept(spellbookPlatingCast);
         output.accept(spellbookPlatingCast.getSand());
