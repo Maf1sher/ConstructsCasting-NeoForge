@@ -100,6 +100,7 @@ public class ConstructsCasting {
         ModifierModule.LOADER.register(ConstructsCasting.id("self_damage_cast"), SelfDamageOnCastModule.LOADER);
         ModifierModule.LOADER.register(id("venomagic"), VenomagicModule.LOADER);
         LivingEntityPredicate.LOADER.register(ConstructsCasting.id("magic_user"), CCModifiers.magicUser.getLoader());
+        LivingEntityPredicate.LOADER.register(ConstructsCasting.id("freezing"), CCModifiers.freezing.getLoader());
     }
 
     @SubscribeEvent
@@ -140,7 +141,7 @@ public class ConstructsCasting {
         gen.addProvider(server, new CCFluidTransfer(output, MOD_ID, provider));
         gen.addProvider(server, new CCMobEquipment(output, MOD_ID));
         gen.addProvider(server, new CCLootInjections(output, IronsSpellbooks.MODID, provider));
-        gen.addProvider(server, new CCFluidEffects(output, ConstructsCasting.MOD_ID));
+        gen.addProvider(server, new CCFluidEffects(output, ConstructsCasting.MOD_ID, provider));
         gen.addProvider(server, new CCLang(output, ConstructsCasting.MOD_ID, "en_us"));
         gen.addProvider(server, new CCDamageTypes.Tags(output, provider, MOD_ID, fileHelper));
         gen.addProvider(server, new CCModifiers.Tags(output, MOD_ID, fileHelper));

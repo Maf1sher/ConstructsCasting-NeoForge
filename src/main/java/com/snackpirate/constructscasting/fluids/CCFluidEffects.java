@@ -28,8 +28,8 @@ import slimeknights.tconstruct.library.modifiers.fluid.entity.RestoreHungerFluid
 import slimeknights.tconstruct.library.recipe.FluidValues;
 
 public class CCFluidEffects extends AbstractFluidEffectProvider {
-	public CCFluidEffects(PackOutput packOutput, String modId) {
-		super(packOutput, modId);
+	public CCFluidEffects(PackOutput packOutput, String modId, java.util.concurrent.CompletableFuture<net.minecraft.core.HolderLookup.Provider> registries) {
+		super(packOutput, modId, registries);
 	}
 
 	@Override

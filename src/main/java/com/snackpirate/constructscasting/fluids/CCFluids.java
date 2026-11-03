@@ -150,7 +150,7 @@ public class CCFluids {
 			ResourceLocation molten = ResourceLocation.parse("tconstruct:fluid/molten/");
 
 			texture(moltenArcanium).root(ConstructsCasting.id("fluid/arcanium/")).still().flowing().color(0xffffffff);
-			texture(moltenExilite) .root(molten).still().flowing().color(0xff5a5b5c);
+			texture(moltenExilite) .root(molten).still().flowing().color(0xff404e42);
 			texture(moltenMithril).root(molten).still().flowing().color(0xffacf4f9).overlay().camera();
 			texture(moltenPyrium).root(molten).still().flowing().color(0xffe5a028).overlay().camera();
 			texture(moltenArcaneSalvage).root(molten).still().flowing().color(0xffffffff);

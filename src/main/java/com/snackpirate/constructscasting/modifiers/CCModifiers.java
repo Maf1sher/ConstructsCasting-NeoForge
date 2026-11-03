@@ -37,6 +37,7 @@ import slimeknights.tconstruct.library.modifiers.modules.behavior.AttributeModul
 import slimeknights.tconstruct.library.modifiers.modules.behavior.ConditionalStatModule;
 import slimeknights.tconstruct.library.modifiers.modules.build.*;
 import slimeknights.tconstruct.library.modifiers.modules.combat.ConditionalMeleeDamageModule;
+import slimeknights.tconstruct.library.modifiers.modules.combat.ConditionalPowerModule;
 import slimeknights.tconstruct.library.modifiers.modules.combat.MobEffectModule;
 import slimeknights.tconstruct.library.modifiers.util.ModifierDeferredRegister;
 import slimeknights.tconstruct.library.modifiers.util.ModifierLevelDisplay;
@@ -152,11 +153,12 @@ public class CCModifiers extends AbstractModifierProvider {
 				.build();
 		buildModifier(ANTIMAGIC)
 				.addModule(ConditionalMeleeDamageModule.builder().target(magicUser).eachLevel(2f))
+				.addModule(ConditionalPowerModule.builder().target(magicUser).eachLevel(0.75f))
 						.build();
 		buildModifier(SPELLBOUND)
                 .addModule(AttributeModule.builder(AttributeRegistry.SPELL_POWER.get(), AttributeModifier.Operation.ADD_MULTIPLIED_BASE).tool(ToolStackPredicate.tag(CCItems.Tags.MAGIC_TOOL).inverted()).uniqueFrom(SPELLBOUND.getLocation()).eachLevel(0.05f))
                 .addModule(StatBoostModule.add(CCToolStats.SPELL_POWER).toolTag(CCItems.Tags.MAGIC_TOOL).eachLevel(0.05f)).build();
-		buildModifier(ANTIFROST).addModule(ConditionalMeleeDamageModule.builder().target(LivingEntityPredicate.simple(entity -> entity.getTicksFrozen() >= entity.getTicksRequiredToFreeze())).eachLevel(2.0f));
+		buildModifier(ANTIFROST).addModule(ConditionalMeleeDamageModule.builder().target(freezing).eachLevel(2.0f));
 		buildModifier(MANA_UPGRADE)     .levelDisplay(ModifierLevelDisplay.DEFAULT)
 				.addModule(StatBoostModule.add(CCToolStats.MAX_MANA).toolTag(CCItems.Tags.MOD_SPELLBOOKS).eachLevel(80f))
 				.addModule(AttributeModule.builder(AttributeRegistry.MAX_MANA.get(), AttributeModifier.Operation.ADD_VALUE)
@@ -226,7 +228,8 @@ public class CCModifiers extends AbstractModifierProvider {
                         .variable(MULTIPLIER).multiply()
                         .constant(0).max()
                         .variable(VALUE).add()
-                        .build());
+                        .build())
+		;
         buildModifier(ICHORSPELLS)
                 .addModule(AttributeModule.builder(AttributeRegistry.MANA_REGEN, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL).eachLevel(-0.3f))
                 .addModule(StatBoostModule.add(CCToolStats.SPELL_POWER).eachLevel(0.15f))
@@ -266,11 +269,11 @@ public class CCModifiers extends AbstractModifierProvider {
 				.build(); //manyullyn takes 5 hits to max out, so around 5 hits for an explosion would be nice
 		buildModifier(MANA_PROTECTION)
 				.addModule(new ManaProtectionModule(LevelingValue.flat(4), LevelingValue.eachLevel(0.04f)))
-				.addModule(new RarityModule(Rarity.RARE))
+//				.addModule(new RarityModule(Rarity.RARE))
 				.build();
 		buildModifier(SORCEROUS)
 				.addModule(new ManaOnHitModule(LevelingValue.flat(3), LevelingValue.eachLevel(0.25f)))
-				.addModule(new RarityModule(Rarity.RARE))
+//				.addModule(new RarityModule(Rarity.RARE))
 				.build();
 		buildModifier(venomagic)
 				.addModule(new VenomagicModule(LevelingValue.eachLevel(0.1f)))
@@ -284,6 +287,7 @@ public class CCModifiers extends AbstractModifierProvider {
 	private static AttributeModule spellDispulsionModifier(ModifierId modifier, Attribute attribute) {
 		return AttributeModule.builder(attribute, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).slots(notOffhand).uniqueFrom(modifier.getLocation()).eachLevel(0.15f);
 	}
+	public static LivingEntityPredicate freezing = LivingEntityPredicate.simple(entity -> entity.getTicksFrozen() >= entity.getTicksRequiredToFreeze());
 	public static LivingEntityPredicate magicUser = LivingEntityPredicate.simple(
 			target -> MagicData.getPlayerMagicData(target).isCasting() ||
 					target instanceof AbstractSpellCastingMob ||

@@ -33,7 +33,6 @@ public class CCFluidTransfer extends AbstractFluidContainerTransferProvider {
 		addBottleFill("ice_venom", ItemRegistry.ICE_VENOM_VIAL.get(), FluidRegistry.ICE_VENOM_FLUID.get());
 		addBottleFill("timeless_slurry", ItemRegistry.TIMELESS_SLURRY.get(), FluidRegistry.TIMELESS_SLURRY_FLUID.get());
 
-
 		addBottleFill("ink/common", ItemRegistry.INK_COMMON.get(), FluidRegistry.COMMON_INK.get());
 		addBottleFill("ink/uncommon", ItemRegistry.INK_UNCOMMON.get(), FluidRegistry.UNCOMMON_INK.get());
 		addBottleFill("ink/rare", ItemRegistry.INK_RARE.get(), FluidRegistry.RARE_INK.get());

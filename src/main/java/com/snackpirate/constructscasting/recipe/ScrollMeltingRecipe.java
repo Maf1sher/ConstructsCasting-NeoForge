@@ -4,6 +4,7 @@ import com.snackpirate.constructscasting.fluids.CCFluids;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.api.spells.SchoolType;
 import io.redspace.ironsspellbooks.registries.ItemRegistry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -17,8 +18,11 @@ import slimeknights.mantle.data.loadable.record.RecordLoadable;
 import slimeknights.mantle.fluid.UnplaceableFluid;
 import slimeknights.mantle.recipe.helper.LoadableRecipeSerializer;
 import slimeknights.mantle.registration.object.FluidObject;
+import slimeknights.tconstruct.library.recipe.melting.IDisplayableMeltingRecipe;
 import slimeknights.tconstruct.library.recipe.melting.IMeltingContainer;
 import slimeknights.tconstruct.library.recipe.melting.IMeltingRecipe;
+
+import java.util.List;
 
 public class ScrollMeltingRecipe implements IMeltingRecipe {
 	protected static final LoadableField<Integer, ScrollMeltingRecipe> OUTPUT;
@@ -108,4 +112,35 @@ public class ScrollMeltingRecipe implements IMeltingRecipe {
 		TIME = IntLoadable.FROM_ONE.requiredField("time", (r) -> r.time);
 		LOADER = RecordLoadable.create(ContextKey.ID.requiredField(), LoadableRecipeSerializer.RECIPE_GROUP, OUTPUT, BYPRODUCT_AMOUNT, TEMPERATURE, TIME, ScrollMeltingRecipe::new);
 	}
+
+
+//	@Override
+//	public List<IDisplayableMeltingRecipe> getRecipes(RegistryAccess access) {
+//		return List.of();
+//	}
+//
+//	@Override
+//	public ResourceLocation getRecipeId() {
+//		return id;
+//	}
+//
+//	@Override
+//	public List<ItemStack> getInputs() {
+//		return List.of();
+//	}
+//
+//	@Override
+//	public List<FluidStack> getOutputs() {
+//		return List.of();
+//	}
+//
+//	@Override
+//	public int getTemperature() {
+//		return temperature;
+//	}
+//
+//	@Override
+//	public int getTime() {
+//		return time;
+//	}
 }

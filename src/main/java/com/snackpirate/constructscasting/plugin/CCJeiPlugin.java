@@ -39,7 +39,7 @@ public class CCJeiPlugin implements IModPlugin {
 	@Override
 	public void registerRecipes(@NotNull IRecipeRegistration register) {
 		List<IDisplayableMeltingRecipe> meltingRecipes = getScrollRecipes(register.getVanillaRecipeFactory())
-				.filter(recipe -> !recipe.getInput().isEmpty())
+				.filter(recipe -> !recipe.getInputs().isEmpty())
 				.<IDisplayableMeltingRecipe>map(recipe -> recipe)
 				.toList();
 		List<DisplayRecipe<IDisplayableMeltingRecipe>> displayRecipes = DisplayRecipe.of(ConstructsCasting.id("scroll_melting"), meltingRecipes);
@@ -47,7 +47,7 @@ public class CCJeiPlugin implements IModPlugin {
 		register.addRecipes(TConstructJEIConstants.FOUNDRY, displayRecipes);
 	}
 
-	private static Stream<MeltingRecipe> getScrollRecipes(IVanillaRecipeFactory vanillaRecipeFactory) {
+	private static Stream<IDisplayableMeltingRecipe> getScrollRecipes(IVanillaRecipeFactory vanillaRecipeFactory) {
 		return Arrays.stream(SpellRarity.values()).flatMap(
 				rarity -> SchoolRegistry.REGISTRY.stream().map(schoolType -> recipeForRarityAndSchool(rarity, schoolType)));
 //        return SpellRegistry.getEnabledSpells().stream().flatMap(spell -> IntStream.rangeClosed(spell.getMinLevel(), spell.getMaxLevel()).mapToObj(level -> recipeForSpellAndLevel(spell, level)));
@@ -57,7 +57,7 @@ public class CCJeiPlugin implements IModPlugin {
 		ISpellContainer.createScrollContainer(spell, spellLevel, scrollStack);
 		return scrollStack;
 	}
-	private static MeltingRecipe recipeForRarityAndSchool(SpellRarity spellRarity, SchoolType school) {
+	private static IDisplayableMeltingRecipe recipeForRarityAndSchool(SpellRarity spellRarity, SchoolType school) {
 		var scrollStack = new ItemStack(ItemRegistry.SCROLL.get());
 		Stream<ItemStack> scrolls = SpellRegistry.getEnabledSpells().stream().flatMap( //is iterated through for every rarity*school combo, consider making better? not sure if iterating through each spell * level would be better
 				spell -> IntStream.rangeClosed(spell.getMinLevel(), spell.getMaxLevel())
