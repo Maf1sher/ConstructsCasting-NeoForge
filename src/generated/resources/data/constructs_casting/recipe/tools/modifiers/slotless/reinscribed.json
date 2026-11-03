@@ -3,18 +3,23 @@
   "allow_crystal": true,
   "inputs": [
     {
+      "count": 1,
       "item": "irons_spellbooks:common_ink"
     },
     {
+      "count": 1,
       "item": "irons_spellbooks:uncommon_ink"
     },
     {
+      "count": 1,
       "item": "irons_spellbooks:rare_ink"
     },
     {
+      "count": 1,
       "item": "irons_spellbooks:epic_ink"
     },
     {
+      "count": 1,
       "item": "irons_spellbooks:legendary_ink"
     }
   ],

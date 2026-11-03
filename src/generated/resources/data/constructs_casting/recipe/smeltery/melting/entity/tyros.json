@@ -1,9 +1,7 @@
 {
   "type": "tconstruct:entity_melting",
   "damage": 2,
-  "entity": {
-    "type": "irons_spellbooks:fire_boss"
-  },
+  "entity": "irons_spellbooks:fire_boss",
   "result": {
     "amount": 10,
     "fluid": "constructs_casting:molten_pyrium"

@@ -1,9 +1,7 @@
 {
   "type": "tconstruct:entity_melting",
   "damage": 2,
-  "entity": {
-    "type": "minecraft:squid"
-  },
+  "entity": "minecraft:squid",
   "result": {
     "amount": 50,
     "fluid": "constructs_casting:squid_ink"

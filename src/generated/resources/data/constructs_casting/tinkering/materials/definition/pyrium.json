@@ -1,6 +1,7 @@
 {
   "craftable": false,
   "hidden": false,
+  "rarity": "IRONS_SPELLBOOKS_RARITY_CINDEROUS",
   "sortOrder": 8,
   "tier": 4
 }

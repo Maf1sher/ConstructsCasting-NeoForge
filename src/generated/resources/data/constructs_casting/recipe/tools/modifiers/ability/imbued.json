@@ -3,18 +3,23 @@
   "allow_crystal": true,
   "inputs": [
     {
+      "count": 1,
       "item": "irons_spellbooks:mithril_ingot"
     },
     {
+      "count": 1,
       "tag": "tconstruct:modifiable/melee/sword"
     },
     {
+      "count": 1,
       "item": "irons_spellbooks:mithril_ingot"
     },
     {
+      "count": 1,
       "item": "irons_spellbooks:arcane_rune"
     },
     {
+      "count": 1,
       "item": "irons_spellbooks:arcane_rune"
     }
   ],

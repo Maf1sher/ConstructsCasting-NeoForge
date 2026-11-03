@@ -3,12 +3,15 @@
   "allow_crystal": false,
   "inputs": [
     {
+      "count": 1,
       "item": "minecraft:feather"
     },
     {
+      "count": 1,
       "item": "minecraft:rabbit_foot"
     },
     {
+      "count": 1,
       "item": "minecraft:feather"
     }
   ],

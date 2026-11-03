@@ -17,6 +17,5 @@
       ],
       "unique": "constructs_casting.modifier.spell_dispulsion"
     }
-  ],
-  "tooltip_display": "always"
+  ]
 }

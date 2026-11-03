@@ -2,9 +2,11 @@
   "type": "tconstruct:remove_modifier",
   "inputs": [
     {
+      "count": 1,
       "item": "irons_spellbooks:shriving_stone"
     },
     {
+      "count": 1,
       "item": "minecraft:wet_sponge"
     }
   ],
@@ -27,7 +29,7 @@
   },
   "name": "affinity",
   "tools": {
-    "amount_needed": 2,
+    "count": 2,
     "item": "tconstruct:dagger"
   }
 }

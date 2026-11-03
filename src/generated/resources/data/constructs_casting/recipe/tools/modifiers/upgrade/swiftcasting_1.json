@@ -3,12 +3,15 @@
   "allow_crystal": true,
   "inputs": [
     {
+      "count": 1,
       "item": "irons_spellbooks:mithril_weave"
     },
     {
+      "count": 1,
       "item": "irons_spellbooks:divine_soulshard"
     },
     {
+      "count": 1,
       "item": "minecraft:rabbit_foot"
     }
   ],

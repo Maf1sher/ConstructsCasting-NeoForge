@@ -5,9 +5,7 @@
   },
   "pattern": {
     "type": "tconstruct:material",
-    "match": {
-      "item": "constructs_casting:spellbook_plating"
-    }
+    "item": "constructs_casting:spellbook_plating"
   },
   "result": "constructs_casting:spellbook_plating_sand_cast"
 }

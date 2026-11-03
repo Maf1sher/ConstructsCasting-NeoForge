@@ -3,12 +3,15 @@
   "allow_crystal": true,
   "inputs": [
     {
+      "count": 1,
       "tag": "c:ingots/steel"
     },
     {
+      "count": 1,
       "item": "irons_spellbooks:mithril_ingot"
     },
     {
+      "count": 1,
       "tag": "c:ingots/steel"
     }
   ],

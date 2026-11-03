@@ -3,18 +3,23 @@
   "allow_crystal": true,
   "inputs": [
     {
+      "count": 1,
       "item": "irons_spellbooks:arcane_ingot"
     },
     {
+      "count": 1,
       "item": "irons_spellbooks:cinder_essence"
     },
     {
+      "count": 1,
       "item": "irons_spellbooks:arcane_ingot"
     },
     {
+      "count": 1,
       "tag": "irons_spellbooks:inscribed_rune"
     },
     {
+      "count": 1,
       "tag": "irons_spellbooks:inscribed_rune"
     }
   ],

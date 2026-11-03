@@ -5,9 +5,7 @@
   },
   "pattern": {
     "type": "tconstruct:material",
-    "match": {
-      "item": "constructs_casting:faceted_gem"
-    }
+    "item": "constructs_casting:faceted_gem"
   },
   "result": "constructs_casting:faceted_gem_red_sand_cast"
 }

@@ -2,9 +2,7 @@
   "type": "tconstruct:casting_table",
   "cast": {
     "type": "tconstruct:material",
-    "match": {
-      "item": "constructs_casting:faceted_gem"
-    }
+    "item": "constructs_casting:faceted_gem"
   },
   "cast_consumed": true,
   "cooling_time": 57,

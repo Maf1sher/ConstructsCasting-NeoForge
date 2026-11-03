@@ -3,18 +3,23 @@
   "allow_crystal": false,
   "inputs": [
     {
+      "count": 1,
       "item": "minecraft:red_dye"
     },
     {
+      "count": 1,
       "item": "minecraft:orange_dye"
     },
     {
+      "count": 1,
       "item": "minecraft:green_dye"
     },
     {
+      "count": 1,
       "item": "minecraft:blue_dye"
     },
     {
+      "count": 1,
       "item": "minecraft:purple_dye"
     }
   ],

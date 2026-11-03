@@ -1,9 +1,7 @@
 {
   "type": "tconstruct:entity_melting",
   "damage": 2,
-  "entity": {
-    "type": "irons_spellbooks:apothecarist"
-  },
+  "entity": "irons_spellbooks:apothecarist",
   "result": {
     "amount": 50,
     "fluid": "constructs_casting:nature_essence"

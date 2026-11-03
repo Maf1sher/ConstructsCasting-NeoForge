@@ -9,5 +9,10 @@
     "amount": 1000,
     "fluid": "tconstruct:ender_slime"
   },
-  "result": "constructs_casting:tinkerers_spellbook"
+  "result": {
+    "components": {
+      "minecraft:custom_data": {}
+    },
+    "item": "constructs_casting:tinkerers_spellbook"
+  }
 }

@@ -3,18 +3,23 @@
   "allow_crystal": true,
   "inputs": [
     {
+      "count": 1,
       "item": "minecraft:amethyst_shard"
     },
     {
+      "count": 1,
       "item": "minecraft:copper_ingot"
     },
     {
+      "count": 1,
       "item": "minecraft:copper_ingot"
     },
     {
+      "count": 1,
       "item": "minecraft:copper_ingot"
     },
     {
+      "count": 1,
       "item": "minecraft:copper_ingot"
     }
   ],
