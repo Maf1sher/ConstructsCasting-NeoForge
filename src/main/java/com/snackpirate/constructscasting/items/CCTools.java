@@ -30,7 +30,7 @@ import slimeknights.tconstruct.tools.TinkerToolParts;
 
 import slimeknights.tconstruct.tools.stats.*;
 
-import java.util.Set;
+import com.google.common.collect.ImmutableSet;
 
 public class CCTools {
 	public static class CCToolDefinitions extends AbstractToolDefinitionDataProvider {
@@ -99,7 +99,7 @@ public class CCTools {
 					.module(ToolSlotsModule.builder()
 							.slots(SlotType.UPGRADE, 1)
 							.build())
-					.module(new StatTypesToolNameModule(Set.of(CCMaterialStats.Statless.ADORNMENT.getIdentifier())))
+					.module(new StatTypesToolNameModule(ImmutableSet.of(CCMaterialStats.Statless.ADORNMENT.getIdentifier())))
 					.build();
 			define(ELDRITCH_STAFF)
 					.module(ToolSlotsModule.builder()
@@ -126,7 +126,7 @@ public class CCTools {
 							.build())
 					.module(ToolTraitsModule.builder()
 							.trait(CCModifiers.CASTING).build())
-					.module(new StatTypesToolNameModule(Set.of(CCMaterialStats.Statless.ADORNMENT.getIdentifier())))
+					.module(new StatTypesToolNameModule(ImmutableSet.of(CCMaterialStats.Statless.ADORNMENT.getIdentifier())))
 					.module(DualOptionInteraction.INSTANCE);
 			define(BATTLESTAFF)
 					.largeToolStartingSlots()
@@ -147,7 +147,7 @@ public class CCTools {
                             .set(ToolStats.ATTACK_DAMAGE, 1.25f)
                             .set(ToolStats.MINING_SPEED, 0.25f)
                             .set(ToolStats.DURABILITY, 1.5f).build()))
-					.module(new StatTypesToolNameModule(Set.of(HeadMaterialStats.ID, CCMaterialStats.Statless.ADORNMENT.getIdentifier())))
+					.module(new StatTypesToolNameModule(ImmutableSet.of(HeadMaterialStats.ID, CCMaterialStats.Statless.ADORNMENT.getIdentifier())))
 					.module(DualOptionInteraction.INSTANCE).build();
 
 			ToolModule[] swordHarvest = {
