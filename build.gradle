@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.140'
+    id 'net.neoforged.moddev' version '2.0.148'
 }
 
 group = mod_group_id
@@ -41,31 +41,26 @@ repositories {
             includeGroup "software.bernie.geckolib"
         }
     }
-    // Local Mantle-NeoForge build
+    // Local Mantle-NeoForge and TinkersConstruct-NeoForge builds
     flatDir {
-        dir '../../Tinkers-1.21.1-NeoForge/Mantle-NeoForge/build/libs'
-    }
-    // Local TCon-NeoForge build
-    flatDir {
-        dir '../../Tinkers-1.21.1-NeoForge/TinkersConstruct-NeoForge/build/libs'
-    }
-    // Local mods (GeckoLib 4.8.4 runtime jar)
-    flatDir {
-        dir "${System.getProperty('user.home')}/Documents/curseforge/minecraft/Instances/Tinkers-NeoForge/mods"
+        dirs '../Mantle-NeoForge/build/libs',
+             '../TinkersConstruct-NeoForge/build/libs'
     }
 }
 
 dependencies {
     // TCon + Mantle (local builds)
-    implementation fileTree(dir: '../../Tinkers-1.21.1-NeoForge/Mantle-NeoForge/build/libs', include: 'Mantle-*.jar')
-    implementation fileTree(dir: '../../Tinkers-1.21.1-NeoForge/TinkersConstruct-NeoForge/build/libs', include: 'TinkersConstruct-*.jar')
+    implementation fileTree(dir: '../Mantle-NeoForge/build/libs',
+            include: 'Mantle-*.jar', exclude: ['*-sources.jar', '*-javadoc.jar'])
+    implementation fileTree(dir: '../TinkersConstruct-NeoForge/build/libs',
+            include: 'TinkersConstruct-*.jar', exclude: ['*-sources.jar', '*-javadoc.jar'])
 
-    // ISS full mod (CurseMaven - includes API and non-API classes)
-    implementation "curse.maven:irons-spells-n-spellbooks-855414:8237097"
+    // ISS full mod (Iron's maven - includes API and non-API classes)
+    implementation "io.redspace:irons_spellbooks:${irons_spells_version}"
     runtimeOnly "io.redspace:irons_lib:${irons_lib_version}"
 
-    // GeckoLib (local runtime version used by ISS)
-    implementation "software.bernie.geckolib:geckolib-neoforge-1.21.1:4.8.4"
+    // GeckoLib
+    implementation "software.bernie.geckolib:geckolib-neoforge-1.21.1:${geckolib_version}"
 
     // Curios
     implementation "curse.maven:curios-309927:6529130"
