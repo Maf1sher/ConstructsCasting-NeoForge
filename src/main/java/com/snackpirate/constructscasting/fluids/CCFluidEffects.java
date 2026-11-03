@@ -36,26 +36,26 @@ public class CCFluidEffects extends AbstractFluidEffectProvider {
 	protected void addFluids() {
 		addFluid(CCFluids.Tags.essenceOf("arcane"), FluidValues.SIP).addEntityEffect(ADD_MANA);
 		addFluid(CCFluids.Tags.essenceOf("cinder"), FluidValues.SIP).addEntityEffect(DEPLETE_MANA);
-		addFluid(CCFluids.Tags.MOLTEN_ARCANIUM, FluidValues.NUGGET).fireDamage(2f).addEffect(FluidMobEffect.builder().effect(MobEffects.magicEmpowerment.get(), 100, 1), TimeAction.SET);
-		addFluid(CCFluids.Tags.MOLTEN_EXILITE, FluidValues.NUGGET).fireDamage(2f).addEffect(FluidMobEffect.builder().effect(MobEffects.magicVulnerability.get(), 100, 1), TimeAction.SET);
-		addFluid(CCFluids.Tags.essenceOf("blood"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.bloodEmpowerment.get(), 100, 1), TimeAction.SET);
-		addFluid(CCFluids.Tags.essenceOf("ender"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.enderEmpowerment.get(), 100, 1), TimeAction.SET);
-		addFluid(CCFluids.Tags.essenceOf("evocation"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.evocationEmpowerment.get(), 100, 1), TimeAction.SET);
-		addFluid(CCFluids.Tags.essenceOf("fire"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.fireEmpowerment.get(), 100, 1), TimeAction.SET);
-		addFluid(CCFluids.Tags.essenceOf("holy"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.holyEmpowerment.get(), 100, 1), TimeAction.SET);
-		addFluid(CCFluids.Tags.essenceOf("ice"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.iceEmpowerment.get(), 100, 1), TimeAction.SET);
-		addFluid(CCFluids.Tags.essenceOf("lightning"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.lightningEmpowerment.get(), 100, 1), TimeAction.SET);
-		addFluid(CCFluids.Tags.essenceOf("nature"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.natureEmpowerment.get(), 100, 1), TimeAction.SET);
-		addFluid(CCFluids.moltenMithril, FluidValues.NUGGET).addEffect(FluidMobEffect.builder().effect(MobEffects.recoveryEmpowerment.get(), 100, 2), TimeAction.SET);
+		addFluid(CCFluids.Tags.MOLTEN_ARCANIUM, FluidValues.NUGGET).fireDamage(2f).addEffect(FluidMobEffect.builder().effect(MobEffects.magicEmpowerment, 100, 1), TimeAction.SET);
+		addFluid(CCFluids.Tags.MOLTEN_EXILITE, FluidValues.NUGGET).fireDamage(2f).addEffect(FluidMobEffect.builder().effect(MobEffects.magicVulnerability, 100, 1), TimeAction.SET);
+		addFluid(CCFluids.Tags.essenceOf("blood"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.bloodEmpowerment, 100, 1), TimeAction.SET);
+		addFluid(CCFluids.Tags.essenceOf("ender"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.enderEmpowerment, 100, 1), TimeAction.SET);
+		addFluid(CCFluids.Tags.essenceOf("evocation"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.evocationEmpowerment, 100, 1), TimeAction.SET);
+		addFluid(CCFluids.Tags.essenceOf("fire"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.fireEmpowerment, 100, 1), TimeAction.SET);
+		addFluid(CCFluids.Tags.essenceOf("holy"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.holyEmpowerment, 100, 1), TimeAction.SET);
+		addFluid(CCFluids.Tags.essenceOf("ice"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.iceEmpowerment, 100, 1), TimeAction.SET);
+		addFluid(CCFluids.Tags.essenceOf("lightning"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.lightningEmpowerment, 100, 1), TimeAction.SET);
+		addFluid(CCFluids.Tags.essenceOf("nature"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.natureEmpowerment, 100, 1), TimeAction.SET);
+		addFluid(CCFluids.moltenMithril, FluidValues.NUGGET).addEffect(FluidMobEffect.builder().effect(MobEffects.recoveryEmpowerment, 100, 2), TimeAction.SET);
 		addFluid(CCFluids.potatoStew, FluidValues.SIP).addEntityEffect(new RestoreHungerFluidEffect(2, 0.48f, false, ItemOutput.fromItem(CCItems.potatoStewBowl.get())));
-		addFluid(CCFluids.poisonousPotatoStew, FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffectRegistry.BLIGHT.get(), 100, 1), TimeAction.SET);
+		addFluid(CCFluids.poisonousPotatoStew, FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffectRegistry.BLIGHT, 100, 1), TimeAction.SET);
 
 		addFluid(CCFluids.squidInk, FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(net.minecraft.world.effect.MobEffects.BLINDNESS, 100, 1), TimeAction.SET);
-		addFluid(CCFluids.Tags.ink("common"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.inkyImpairment.get(), 160, 1), TimeAction.SET);
-		addFluid(CCFluids.Tags.ink("uncommon"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.inkyImpairment.get(), 170, 2), TimeAction.SET);
-		addFluid(CCFluids.Tags.ink("rare"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.inkyImpairment.get(), 180, 3), TimeAction.SET);
-		addFluid(CCFluids.Tags.ink("epic"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.inkyImpairment.get(), 190, 4), TimeAction.SET);
-		addFluid(CCFluids.Tags.ink("legendary"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.inkyImpairment.get(), 200, 5), TimeAction.SET);
+		addFluid(CCFluids.Tags.ink("common"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.inkyImpairment, 160, 1), TimeAction.SET);
+		addFluid(CCFluids.Tags.ink("uncommon"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.inkyImpairment, 170, 2), TimeAction.SET);
+		addFluid(CCFluids.Tags.ink("rare"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.inkyImpairment, 180, 3), TimeAction.SET);
+		addFluid(CCFluids.Tags.ink("epic"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.inkyImpairment, 190, 4), TimeAction.SET);
+		addFluid(CCFluids.Tags.ink("legendary"), FluidValues.SIP).addEffect(FluidMobEffect.builder().effect(MobEffects.inkyImpairment, 200, 5), TimeAction.SET);
 	}
 
 	@Override

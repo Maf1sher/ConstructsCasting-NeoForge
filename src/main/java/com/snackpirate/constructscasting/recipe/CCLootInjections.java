@@ -2,25 +2,28 @@ package com.snackpirate.constructscasting.recipe;
 
 import com.snackpirate.constructscasting.items.CCItems;
 import io.redspace.ironsspellbooks.IronsSpellbooks;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemDamageFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import slimeknights.mantle.loot.AbstractLootTableInjectionProvider;
-import slimeknights.mantle.loot.LootTableInjection;
+import slimeknights.mantle.loot.injection.AbstractLootTableInjectionProvider;
+import slimeknights.mantle.loot.injection.LootTableInjection;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.json.loot.AddToolDataFunction;
 import slimeknights.tconstruct.library.json.predicate.material.MaterialPredicate;
 import slimeknights.tconstruct.library.materials.RandomMaterial;
 import slimeknights.tconstruct.tools.TinkerTools;
 
+import java.util.concurrent.CompletableFuture;
+
 public class CCLootInjections extends AbstractLootTableInjectionProvider {
-	public CCLootInjections(PackOutput output, String domain) {
-		super(output, domain);
+	public CCLootInjections(PackOutput output, String domain, CompletableFuture<HolderLookup.Provider> registries) {
+		super(output, domain, registries);
 	}
 
 	@Override
-	protected void addTables() {
+	protected void addTables(HolderLookup.Provider lookup) {
 		//TODO: when the 1.21 backport rolls around, add flamberges to citadel vault loot
 		RandomMaterial random = RandomMaterial.ancient();
 		RandomMaterial randomHighTier = RandomMaterial.random().tier(3, 4).material(MaterialPredicate.tag(TinkerTags.Materials.EXCLUDE_FROM_LOOT).inverted()).build();

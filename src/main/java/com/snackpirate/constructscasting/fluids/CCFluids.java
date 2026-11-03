@@ -28,7 +28,7 @@ import slimeknights.mantle.registration.object.FlowingFluidObject;
 import slimeknights.mantle.registration.object.FluidObject;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.fluids.TinkerFluids;
-import slimeknights.tconstruct.fluids.block.BurningLiquidBlock;
+import slimeknights.mantle.block.fluid.BurningLiquidBlock;
 import slimeknights.tconstruct.fluids.data.FluidBucketModelProvider;
 import slimeknights.tconstruct.library.modifiers.fluid.FluidEffect;
 import slimeknights.tconstruct.library.recipe.FluidValues;
@@ -133,42 +133,42 @@ public class CCFluids {
 		@Override
 		public void addTextures() {
 			ResourceLocation potion = ResourceLocation.parse("tconstruct:fluid/potion/");
-			texture(arcaneEssence)   .textures(potion, false, false).color(0xff79c0f3);
-			texture(fireEssence)     .textures(potion, false, false).color(0xfffc9269);
-			texture(iceEssence)      .textures(potion, false, false).color(0xff75f1ec);
-			texture(lightningEssence).textures(potion, false, false).color(0xff8273e0);
-			texture(enderEssence)    .textures(potion, false, false).color(0xffe073fc);
-			texture(holyEssence)     .textures(potion, false, false).color(0xfffce969);
-			texture(bloodEssence)    .textures(potion, false, false).color(0xffd67369);
-			texture(evocationEssence).textures(potion, false, false).color(0xff75fc79);
-			texture(natureEssence)   .textures(potion, false, false).color(0xffb0f869);
-			texture(cinderEssence)   .textures(potion, false, false).color(0xff6a2b00);
+			texture(arcaneEssence)   .root(potion).still().flowing().color(0xff79c0f3);
+			texture(fireEssence)     .root(potion).still().flowing().color(0xfffc9269);
+			texture(iceEssence)      .root(potion).still().flowing().color(0xff75f1ec);
+			texture(lightningEssence).root(potion).still().flowing().color(0xff8273e0);
+			texture(enderEssence)    .root(potion).still().flowing().color(0xffe073fc);
+			texture(holyEssence)     .root(potion).still().flowing().color(0xfffce969);
+			texture(bloodEssence)    .root(potion).still().flowing().color(0xffd67369);
+			texture(evocationEssence).root(potion).still().flowing().color(0xff75fc79);
+			texture(natureEssence)   .root(potion).still().flowing().color(0xffb0f869);
+			texture(cinderEssence)   .root(potion).still().flowing().color(0xff6a2b00);
 
-			texture(liquidLightning).textures(potion, false, false).color(0xffd7eef5);
-			texture(potatoStew).textures(ResourceLocation.parse("tconstruct:fluid/food/stew/"), false, false).color(0xffe9ba61);
-			texture(poisonousPotatoStew).textures(ResourceLocation.parse("tconstruct:fluid/food/stew/"), false, false).color(0xffedea61);
+			texture(liquidLightning).root(potion).still().flowing().color(0xffd7eef5);
+			texture(potatoStew).root(ResourceLocation.parse("tconstruct:fluid/food/stew/")).still().flowing().color(0xffe9ba61);
+			texture(poisonousPotatoStew).root(ResourceLocation.parse("tconstruct:fluid/food/stew/")).still().flowing().color(0xffedea61);
 			ResourceLocation molten = ResourceLocation.parse("tconstruct:fluid/molten/");
 
-			texture(moltenArcanium).textures(ConstructsCasting.id("fluid/arcanium/"),      false, false).color(0xffffffff);
-			texture(moltenExilite) .textures(molten,      false, false).color(0xff5a5b5c);
+			texture(moltenArcanium).root(ConstructsCasting.id("fluid/arcanium/")).still().flowing().color(0xffffffff);
+			texture(moltenExilite) .root(molten).still().flowing().color(0xff5a5b5c);
 			texture(moltenMithril).root(molten).still().flowing().color(0xffacf4f9).overlay().camera();
 			texture(moltenPyrium).root(molten).still().flowing().color(0xffe5a028).overlay().camera();
-			texture(moltenArcaneSalvage).textures(molten, false, false).color(0xffffffff);
+			texture(moltenArcaneSalvage).root(molten).still().flowing().color(0xffffffff);
 			ResourceLocation inky = ResourceLocation.parse("tconstruct:fluid/slime/venom/");
-			texture(squidInk)	   .textures(inky, false, false).color(0xff180030);
-			texture(commonInk)     .textures(inky, false, false).color(0xff2d2d2d);
-			texture(uncommonInk)   .textures(inky, false, false).color(0xff124300);
-			texture(rareInk)       .textures(inky, false, false).color(0xff0f3844);
-			texture(epicInk)       .textures(inky, false, false).color(0xff442d5d);
-			texture(legendaryInk)  .textures(inky, false, false).color(0xffd6a200);
+			texture(squidInk)	   .root(inky).still().flowing().color(0xff180030);
+			texture(commonInk)     .root(inky).still().flowing().color(0xff2d2d2d);
+			texture(uncommonInk)   .root(inky).still().flowing().color(0xff124300);
+			texture(rareInk)       .root(inky).still().flowing().color(0xff0f3844);
+			texture(epicInk)       .root(inky).still().flowing().color(0xff442d5d);
+			texture(legendaryInk)  .root(inky).still().flowing().color(0xffd6a200);
 
-			texture(moltenCrystallizedCoral).textures(molten, false, false).color(0xcfd48996);
-			texture(gasifiedRedstone).textures(ResourceLocation.parse("tconstruct:fluid/slime/ichor/"), false, false).color(0xffff0f01);
-			texture(moltenPearl).textures(molten, false, false).color(0xfff28ba6);
+			texture(moltenCrystallizedCoral).root(molten).still().flowing().color(0xcfd48996);
+			texture(gasifiedRedstone).root(ResourceLocation.parse("tconstruct:fluid/slime/ichor/")).still().flowing().color(0xffff0f01);
+			texture(moltenPearl).root(molten).still().flowing().color(0xfff28ba6);
 
-			texture(abyssalEssence).textures(potion, false, false).color(0xff6400fc);
-			texture(technomancyEssence).textures(potion, false, false).color(0xffb1bcc3);
-			texture(aquaEssence).textures(potion, false, false).color(0xff56aada);
+			texture(abyssalEssence).root(potion).still().flowing().color(0xff6400fc);
+			texture(technomancyEssence).root(potion).still().flowing().color(0xffb1bcc3);
+			texture(aquaEssence).root(potion).still().flowing().color(0xff56aada);
 			texture(soundEssence).root(potion).still().flowing().color(0xff37f1aa);
 		}
 

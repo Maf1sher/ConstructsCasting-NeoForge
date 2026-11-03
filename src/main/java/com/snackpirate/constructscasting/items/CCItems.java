@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
-import slimeknights.mantle.registration.object.ItemObject;
+import net.neoforged.neoforge.registries.DeferredItem;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.common.registration.CastItemObject;
 import slimeknights.tconstruct.common.registration.ItemDeferredRegisterExtension;
@@ -49,33 +49,33 @@ import static slimeknights.tconstruct.common.TinkerTags.Items.*;
 
 public class CCItems {
 	public static final ItemDeferredRegisterExtension ITEMS = new ItemDeferredRegisterExtension(ConstructsCasting.MOD_ID);
-	public static final ItemObject<ContainerFoodItem.FluidContainerFoodItem> potatoStewBowl = ITEMS.register("potato_stew", () -> new ContainerFoodItem.FluidContainerFoodItem(new Item.Properties().food(TinkerFood.MEAT_SOUP).stacksTo(1).craftRemainder(Items.BOWL), () -> new FluidStack(CCFluids.potatoStew.get(), FluidValues.BOWL)));
-	public static final ItemObject<ContainerFoodItem.FluidContainerFoodItem> poisonousPotatoStewBowl = ITEMS.register("poisonous_potato_stew", () -> new ContainerFoodItem.FluidContainerFoodItem(new Item.Properties().food(TinkerFood.VENOM_BOTTLE).stacksTo(1).craftRemainder(Items.BOWL), () -> new FluidStack(CCFluids.poisonousPotatoStew.get(), FluidValues.BOWL)));
+	public static final DeferredItem<ContainerFoodItem.FluidContainerFoodItem> potatoStewBowl = ITEMS.register("potato_stew", () -> new ContainerFoodItem.FluidContainerFoodItem(new Item.Properties().food(TinkerFood.MEAT_SOUP).stacksTo(1).craftRemainder(Items.BOWL), () -> new FluidStack(CCFluids.potatoStew.get(), FluidValues.BOWL)));
+	public static final DeferredItem<ContainerFoodItem.FluidContainerFoodItem> poisonousPotatoStewBowl = ITEMS.register("poisonous_potato_stew", () -> new ContainerFoodItem.FluidContainerFoodItem(new Item.Properties().food(TinkerFood.VENOM_BOTTLE).stacksTo(1).craftRemainder(Items.BOWL), () -> new FluidStack(CCFluids.poisonousPotatoStew.get(), FluidValues.BOWL)));
 
-	public static final ItemObject<Item> exiliteIngot = ITEMS.register("exilite_ingot", () -> new Item(new Item.Properties().stacksTo(64)));
-	public static final ItemObject<Item> exiliteNugget = ITEMS.register("exilite_nugget", () -> new Item(new Item.Properties().stacksTo(64)));
+	public static final DeferredItem<Item> exiliteIngot = ITEMS.register("exilite_ingot", () -> new Item(new Item.Properties().stacksTo(64)));
+	public static final DeferredItem<Item> exiliteNugget = ITEMS.register("exilite_nugget", () -> new Item(new Item.Properties().stacksTo(64)));
 
-	public static final ItemObject<Item> arcaneNugget = ITEMS.register("arcane_nugget", () -> new Item(new Item.Properties().stacksTo(65)));
-	public static final ItemObject<Item> mithrilNugget = ITEMS.register("mithril_nugget", () -> new Item(new Item.Properties().stacksTo(64).rarity(Rarity.RARE)));
-	public static final ItemObject<Item> pyriumNugget = ITEMS.register("pyrium_nugget", () -> new Item(new Item.Properties().stacksTo(64).rarity(CinderousRarity.CINDEROUS_RARITY_PROXY.getValue())));
+	public static final DeferredItem<Item> arcaneNugget = ITEMS.register("arcane_nugget", () -> new Item(new Item.Properties().stacksTo(65)));
+	public static final DeferredItem<Item> mithrilNugget = ITEMS.register("mithril_nugget", () -> new Item(new Item.Properties().stacksTo(64).rarity(Rarity.RARE)));
+	public static final DeferredItem<Item> pyriumNugget = ITEMS.register("pyrium_nugget", () -> new Item(new Item.Properties().stacksTo(64).rarity(CinderousRarity.CINDEROUS_RARITY_PROXY.getValue())));
 
-	public static final ItemObject<Item> wizardslimeBall = ITEMS.register("wizardslime_ball", () -> new Item(new Item.Properties().stacksTo(64)));
-	public static final ItemObject<Item> slimeRune = ITEMS.register("slime_rune", () -> new Item(new Item.Properties().stacksTo(64)));
+	public static final DeferredItem<Item> wizardslimeBall = ITEMS.register("wizardslime_ball", () -> new Item(new Item.Properties().stacksTo(64)));
+	public static final DeferredItem<Item> slimeRune = ITEMS.register("slime_rune", () -> new Item(new Item.Properties().stacksTo(64)));
 
-	public static final ItemObject<Item> exiliteReinforcement = ITEMS.register("exilite_reinforcement", () -> new Item(new Item.Properties().stacksTo(64)));
-	public static final ItemObject<Item> slimySpellbook = ITEMS.register("tinkerers_spellbook", () -> new ModifiableSpellbookItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC), 6, CCTools.CCToolDefinitions.SLIMY_SPELLBOOK));
+	public static final DeferredItem<Item> exiliteReinforcement = ITEMS.register("exilite_reinforcement", () -> new Item(new Item.Properties().stacksTo(64)));
+	public static final DeferredItem<Item> slimySpellbook = ITEMS.register("tinkerers_spellbook", () -> new ModifiableSpellbookItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC), 6, CCTools.CCToolDefinitions.SLIMY_SPELLBOOK));
 	//will fully implement later vvv
-	public static final ItemObject<ModifiableSpellbookItem> travellersSpellbook = ITEMS.register("travellers_spellbook", () -> new ModifiableSpellbookItem(new Item.Properties().stacksTo(1), 12, CCTools.CCToolDefinitions.TRAVELLERS_SPELLBOOK));
-	public static final ItemObject<ModifiableSpellbookItem> platedSpellbook = ITEMS.register("plated_spellbook", () -> new ModifiableSpellbookItem(new Item.Properties().stacksTo(1), 12, CCTools.CCToolDefinitions.PLATED_SPELLBOOK));
-	public static final ItemObject<Item> eldritchStaff = ITEMS.register("eldritch_staff", () -> new ModifiableItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE), CCTools.CCToolDefinitions.ELDRITCH_STAFF));
+	public static final DeferredItem<ModifiableSpellbookItem> travellersSpellbook = ITEMS.register("travellers_spellbook", () -> new ModifiableSpellbookItem(new Item.Properties().stacksTo(1), 12, CCTools.CCToolDefinitions.TRAVELLERS_SPELLBOOK));
+	public static final DeferredItem<ModifiableSpellbookItem> platedSpellbook = ITEMS.register("plated_spellbook", () -> new ModifiableSpellbookItem(new Item.Properties().stacksTo(1), 12, CCTools.CCToolDefinitions.PLATED_SPELLBOOK));
+	public static final DeferredItem<Item> eldritchStaff = ITEMS.register("eldritch_staff", () -> new ModifiableItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE), CCTools.CCToolDefinitions.ELDRITCH_STAFF));
 
-    public static final ItemObject<ToolPartItem> spellbookPlating = ITEMS.register("spellbook_plating", () -> new ToolPartItem(new Item.Properties(), CCMaterialStats.Statless.ADORNMENT.getIdentifier()));
-	public static final ItemObject<ToolPartItem> facetedGem = ITEMS.register("faceted_gem", () -> new ToolPartItem(new Item.Properties(), CCMaterialStats.Statless.ADORNMENT.getIdentifier()));
+    public static final DeferredItem<ToolPartItem> spellbookPlating = ITEMS.register("spellbook_plating", () -> new ToolPartItem(new Item.Properties(), CCMaterialStats.Statless.ADORNMENT.getIdentifier()));
+	public static final DeferredItem<ToolPartItem> facetedGem = ITEMS.register("faceted_gem", () -> new ToolPartItem(new Item.Properties(), CCMaterialStats.Statless.ADORNMENT.getIdentifier()));
 
-    public static final ItemObject<ToolPartItem> pages = ITEMS.register("pages", () -> new ToolPartItem(new Item.Properties(), MagicClothMaterialStats.ID));
+    public static final DeferredItem<ToolPartItem> pages = ITEMS.register("pages", () -> new ToolPartItem(new Item.Properties(), MagicClothMaterialStats.ID));
 
-	public static final ItemObject<ToolPartItem> spellbookCover = ITEMS.register("spellbook_cover", () -> new ToolPartItem(new Item.Properties(), MagicBaseMaterialStats.ID));
-	public static final ItemObject<ToolPartItem> wandRod = ITEMS.register("wand_rod", () -> new ToolPartItem(new Item.Properties(), MagicBaseMaterialStats.ID));
+	public static final DeferredItem<ToolPartItem> spellbookCover = ITEMS.register("spellbook_cover", () -> new ToolPartItem(new Item.Properties(), MagicBaseMaterialStats.ID));
+	public static final DeferredItem<ToolPartItem> wandRod = ITEMS.register("wand_rod", () -> new ToolPartItem(new Item.Properties(), MagicBaseMaterialStats.ID));
 
     public static final CastItemObject spellbookPlatingCast = ITEMS.registerCast("spellbook_plating", new Item.Properties());
 	public static final CastItemObject facetedGemCast = ITEMS.registerCast("faceted_gem", new Item.Properties());
@@ -83,10 +83,10 @@ public class CCItems {
 //		if (!regObj.get().getDefaultInstance().is(Tags.HIDE_CREATIVE)) output.accept(regObj.get());
 //
 //	});
-	public static final ItemObject<ModifiableMagicStaff> wand = ITEMS.register("wand", () -> new ModifiableMagicStaff(new Item.Properties().stacksTo(1), CCTools.CCToolDefinitions.WAND));
-	public static final ItemObject<ModifiableMagicStaff> battlestaff = ITEMS.register("battlestaff", () -> new ModifiableMagicStaff(new Item.Properties().stacksTo(1), CCTools.CCToolDefinitions.BATTLESTAFF));
-	public static final ItemObject<ModifiableSwordItem> flamberge = ITEMS.register("flamberge", () -> new ModifiableSwordItem(new Item.Properties().stacksTo(1), CCTools.CCToolDefinitions.FLAMBERGE));
-//	public static final ItemObject<ArtificersGuideItem> artificersGuide = ITEMS.register("artificers_guide", () -> new ArtificersGuideItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
+	public static final DeferredItem<ModifiableMagicStaff> wand = ITEMS.register("wand", () -> new ModifiableMagicStaff(new Item.Properties().stacksTo(1), CCTools.CCToolDefinitions.WAND));
+	public static final DeferredItem<ModifiableMagicStaff> battlestaff = ITEMS.register("battlestaff", () -> new ModifiableMagicStaff(new Item.Properties().stacksTo(1), CCTools.CCToolDefinitions.BATTLESTAFF));
+	public static final DeferredItem<ModifiableSwordItem> flamberge = ITEMS.register("flamberge", () -> new ModifiableSwordItem(new Item.Properties().stacksTo(1), CCTools.CCToolDefinitions.FLAMBERGE));
+//	public static final DeferredItem<ArtificersGuideItem> artificersGuide = ITEMS.register("artificers_guide", () -> new ArtificersGuideItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
 
     public static void addTabItems(CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
         output.accept(potatoStewBowl);

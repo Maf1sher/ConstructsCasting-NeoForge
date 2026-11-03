@@ -4,6 +4,7 @@ import com.snackpirate.constructscasting.fluids.CCFluids;
 import com.snackpirate.constructscasting.items.CCItems;
 import io.redspace.ironsspellbooks.registries.FluidRegistry;
 import io.redspace.ironsspellbooks.registries.ItemRegistry;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -12,18 +13,21 @@ import net.minecraft.world.level.material.Fluid;
 import slimeknights.mantle.fluid.transfer.AbstractFluidContainerTransferProvider;
 import slimeknights.mantle.fluid.transfer.FillFluidContainerTransfer;
 import slimeknights.mantle.recipe.helper.ItemOutput;
-import slimeknights.mantle.recipe.ingredient.FluidIngredient;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import slimeknights.tconstruct.library.recipe.FluidValues;
 
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
 public class CCFluidTransfer extends AbstractFluidContainerTransferProvider {
-	public CCFluidTransfer(PackOutput packOutput, String modId) {
-		super(packOutput, modId);
+	public CCFluidTransfer(PackOutput packOutput, String modId, CompletableFuture<HolderLookup.Provider> registries) {
+		super(packOutput, modId, registries);
 	}
 
 	@Override
-	protected void addTransfers() {
-		addFillEmpty("potato_stew_", CCItems.potatoStewBowl, Items.BOWL, CCFluids.potatoStew, FluidValues.BOWL, false);
-		addFillEmpty("poisonous_potato_stew_", CCItems.poisonousPotatoStewBowl, Items.BOWL, CCFluids.poisonousPotatoStew, FluidValues.BOWL, false);
+	protected void addTransfers(HolderLookup.Provider lookup) {
+		addFillEmpty("potato_stew_", CCItems.potatoStewBowl, Items.BOWL, CCFluids.potatoStew, FluidValues.BOWL, List.of());
+		addFillEmpty("poisonous_potato_stew_", CCItems.poisonousPotatoStewBowl, Items.BOWL, CCFluids.poisonousPotatoStew, FluidValues.BOWL, List.of());
 		addBottleFill("blood", ItemRegistry.BLOOD_VIAL.get(), FluidRegistry.BLOOD.get());
 		addBottleFill("lightning", ItemRegistry.LIGHTNING_BOTTLE.get(), CCFluids.liquidLightning.get());
 		addBottleFill("ice_venom", ItemRegistry.ICE_VENOM_VIAL.get(), FluidRegistry.ICE_VENOM_FLUID.get());
@@ -45,7 +49,7 @@ public class CCFluidTransfer extends AbstractFluidContainerTransferProvider {
 		addBottleFill("elixir/oaksin", ItemRegistry.OAKSKIN_ELIXIR.get(), FluidRegistry.OAKSKIN_ELIXIR_FLUID.get());
 	}
 	protected void addBottleFill(String name, ItemLike output, Fluid fluid) {
-		addTransfer(name + "_fill", new FillFluidContainerTransfer(Ingredient.of(Items.GLASS_BOTTLE), ItemOutput.fromItem(output), FluidIngredient.of(fluid, FluidValues.BOTTLE)));
+		addTransfer(name + "_fill", new FillFluidContainerTransfer(Ingredient.of(Items.GLASS_BOTTLE), ItemOutput.fromItem(output), SizedFluidIngredient.of(fluid, FluidValues.BOTTLE)));
 	}
 
 	@Override

@@ -89,7 +89,7 @@ public class ScrollMeltingRecipe implements IMeltingRecipe {
 
 	@Override
 	public boolean matches(IMeltingContainer pContainer, Level pLevel) {
-		return pContainer.hasAnyMatching((stack) -> stack.is(ItemRegistry.SCROLL.get()));
+		return pContainer.getStack().is(ItemRegistry.SCROLL.get());
 	}
 
 	public ResourceLocation getId() {

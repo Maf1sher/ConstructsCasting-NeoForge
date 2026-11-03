@@ -19,6 +19,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.component.DataComponents;
@@ -40,6 +41,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.mantle.client.SafeClientAccess;
 import slimeknights.mantle.client.TooltipKey;
+import slimeknights.mantle.util.DataComponentHelper;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.build.ConditionalStatModifierHook;
@@ -142,7 +144,10 @@ public class ModifiableSpellbookItem extends SpellBook implements IModifiableDis
 
 	@Override
 	public void verifyComponentsAfterLoad(ItemStack stack) {
-		ToolStack.verifyTag(this, stack, getToolDefinition());
+		CompoundTag tag = DataComponentHelper.getCustomData(stack);
+		if (tag != null) {
+			ToolStack.verifyTag(this, tag, getToolDefinition());
+		}
 		ToolStack.ensureInitialized(stack, getToolDefinition());
 	}
 
@@ -166,7 +171,7 @@ public class ModifiableSpellbookItem extends SpellBook implements IModifiableDis
 		for (ModifierEntry entry : tool.getModifierList()) {
 			entry.getHook(ModifierHooks.ATTRIBUTES).addAttributes(tool, entry, EquipmentSlot.LEGS, (attr, mod) -> {
                 AttributeModifier newMod = new AttributeModifier(mod.id(), mod.amount(), mod.operation());
-                attributeBuilder.put(net.minecraft.core.Holder.direct(attr), newMod);
+                attributeBuilder.put(attr, newMod);
             });
 		}
 
@@ -187,8 +192,8 @@ public class ModifiableSpellbookItem extends SpellBook implements IModifiableDis
 			entry.getHook(ModifierHooks.EQUIPMENT_CHANGE).onUnequip(tool, entry, context);
             entry.getHook(ModifierHooks.ATTRIBUTES).addAttributes(tool, entry, EquipmentSlot.LEGS, (attr, mod) -> {
                 AttributeModifier newMod = new AttributeModifier(mod.id(), mod.amount(), mod.operation());
-                if (slotContext.entity().getAttribute(net.minecraft.core.Holder.direct(attr)) != null) {
-                    slotContext.entity().getAttribute(net.minecraft.core.Holder.direct(attr)).removeModifier(newMod);
+                if (slotContext.entity().getAttribute(attr) != null) {
+                    slotContext.entity().getAttribute(attr).removeModifier(newMod);
                 }
             });
 		}
@@ -197,7 +202,7 @@ public class ModifiableSpellbookItem extends SpellBook implements IModifiableDis
 
     @Override
 	public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
-		return ToolStack.from(stack).getModifierLevel(CCModifiers.ENCYCLOPEDIC.getModifierId()) < 1;
+		return ToolStack.from(stack).getModifierLevel(CCModifiers.ENCYCLOPEDIC.getId()) < 1;
 	}
 
 	protected static boolean shouldInteract(@Nullable LivingEntity player, ToolStack toolStack, InteractionHand hand) {

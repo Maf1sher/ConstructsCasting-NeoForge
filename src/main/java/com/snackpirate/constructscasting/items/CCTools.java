@@ -161,7 +161,7 @@ public class CCTools {
 							.stat(HandleMaterialStats.ID)
 							.build())
 					.module(ancientThreeParts)
-					.module(new MaterialTraitsModule(PlatingMaterialStats.LEGGINGS.getStatId(), 1), ToolHooks.REBALANCED_TRAIT)
+					.module(new MaterialTraitsModule(PlatingMaterialStats.LEGGINGS.getId(), 1), ToolHooks.REBALANCED_TRAIT)
 					.module(ToolSlotsModule.builder()
 							.slots(SlotType.ABILITY, 1)
 							.slots(SlotType.UPGRADE, 2)

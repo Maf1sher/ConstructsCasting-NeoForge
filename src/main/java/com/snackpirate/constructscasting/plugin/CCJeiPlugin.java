@@ -16,16 +16,16 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.recipe.helper.FluidOutput;
+import slimeknights.tconstruct.library.recipe.display.DisplayRecipe;
+import slimeknights.tconstruct.library.recipe.melting.IDisplayableMeltingRecipe;
 import slimeknights.tconstruct.library.recipe.melting.MeltingRecipe;
 import slimeknights.tconstruct.plugin.jei.TConstructJEIConstants;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -38,13 +38,13 @@ public class CCJeiPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipes(@NotNull IRecipeRegistration register) {
-		List<MeltingRecipe> meltingRecipes = getScrollRecipes(register.getVanillaRecipeFactory()).filter(recipe -> !recipe.getInput().isEmpty()).toList();
-		register.addRecipes(TConstructJEIConstants.MELTING, wrapRecipes(meltingRecipes, MeltingRecipe::getId));
-		register.addRecipes(TConstructJEIConstants.FOUNDRY, wrapRecipes(meltingRecipes, MeltingRecipe::getId));
-	}
-
-	private static <T extends net.minecraft.world.item.crafting.Recipe<?>> List<RecipeHolder<T>> wrapRecipes(List<T> recipes, Function<T, ResourceLocation> idGetter) {
-		return recipes.stream().<RecipeHolder<T>>map(recipe -> new RecipeHolder<>(idGetter.apply(recipe), recipe)).toList();
+		List<IDisplayableMeltingRecipe> meltingRecipes = getScrollRecipes(register.getVanillaRecipeFactory())
+				.filter(recipe -> !recipe.getInput().isEmpty())
+				.<IDisplayableMeltingRecipe>map(recipe -> recipe)
+				.toList();
+		List<DisplayRecipe<IDisplayableMeltingRecipe>> displayRecipes = DisplayRecipe.of(ConstructsCasting.id("scroll_melting"), meltingRecipes);
+		register.addRecipes(TConstructJEIConstants.MELTING, displayRecipes);
+		register.addRecipes(TConstructJEIConstants.FOUNDRY, displayRecipes);
 	}
 
 	private static Stream<MeltingRecipe> getScrollRecipes(IVanillaRecipeFactory vanillaRecipeFactory) {

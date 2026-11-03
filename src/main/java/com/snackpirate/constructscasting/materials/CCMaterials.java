@@ -351,7 +351,7 @@ public class CCMaterials extends AbstractMaterialDataProvider {
 		}
 
 		private static ResourceLocation[] loc(MaterialId... ids) {
-			return Arrays.stream(ids).map(MaterialId::location).toArray(ResourceLocation[]::new);
+			return Arrays.stream(ids).map(MaterialId::getLocation).toArray(ResourceLocation[]::new);
 		}
 
 		@Override

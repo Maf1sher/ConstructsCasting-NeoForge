@@ -33,9 +33,9 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.slf4j.Logger;
-import slimeknights.mantle.client.model.NBTKeyModel;
+import slimeknights.mantle.client.model.ItemKeyModel;
 import slimeknights.mantle.data.predicate.entity.LivingEntityPredicate;
-import slimeknights.mantle.registration.deferred.SynchronizedDeferredRegister;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.library.client.data.material.GeneratorPartTextureJsonGenerator;
 import slimeknights.tconstruct.library.client.data.material.MaterialPartTextureGenerator;
@@ -51,7 +51,7 @@ import java.util.concurrent.CompletableFuture;
 @EventBusSubscriber(modid = ConstructsCasting.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ConstructsCasting {
     public static final String MOD_ID = "constructs_casting";
-    protected static final SynchronizedDeferredRegister<CreativeModeTab> CREATIVE_TABS = SynchronizedDeferredRegister.create(Registries.CREATIVE_MODE_TAB, ConstructsCasting.MOD_ID);
+    protected static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ConstructsCasting.MOD_ID);
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> CREATIVE_TAB = CREATIVE_TABS.register("main", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.constructs_casting.constructs_casting"))
@@ -87,7 +87,7 @@ public class ConstructsCasting {
         MaterialRegistry.getInstance().registerStatType(MagicClothMaterialStats.TYPE, CCToolStats.MAGIC);
         MaterialRegistry.getInstance().registerStatType(CCMaterialStats.Statless.ADORNMENT.getType());
         if (FMLEnvironment.dist == Dist.CLIENT) {
-            NBTKeyModel.registerExtraTexture(TConstruct.getResource("creative_slot"), "affinity", ConstructsCasting.id("gui/modifiers/affinity_slot"));
+            ItemKeyModel.registerExtraTexture(TConstruct.getResource("creative_slot"), "affinity", ConstructsCasting.id("gui/modifiers/affinity_slot"));
         }
     }
 
@@ -137,9 +137,9 @@ public class ConstructsCasting {
         gen.addProvider(server, new CCFluids.Tags.CCFluidTooltipProvider(output, MOD_ID));
         gen.addProvider(server, new CCRecipes(output, provider));
         gen.addProvider(server, new CCLootTableProvider(output, provider));
-        gen.addProvider(server, new CCFluidTransfer(output, MOD_ID));
+        gen.addProvider(server, new CCFluidTransfer(output, MOD_ID, provider));
         gen.addProvider(server, new CCMobEquipment(output, MOD_ID));
-        gen.addProvider(server, new CCLootInjections(output, IronsSpellbooks.MODID));
+        gen.addProvider(server, new CCLootInjections(output, IronsSpellbooks.MODID, provider));
         gen.addProvider(server, new CCFluidEffects(output, ConstructsCasting.MOD_ID));
         gen.addProvider(server, new CCLang(output, ConstructsCasting.MOD_ID, "en_us"));
         gen.addProvider(server, new CCDamageTypes.Tags(output, provider, MOD_ID, fileHelper));

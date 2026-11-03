@@ -1,6 +1,7 @@
 package com.snackpirate.constructscasting.modifiers;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -47,6 +48,7 @@ public class SpellbookStrapModifier extends Modifier implements KeybindInteractM
 			if (level.isClientSide) {
 				return true;
 			}
+			HolderLookup.Provider registries = level.registryAccess();
 			ItemStack spellbook = CuriosApi.getCuriosInventory(player).map(handler -> handler.getStacksHandler("spellbook").map(stacks -> stacks.getStacks().getStackInSlot(0))).get().orElse(ItemStack.EMPTY);
 //			ConstructsCasting.LOGGER.info(spellbook.toString());
 //
@@ -55,7 +57,7 @@ public class SpellbookStrapModifier extends Modifier implements KeybindInteractM
 				int slots = inventory.getSlots(tool, modifier);
 
 				// new offhand is first slot
-				ItemStack newOffhand = inventory.getStack(tool, modifier, 0);
+				ItemStack newOffhand = inventory.getStack(tool, modifier, 0, registries);
 //				player.setItemInHand(InteractionHand.OFF_HAND, newOffhand);
 				CuriosApi.getCuriosInventory(player).map(handler -> handler.getStacksHandler("spellbook").map(stacks -> {
 					stacks.getStacks().setStackInSlot(0, newOffhand);
@@ -63,10 +65,10 @@ public class SpellbookStrapModifier extends Modifier implements KeybindInteractM
 				// shift all other slots back by 1;
                 //not sure if this is necessary, may not want >1 level
 				for (int i = 1; i < slots; i++) {
-					inventory.setStack(tool, modifier, i - 1, inventory.getStack(tool, modifier, i));
+					inventory.setStack(tool, modifier, i - 1, inventory.getStack(tool, modifier, i, registries), registries);
 				}
 				// put old offhand in last slot
-				inventory.setStack(tool, modifier, slots - 1, spellbook);
+				inventory.setStack(tool, modifier, slots - 1, spellbook, registries);
 
 				// sound effect
 				if (!newOffhand.isEmpty() || !spellbook.isEmpty()) {

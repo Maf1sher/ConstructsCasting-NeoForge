@@ -6,6 +6,7 @@ import com.snackpirate.constructscasting.ConstructsCasting;
 import com.snackpirate.constructscasting.materials.CCToolStats;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -79,15 +80,15 @@ public class ModifiableMagicStaff extends ModifiableItem {
 
 	// used by TooltipUtil.addAttributes for tooltip display; NOT called by the attribute pipeline in NeoForge
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(IToolStackView tool, EquipmentSlot slot) {
-		ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = new ImmutableMultimap.Builder<>();
+	public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(IToolStackView tool, EquipmentSlot slot) {
+		ImmutableMultimap.Builder<Holder<Attribute>, AttributeModifier> attributeBuilder = new ImmutableMultimap.Builder<>();
 		attributeBuilder.putAll(super.getAttributeModifiers(tool, slot));
 		float spBonus =
                 tool.getStats().get(CCToolStats.SPELL_POWER);
-		attributeBuilder.put(AttributeRegistry.SPELL_POWER.get(), new AttributeModifier(ConstructsCasting.id("spell_power_bonus"), spBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+		attributeBuilder.put(AttributeRegistry.SPELL_POWER, new AttributeModifier(ConstructsCasting.id("spell_power_bonus"), spBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
 		float cdBonus =
                 tool.getStats().get(CCToolStats.COOLDOWN_REDUCTION);
-		attributeBuilder.put(AttributeRegistry.COOLDOWN_REDUCTION.get(), new AttributeModifier(ConstructsCasting.id("cd_reduction"), cdBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+		attributeBuilder.put(AttributeRegistry.COOLDOWN_REDUCTION, new AttributeModifier(ConstructsCasting.id("cd_reduction"), cdBonus, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
 
 		return attributeBuilder.build();
 	}
@@ -129,7 +130,7 @@ public class ModifiableMagicStaff extends ModifiableItem {
 			builder.addOptional(ToolStats.ARMOR_TOUGHNESS);
 			builder.addOptional(ToolStats.KNOCKBACK_RESISTANCE, 10f);
 		}
-		if (tool.getModifierLevel(TinkerModifiers.blocking.getModifierId()) > 0 || tool.getModifierLevel(TinkerModifiers.parrying.getModifierId()) > 0) {
+		if (tool.getModifierLevel(TinkerModifiers.blocking.getId()) > 0 || tool.getModifierLevel(TinkerModifiers.parrying.getId()) > 0) {
 			builder.add(ToolStats.BLOCK_AMOUNT);
 			builder.add(ToolStats.BLOCK_ANGLE);
 		}

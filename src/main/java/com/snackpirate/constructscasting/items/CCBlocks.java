@@ -15,8 +15,8 @@ import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
-import slimeknights.mantle.item.BlockTooltipItem;
-import slimeknights.mantle.registration.object.ItemObject;
+import slimeknights.mantle.item.tooltip.BlockTooltipItem;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import slimeknights.tconstruct.common.registration.BlockDeferredRegisterExtension;
 
 import java.util.concurrent.CompletableFuture;
@@ -29,10 +29,10 @@ public class CCBlocks {
 	protected static final Function<Block,? extends BlockItem> TOOLTIP_BLOCK_ITEM = (b) -> new BlockTooltipItem(b, ITEM_PROPS);
 	public static final BlockDeferredRegisterExtension BLOCKS = new BlockDeferredRegisterExtension(ConstructsCasting.MOD_ID);
 
-	public static final ItemObject<Block> exiliteBlock = BLOCKS.register("exilite_block", metalBuilder(MapColor.TERRACOTTA_GRAY), BLOCK_ITEM);
-	public static final ItemObject<Block> arcaneBlock = BLOCKS.register("arcane_block", metalBuilder(MapColor.COLOR_MAGENTA), BLOCK_ITEM);
-	public static final ItemObject<Block> mithrilBlock = BLOCKS.register("mithril_block", metalBuilder(MapColor.COLOR_LIGHT_BLUE), BLOCK_ITEM);
-	public static final ItemObject<Block> pyriumBlock = BLOCKS.register("pyrium_block", metalBuilder(MapColor.TERRACOTTA_YELLOW), BLOCK_ITEM);
+	public static final DeferredBlock<Block> exiliteBlock = BLOCKS.register("exilite_block", metalBuilder(MapColor.TERRACOTTA_GRAY), BLOCK_ITEM);
+	public static final DeferredBlock<Block> arcaneBlock = BLOCKS.register("arcane_block", metalBuilder(MapColor.COLOR_MAGENTA), BLOCK_ITEM);
+	public static final DeferredBlock<Block> mithrilBlock = BLOCKS.register("mithril_block", metalBuilder(MapColor.COLOR_LIGHT_BLUE), BLOCK_ITEM);
+	public static final DeferredBlock<Block> pyriumBlock = BLOCKS.register("pyrium_block", metalBuilder(MapColor.TERRACOTTA_YELLOW), BLOCK_ITEM);
 
 
 	protected static BlockBehaviour.Properties metalBuilder(MapColor color) {
