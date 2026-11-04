@@ -9,5 +9,8 @@
       },
       "modifier": "tconstruct:dyed"
     }
+  },
+  "modifiers": {
+    "tconstruct:dyed": []
   }
 }

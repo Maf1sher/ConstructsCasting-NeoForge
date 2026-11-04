@@ -4,6 +4,7 @@ import com.snackpirate.constructscasting.ConstructsCasting;
 import net.minecraft.data.PackOutput;
 import slimeknights.tconstruct.library.client.modifiers.DyedModifierModel;
 import slimeknights.tconstruct.library.data.AbstractModifierModelMapProvider;
+import slimeknights.tconstruct.tools.TinkerModifiers;
 import slimeknights.tconstruct.tools.data.ModifierIds;
 
 /** Generates modifier model maps for Construct's Casting tools, replacing the legacy modifier roots. */
@@ -33,10 +34,13 @@ public class CCModifierModelMapProvider extends AbstractModifierModelMapProvider
 		// eldritch staff: dyed textures live under item/eldritch_staff, unlike the default item/tool prefix
 		tool(CCItems.eldritchStaff).dyed(new DyedModifierModel(
 			material("item/eldritch_staff/modifiers/tconstruct_dyed"),
-			material("item/eldritch_staff/large_modifiers/tconstruct_dyed")));
+			material("item/eldritch_staff/large_modifiers/tconstruct_dyed")))
+			// suppress the legacy dyed model; the constant above renders it instead
+			.empty(TinkerModifiers.dyed.getId());
 		tool(CCItems.eldritchStaff, "/broken").dyed(new DyedModifierModel(
 			material("item/eldritch_staff/modifiers/broken/tconstruct_dyed"),
-			material("item/eldritch_staff/large_modifiers/broken/tconstruct_dyed")));
+			material("item/eldritch_staff/large_modifiers/broken/tconstruct_dyed")))
+			.empty(TinkerModifiers.dyed.getId());
 	}
 
 	@Override
