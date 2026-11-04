@@ -3,6 +3,14 @@
     {
       "type": "neoforge:mod_loaded",
       "modid": "cataclysm_spellbooks"
+    },
+    {
+      "type": "neoforge:item_exists",
+      "item": "cataclysm_spellbooks:technomancy_rune"
+    },
+    {
+      "type": "neoforge:item_exists",
+      "item": "cataclysm_spellbooks:technomancy_upgrade_orb"
     }
   ],
   "type": "tconstruct:incremental_modifier",

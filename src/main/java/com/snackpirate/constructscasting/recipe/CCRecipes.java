@@ -26,6 +26,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
+import net.neoforged.neoforge.common.conditions.ItemExistsCondition;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.crafting.CompoundIngredient;
 import net.neoforged.neoforge.common.crafting.DifferenceIngredient;
@@ -387,11 +388,11 @@ public class CCRecipes extends RecipeProvider implements IConditionBuilder, IMat
 		incrementalModifierRecipe(consumer, CCModifiers.EVOCATION_UPGRADE, Ingredient.of(ItemRegistry.EVOCATION_RUNE.get()), Ingredient.of(ItemRegistry.EVOCATION_UPGRADE_ORB.get()), "evocation_upgrade", true);
 		incrementalModifierRecipe(consumer, CCModifiers.NATURE_UPGRADE,    Ingredient.of(ItemRegistry.NATURE_RUNE.get()),    Ingredient.of(ItemRegistry.NATURE_UPGRADE_ORB.get()),    "nature_upgrade", true);
 
-		// Optional integrations - items come from optional mods, so use name ingredients plus mod-loaded conditions
-		incrementalModifierRecipe(consumer.withConditions(new ModLoadedCondition("cataclysm_spellbooks")), CCModifiers.ABYSSAL_UPGRADE, nameIngredient("cataclysm_spellbooks:abyssal_rune"), nameIngredient("cataclysm_spellbooks:abyssal_upgrade_orb"), "abyssal_upgrade", true);
-		incrementalModifierRecipe(consumer.withConditions(new ModLoadedCondition("cataclysm_spellbooks")), CCModifiers.TECHNOMANCY_UPGRADE, nameIngredient("cataclysm_spellbooks:technomancy_rune"), nameIngredient("cataclysm_spellbooks:technomancy_upgrade_orb"), "technomancy_upgrade", true);
-		incrementalModifierRecipe(consumer.withConditions(new ModLoadedCondition("traveloptics")), CCModifiers.AQUA_UPGRADE, nameIngredient("traveloptics:aqua_rune"), nameIngredient("traveloptics:aqua_upgrade_orb"), "aqua_upgrade", true);
-		incrementalModifierRecipe(consumer.withConditions(new ModLoadedCondition("alshanex_familiars")), CCModifiers.SOUND_UPGRADE, nameIngredient("alshanex_familiars:sound_rune"), nameIngredient("alshanex_familiars:sound_upgrade_orb"), "sound_upgrade", true);
+		// Optional integrations - items come from optional mods, so use name ingredients plus mod-loaded/item-exists conditions
+		incrementalModifierRecipe(optionalUpgrade(consumer, "cataclysm_spellbooks", "cataclysm_spellbooks:abyssal_rune", "cataclysm_spellbooks:abyssal_upgrade_orb"), CCModifiers.ABYSSAL_UPGRADE, nameIngredient("cataclysm_spellbooks:abyssal_rune"), nameIngredient("cataclysm_spellbooks:abyssal_upgrade_orb"), "abyssal_upgrade", true);
+		incrementalModifierRecipe(optionalUpgrade(consumer, "cataclysm_spellbooks", "cataclysm_spellbooks:technomancy_rune", "cataclysm_spellbooks:technomancy_upgrade_orb"), CCModifiers.TECHNOMANCY_UPGRADE, nameIngredient("cataclysm_spellbooks:technomancy_rune"), nameIngredient("cataclysm_spellbooks:technomancy_upgrade_orb"), "technomancy_upgrade", true);
+		incrementalModifierRecipe(optionalUpgrade(consumer, "traveloptics", "traveloptics:aqua_rune", "traveloptics:aqua_upgrade_orb"), CCModifiers.AQUA_UPGRADE, nameIngredient("traveloptics:aqua_rune"), nameIngredient("traveloptics:aqua_upgrade_orb"), "aqua_upgrade", true);
+		incrementalModifierRecipe(optionalUpgrade(consumer, "alshanex_familiars", "alshanex_familiars:sound_rune", "alshanex_familiars:sound_upgrade_orb"), CCModifiers.SOUND_UPGRADE, nameIngredient("alshanex_familiars:sound_rune"), nameIngredient("alshanex_familiars:sound_upgrade_orb"), "sound_upgrade", true);
 		//essence making
 		MeltingRecipeBuilder.melting(Ingredient.of(ItemRegistry.ARCANE_ESSENCE.get()), new FluidStack(CCFluids.arcaneEssence.get(), 250), 100, 5)
 				.save(consumer, ConstructsCasting.id(meltingFolder + "arcane_essence"));
@@ -585,6 +586,14 @@ public class CCRecipes extends RecipeProvider implements IConditionBuilder, IMat
 	/** Ingredient matching an item by name, for optional mod content that is absent during datagen */
 	private static Ingredient nameIngredient(String name) {
 		return new Ingredient(ItemNameIngredient.of(ResourceLocation.parse(name)));
+	}
+
+	/** Conditions for optional upgrade recipes: mod present plus the rune and orb actually registered */
+	private static RecipeOutput optionalUpgrade(RecipeOutput consumer, String modId, String rune, String orb) {
+		return consumer.withConditions(
+				new ModLoadedCondition(modId),
+				new ItemExistsCondition(rune),
+				new ItemExistsCondition(orb));
 	}
 
 	public static void incrementalModifierRecipe(RecipeOutput consumer, ModifierId modifier, Ingredient runeItem, Ingredient orbItem, String id, boolean isSpellPower) {

@@ -3,6 +3,14 @@
     {
       "type": "neoforge:mod_loaded",
       "modid": "alshanex_familiars"
+    },
+    {
+      "type": "neoforge:item_exists",
+      "item": "alshanex_familiars:sound_rune"
+    },
+    {
+      "type": "neoforge:item_exists",
+      "item": "alshanex_familiars:sound_upgrade_orb"
     }
   ],
   "type": "tconstruct:incremental_modifier",

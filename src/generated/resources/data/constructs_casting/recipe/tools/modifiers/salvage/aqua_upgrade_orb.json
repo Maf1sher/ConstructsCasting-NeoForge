@@ -3,6 +3,14 @@
     {
       "type": "neoforge:mod_loaded",
       "modid": "traveloptics"
+    },
+    {
+      "type": "neoforge:item_exists",
+      "item": "traveloptics:aqua_rune"
+    },
+    {
+      "type": "neoforge:item_exists",
+      "item": "traveloptics:aqua_upgrade_orb"
     }
   ],
   "type": "tconstruct:modifier_salvage",
