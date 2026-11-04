@@ -1,5 +1,5 @@
 {
-  "parent": "constructs_casting:eldritch_staff",
+  "parent": "constructs_casting:item/eldritch_staff",
   "display": {
     "firstperson_righthand": {
       "rotation": [
