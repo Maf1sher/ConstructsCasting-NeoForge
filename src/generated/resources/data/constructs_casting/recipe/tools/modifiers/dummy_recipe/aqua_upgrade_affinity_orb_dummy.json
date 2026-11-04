@@ -1,0 +1,41 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "traveloptics"
+    }
+  ],
+  "type": "tconstruct:modifier",
+  "allow_crystal": false,
+  "check_trait_level": true,
+  "inputs": [
+    {
+      "type": "tconstruct:item_name",
+      "count": 1,
+      "item": "traveloptics:aqua_rune"
+    },
+    {
+      "type": "tconstruct:item_name",
+      "count": 1,
+      "item": "traveloptics:aqua_upgrade_orb"
+    },
+    {
+      "type": "tconstruct:item_name",
+      "count": 1,
+      "item": "traveloptics:aqua_rune"
+    }
+  ],
+  "result": "constructs_casting:dummy_spell_power_upgrade",
+  "slots": {
+    "affinity": 1
+  },
+  "tools": {
+    "type": "neoforge:difference",
+    "base": {
+      "tag": "tconstruct:modifiable"
+    },
+    "subtracted": {
+      "tag": "tconstruct:modifiable"
+    }
+  }
+}

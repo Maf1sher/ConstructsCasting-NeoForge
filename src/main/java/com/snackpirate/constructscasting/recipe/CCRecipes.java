@@ -387,11 +387,11 @@ public class CCRecipes extends RecipeProvider implements IConditionBuilder, IMat
 		incrementalModifierRecipe(consumer, CCModifiers.EVOCATION_UPGRADE, Ingredient.of(ItemRegistry.EVOCATION_RUNE.get()), Ingredient.of(ItemRegistry.EVOCATION_UPGRADE_ORB.get()), "evocation_upgrade", true);
 		incrementalModifierRecipe(consumer, CCModifiers.NATURE_UPGRADE,    Ingredient.of(ItemRegistry.NATURE_RUNE.get()),    Ingredient.of(ItemRegistry.NATURE_UPGRADE_ORB.get()),    "nature_upgrade", true);
 
-		// Optional integrations - disabled due to cross-mod item availability during datagen
-//		incrementalModifierRecipe(withCondition(consumer, new ModLoadedCondition("cataclysm_spellbook")), CCModifiers.ABYSSAL_UPGRADE, ItemNameIngredient.from(ResourceLocation.parse("cataclysm_spellbooks:abyssal_rune")).toIngredient(), ItemNameIngredient.from(ResourceLocation.parse("cataclysm_spellbooks:abyssal_upgrade_orb")).toIngredient(), "abyssal_upgrade", true);
-//		incrementalModifierRecipe(withCondition(consumer, new ModLoadedCondition("cataclysm_spellbook")), CCModifiers.TECHNOMANCY_UPGRADE, ItemNameIngredient.from(ResourceLocation.parse("cataclysm_spellbooks:technomancy_rune")).toIngredient(), ItemNameIngredient.from(ResourceLocation.parse("cataclysm_spellbooks:technomancy_upgrade_orb")).toIngredient(), "technomancy_upgrade", true);
-//		incrementalModifierRecipe(withCondition(consumer, new ModLoadedCondition("traveloptics")), CCModifiers.AQUA_UPGRADE, ItemNameIngredient.from(ResourceLocation.parse("traveloptics:aqua_rune")).toIngredient(), ItemNameIngredient.from(ResourceLocation.parse("traveloptics:aqua_upgrade_orb")).toIngredient(), "aqua_upgrade", true);
-//		incrementalModifierRecipe(withCondition(consumer, new ModLoadedCondition("alshanex_familiars")), CCModifiers.SOUND_UPGRADE, ItemNameIngredient.from(ResourceLocation.parse("alshanex_familiars:sound_rune")).toIngredient(), ItemNameIngredient.from(ResourceLocation.parse("alshanex_familiars:sound_upgrade_orb")).toIngredient(), "sound_upgrade", true);
+		// Optional integrations - items come from optional mods, so use name ingredients plus mod-loaded conditions
+		incrementalModifierRecipe(consumer.withConditions(new ModLoadedCondition("cataclysm_spellbooks")), CCModifiers.ABYSSAL_UPGRADE, nameIngredient("cataclysm_spellbooks:abyssal_rune"), nameIngredient("cataclysm_spellbooks:abyssal_upgrade_orb"), "abyssal_upgrade", true);
+		incrementalModifierRecipe(consumer.withConditions(new ModLoadedCondition("cataclysm_spellbooks")), CCModifiers.TECHNOMANCY_UPGRADE, nameIngredient("cataclysm_spellbooks:technomancy_rune"), nameIngredient("cataclysm_spellbooks:technomancy_upgrade_orb"), "technomancy_upgrade", true);
+		incrementalModifierRecipe(consumer.withConditions(new ModLoadedCondition("traveloptics")), CCModifiers.AQUA_UPGRADE, nameIngredient("traveloptics:aqua_rune"), nameIngredient("traveloptics:aqua_upgrade_orb"), "aqua_upgrade", true);
+		incrementalModifierRecipe(consumer.withConditions(new ModLoadedCondition("alshanex_familiars")), CCModifiers.SOUND_UPGRADE, nameIngredient("alshanex_familiars:sound_rune"), nameIngredient("alshanex_familiars:sound_upgrade_orb"), "sound_upgrade", true);
 		//essence making
 		MeltingRecipeBuilder.melting(Ingredient.of(ItemRegistry.ARCANE_ESSENCE.get()), new FluidStack(CCFluids.arcaneEssence.get(), 250), 100, 5)
 				.save(consumer, ConstructsCasting.id(meltingFolder + "arcane_essence"));
@@ -582,6 +582,11 @@ public class CCRecipes extends RecipeProvider implements IConditionBuilder, IMat
 	public static void inkFillingRecipe(RecipeOutput consumer, Item inkBottle, TagKey<Fluid> ink, String rarity) {
 		ItemCastingRecipeBuilder.tableRecipe(inkBottle).setFluid(ink,FluidValues.BOTTLE).setCast(Items.GLASS_BOTTLE, true).setCoolingTime(1).save(consumer, ConstructsCasting.id(castingFolder + "ink_" + rarity));
 	}
+	/** Ingredient matching an item by name, for optional mod content that is absent during datagen */
+	private static Ingredient nameIngredient(String name) {
+		return new Ingredient(ItemNameIngredient.of(ResourceLocation.parse(name)));
+	}
+
 	public static void incrementalModifierRecipe(RecipeOutput consumer, ModifierId modifier, Ingredient runeItem, Ingredient orbItem, String id, boolean isSpellPower) {
 		Ingredient multiuse = DifferenceIngredient.of(Ingredient.of(TinkerTags.Items.MODIFIABLE), Ingredient.of(TinkerTags.Items.SINGLE_USE));
 		Ingredient none = DifferenceIngredient.of(Ingredient.of(TinkerTags.Items.MODIFIABLE), Ingredient.of(TinkerTags.Items.MODIFIABLE));

@@ -1,0 +1,31 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "cataclysm_spellbooks"
+    }
+  ],
+  "type": "tconstruct:modifier",
+  "allow_crystal": false,
+  "check_trait_level": true,
+  "inputs": [
+    {
+      "type": "tconstruct:item_name",
+      "count": 1,
+      "item": "cataclysm_spellbooks:technomancy_upgrade_orb"
+    }
+  ],
+  "result": "constructs_casting:dummy_spell_power_upgrade",
+  "slots": {
+    "upgrades": 1
+  },
+  "tools": {
+    "type": "neoforge:difference",
+    "base": {
+      "tag": "tconstruct:modifiable"
+    },
+    "subtracted": {
+      "tag": "tconstruct:modifiable"
+    }
+  }
+}

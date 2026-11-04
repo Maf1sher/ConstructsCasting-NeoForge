@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "cataclysm_spellbooks"
+    }
+  ],
+  "type": "tconstruct:modifier_salvage",
+  "level": {
+    "max": 5,
+    "min": 4
+  },
+  "modifier": "constructs_casting:abyssal_upgrade",
+  "slots": {
+    "affinity": 1
+  },
+  "tools": {
+    "type": "neoforge:difference",
+    "base": {
+      "tag": "tconstruct:modifiable"
+    },
+    "subtracted": {
+      "tag": "tconstruct:modifiable/single_use"
+    }
+  }
+}
