@@ -15,8 +15,7 @@
           "tier": 1
         },
         {
-          "type": "tconstruct:random",
-          "tier": 1
+          "type": "tconstruct:random"
         },
         {
           "type": "tconstruct:random",

@@ -58,8 +58,12 @@ public class CCTools {
 
 			RandomMaterial anyMaterial = RandomMaterial.random().allowHidden().build();
             RandomMaterial tier1Material = RandomMaterial.random().tier(1).build();
-			DefaultMaterialsModule defaultThreeParts = DefaultMaterialsModule.builder().material(tier1Material, tier1Material, tier1Material).build();
-            DefaultMaterialsModule defaultFourParts = DefaultMaterialsModule.builder().material(tier1Material, tier1Material, tier1Material, tier1Material).build();
+			// adornment stats are statless, so any tier works; no adornment material is tier 1
+			RandomMaterial adornmentMaterial = RandomMaterial.random().build();
+			DefaultMaterialsModule travellersMaterials = DefaultMaterialsModule.builder().material(tier1Material, tier1Material, tier1Material).build();
+			DefaultMaterialsModule platedSpellbookMaterials = DefaultMaterialsModule.builder().material(adornmentMaterial, tier1Material, tier1Material).build();
+			DefaultMaterialsModule wandMaterials = DefaultMaterialsModule.builder().material(adornmentMaterial, adornmentMaterial, tier1Material).build();
+			DefaultMaterialsModule battlestaffMaterials = DefaultMaterialsModule.builder().material(tier1Material, adornmentMaterial, tier1Material, tier1Material).build();
 			DefaultMaterialsModule ancientThreeParts = DefaultMaterialsModule.builder().material(anyMaterial, anyMaterial, anyMaterial).build();
 			define(SLIMY_SPELLBOOK)
 					.module(ToolSlotsModule.builder()
@@ -86,9 +90,9 @@ public class CCTools {
 							.slots(SlotType.UPGRADE, 3)
 							.slots(SlotType.ABILITY, 1)
 							.build())
-                    .module(defaultThreeParts);
+                    .module(travellersMaterials);
 			define(PLATED_SPELLBOOK)
-                    .module(defaultThreeParts)
+                    .module(platedSpellbookMaterials)
 					.module(PartStatsModule.parts()
 							.part(CCItems.spellbookPlating.get())
 							.part(CCItems.spellbookCover.get())
@@ -117,7 +121,7 @@ public class CCTools {
                     .module(DualOptionInteraction.INSTANCE);
 			define(WAND)
 					.smallToolStartingSlots()
-                    .module(defaultThreeParts)
+                    .module(wandMaterials)
 					.module(PartStatsModule.parts()
 							.part(CCItems.facetedGem)
 							.part(CCItems.facetedGem)
@@ -130,7 +134,7 @@ public class CCTools {
 					.module(DualOptionInteraction.INSTANCE);
 			define(BATTLESTAFF)
 					.largeToolStartingSlots()
-                    .module(defaultFourParts)
+                    .module(battlestaffMaterials)
 					.module(PartStatsModule.parts()
 							.part(TinkerToolParts.broadAxeHead)
 							.part(CCItems.facetedGem)
