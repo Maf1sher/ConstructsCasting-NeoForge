@@ -9,7 +9,7 @@
       "type": "tconstruct:attribute",
       "attribute": "traveloptics:aqua_spell_power",
       "each_level": 0.05,
-      "operation": "multiply_base",
+      "operation": "add_multiplied_base",
       "slots": [
         "mainhand",
         "offhand",
@@ -21,5 +21,5 @@
       "unique": "constructs_casting.modifier.aqua_upgrade"
     }
   ],
-  "tooltip_display": "always"
+  "show_in_tooltips": "always"
 }
