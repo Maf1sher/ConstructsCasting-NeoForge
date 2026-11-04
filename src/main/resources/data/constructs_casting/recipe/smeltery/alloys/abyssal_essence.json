@@ -6,15 +6,11 @@
       "fluid": "constructs_casting:arcane_essence"
     },
     {
-      "amount": 90,
-      "fluid": "constructs_casting:gasified_redstone"
-    },
-    {
-      "amount": 90,
-      "tag": "forge:molten_copper"
+      "amount": 100,
+      "fluid": "constructs_casting:molten_crystallized_coral"
     }
   ],
-  "conditions": [
+  "neoforge:conditions": [
     {
       "type": "neoforge:mod_loaded",
       "modid": "cataclysm_spellbooks"
@@ -22,7 +18,7 @@
   ],
   "result": {
     "amount": 250,
-    "fluid": "constructs_casting:technomancy_essence"
+    "fluid": "constructs_casting:abyssal_essence"
   },
   "temperature": 700
 }

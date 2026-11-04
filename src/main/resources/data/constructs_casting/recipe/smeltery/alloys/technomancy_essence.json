@@ -6,19 +6,23 @@
       "fluid": "constructs_casting:arcane_essence"
     },
     {
-      "amount": 250,
-      "fluid": "constructs_casting:molten_pearl"
+      "amount": 90,
+      "fluid": "constructs_casting:gasified_redstone"
+    },
+    {
+      "amount": 90,
+      "tag": "c:molten_copper"
     }
   ],
-  "conditions": [
+  "neoforge:conditions": [
     {
       "type": "neoforge:mod_loaded",
-      "modid": "traveloptics"
+      "modid": "cataclysm_spellbooks"
     }
   ],
   "result": {
     "amount": 250,
-    "fluid": "constructs_casting:aqua_essence"
+    "fluid": "constructs_casting:technomancy_essence"
   },
   "temperature": 700
 }

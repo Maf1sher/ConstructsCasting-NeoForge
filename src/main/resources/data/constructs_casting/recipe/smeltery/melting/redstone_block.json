@@ -3,7 +3,7 @@
   "ingredient": {
     "item": "minecraft:redstone_block"
   },
-  "conditions": [
+  "neoforge:conditions": [
     {
       "type": "neoforge:mod_loaded",
       "modid": "cataclysm_spellbooks"

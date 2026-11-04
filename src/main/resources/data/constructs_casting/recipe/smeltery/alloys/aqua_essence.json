@@ -6,19 +6,19 @@
       "fluid": "constructs_casting:arcane_essence"
     },
     {
-      "amount": 100,
-      "fluid": "constructs_casting:molten_crystallized_coral"
+      "amount": 250,
+      "fluid": "constructs_casting:molten_pearl"
     }
   ],
-  "conditions": [
+  "neoforge:conditions": [
     {
       "type": "neoforge:mod_loaded",
-      "modid": "cataclysm_spellbooks"
+      "modid": "traveloptics"
     }
   ],
   "result": {
     "amount": 250,
-    "fluid": "constructs_casting:abyssal_essence"
+    "fluid": "constructs_casting:aqua_essence"
   },
   "temperature": 700
 }

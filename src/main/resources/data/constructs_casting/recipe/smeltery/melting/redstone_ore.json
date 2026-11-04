@@ -1,9 +1,9 @@
 {
   "type": "tconstruct:melting",
   "ingredient": {
-    "item": "minecraft:deepslate_redstone_ore"
+    "item": "minecraft:redstone_ore"
   },
-  "conditions": [
+  "neoforge:conditions": [
     {
       "type": "neoforge:mod_loaded",
       "modid": "cataclysm_spellbooks"

@@ -6,6 +6,6 @@
     "fluid": "constructs_casting:gasified_redstone"
   },
   "result": {
-    "tag": "forge:storage_blocks/redstone"
+    "tag": "c:storage_blocks/redstone"
   }
 }

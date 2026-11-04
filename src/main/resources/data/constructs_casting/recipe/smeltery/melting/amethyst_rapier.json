@@ -12,7 +12,7 @@
   "time": 65,
   "byproducts": [
     {
-      "tag": "forge:molten_iron",
+      "tag": "c:molten_iron",
       "amount": 220
     }
   ]

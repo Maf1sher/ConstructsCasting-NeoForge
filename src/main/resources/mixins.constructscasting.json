@@ -1,7 +1,6 @@
 {
   "required": true,
   "package": "com.snackpirate.constructscasting.mixin",
-  "refmap": "mixins.constructscasting.refmap.json",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "UtilsMixin"

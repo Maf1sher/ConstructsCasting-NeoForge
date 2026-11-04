@@ -4,7 +4,7 @@
     "item": "irons_spellbooks:brazier_soul"
   },
   "result": {
-    "tag": "forge:molten_iron",
+    "tag": "c:molten_iron",
     "amount": 30
   },
   "temperature": 800,
