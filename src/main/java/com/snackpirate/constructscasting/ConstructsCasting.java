@@ -37,6 +37,7 @@ import slimeknights.mantle.client.model.ItemKeyModel;
 import slimeknights.mantle.data.predicate.entity.LivingEntityPredicate;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import slimeknights.tconstruct.TConstruct;
+import slimeknights.tconstruct.fluids.data.FluidBlockstateModelProvider;
 import slimeknights.tconstruct.library.client.data.material.GeneratorPartTextureJsonGenerator;
 import slimeknights.tconstruct.library.client.data.material.MaterialPartTextureGenerator;
 import slimeknights.tconstruct.library.materials.MaterialRegistry;
@@ -108,6 +109,7 @@ public class ConstructsCasting {
     {
         DataGenerator gen = event.getGenerator();
         boolean server = event.includeServer();
+        boolean client = event.includeClient();
         PackOutput output = gen.getPackOutput();
         CCMaterials mats = new CCMaterials(output);
         gen.addProvider(server, mats);
@@ -134,6 +136,7 @@ public class ConstructsCasting {
         gen.addProvider(server, new CCItems.Tags(output, provider, blockTags.contentsGetter(), MOD_ID, fileHelper));
         gen.addProvider(server, new CCFluids.CCFluidTextures(output, MOD_ID));
         gen.addProvider(server, new CCFluids.CCBucketModels(output, MOD_ID));
+        gen.addProvider(client, new FluidBlockstateModelProvider(output, MOD_ID));
         gen.addProvider(server, new CCFluids.Tags(output, provider, MOD_ID, fileHelper));
         gen.addProvider(server, new CCFluids.Tags.CCFluidTooltipProvider(output, MOD_ID));
         gen.addProvider(server, new CCRecipes(output, provider));
