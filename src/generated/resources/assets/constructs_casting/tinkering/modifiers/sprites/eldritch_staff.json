@@ -1,0 +1,13 @@
+{
+  "constant": {
+    "__dyed": {
+      "type": "tconstruct:crafted",
+      "model": {
+        "type": "tconstruct:dyed",
+        "texture": "constructs_casting:item/eldritch_staff/modifiers/tconstruct_dyed",
+        "texture_large": "constructs_casting:item/eldritch_staff/large_modifiers/tconstruct_dyed"
+      },
+      "modifier": "tconstruct:dyed"
+    }
+  }
+}

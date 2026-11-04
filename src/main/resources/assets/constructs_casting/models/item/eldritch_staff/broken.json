@@ -6,6 +6,10 @@
     "large_tool": "constructs_casting:item/eldritch_staff/large"
   },
   "large": true,
+  "modifier_maps": [
+    "constructs_casting:eldritch_staff/broken",
+    "tconstruct:staff"
+  ],
   "modifier_roots": {
     "small": [
       "tconstruct:item/tool/staff/modifiers/broken/",
@@ -15,9 +19,5 @@
       "tconstruct:item/tool/staff/large_modifiers/broken/",
       "tconstruct:item/tool/staff/large_modifiers/"
     ]
-  },
-  "first_modifiers": [
-    "tconstruct:dyed",
-    "tconstruct:embellishment"
-  ]
+  }
 }

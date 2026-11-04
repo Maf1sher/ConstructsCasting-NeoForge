@@ -14,10 +14,7 @@
     "large_grip":   "constructs_casting:item/tool/battlestaff/large/grip",
     "large_handle":   "constructs_casting:item/tool/battlestaff/large/handle"
   },
-  "modifier_roots": {
-    "small": ["constructs_casting:item/tool/battlestaff/modifiers/"],
-    "large": ["constructs_casting:item/tool/battlestaff/large/modifiers/"]
-  },
+  "modifier_maps": [ "constructs_casting:battlestaff" ],
   "parts": [
     { "name": "blade",   "index": 0 },
     { "name": "crystal", "index": 1 },

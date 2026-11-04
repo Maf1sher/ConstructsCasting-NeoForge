@@ -1,0 +1,116 @@
+{
+  "modifiers": {
+    "tconstruct:antiaquatic": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_antiaquatic",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_antiaquatic"
+    },
+    "tconstruct:bane_of_sssss": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_bane_of_sssss",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_bane_of_sssss"
+    },
+    "tconstruct:blasting": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_blasting",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_blasting"
+    },
+    "tconstruct:bucketing": [
+      {
+        "type": "tconstruct:fluid",
+        "mask": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_bucketing_full",
+        "mask_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_bucketing_full"
+      },
+      {
+        "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_bucketing",
+        "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_bucketing"
+      }
+    ],
+    "tconstruct:cooling": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_cooling",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_cooling"
+    },
+    "tconstruct:diamond": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_diamond",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_diamond"
+    },
+    "tconstruct:emerald": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_emerald",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_emerald"
+    },
+    "tconstruct:experienced": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_experienced",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_experienced"
+    },
+    "tconstruct:fiery": {
+      "luminosity": 10,
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_fiery",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_fiery"
+    },
+    "tconstruct:haste": {
+      "luminosity": 7,
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_haste",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_haste"
+    },
+    "tconstruct:hydraulic": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_hydraulic",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_hydraulic"
+    },
+    "tconstruct:knockback": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_knockback",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_knockback"
+    },
+    "tconstruct:lightspeed": {
+      "luminosity": 15,
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_lightspeed",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_lightspeed"
+    },
+    "tconstruct:luck": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_luck",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_luck"
+    },
+    "tconstruct:magnetic": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_magnetic",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_magnetic"
+    },
+    "tconstruct:netherite": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_netherite",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_netherite"
+    },
+    "tconstruct:overforced": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_overforced",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_overforced"
+    },
+    "tconstruct:reinforced": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_reinforced",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_reinforced"
+    },
+    "tconstruct:sharpness": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_sharpness",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_sharpness"
+    },
+    "tconstruct:silky": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_silky",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_silky"
+    },
+    "tconstruct:smite": {
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_smite",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_smite"
+    },
+    "tconstruct:tank": [
+      {
+        "type": "tconstruct:tank",
+        "full": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_tank_full",
+        "full_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_tank_full",
+        "partial": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_tank_partial",
+        "partial_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_tank_partial"
+      },
+      {
+        "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_tank",
+        "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_tank"
+      }
+    ],
+    "tconstruct:unbreakable": {
+      "luminosity": 2,
+      "texture": "constructs_casting:item/tool/battlestaff/modifiers/tconstruct_unbreakable",
+      "texture_large": "constructs_casting:item/tool/battlestaff/large/modifiers/tconstruct_unbreakable"
+    }
+  }
+}

@@ -6,7 +6,6 @@
     "cover":   "constructs_casting:item/tool/plated_spellbook/cover",
     "pages":   "constructs_casting:item/tool/plated_spellbook/pages"
   },
-  "modifier_roots": [ "constructs_casting:item/plated_spellbook/modifiers/" ],
   "parts": [
     { "name": "cover",   "index": 1 },
     { "name": "plating", "index": 0 },

@@ -5,6 +5,7 @@ import com.snackpirate.constructscasting.fluids.CCFluidEffects;
 import com.snackpirate.constructscasting.fluids.CCFluids;
 import com.snackpirate.constructscasting.items.CCBlocks;
 import com.snackpirate.constructscasting.items.CCItems;
+import com.snackpirate.constructscasting.items.CCModifierModelMapProvider;
 import com.snackpirate.constructscasting.items.CCToolSpriteProvider;
 import com.snackpirate.constructscasting.items.CCTools;
 import com.snackpirate.constructscasting.materials.*;
@@ -137,6 +138,7 @@ public class ConstructsCasting {
         gen.addProvider(server, new CCFluids.CCFluidTextures(output, MOD_ID));
         gen.addProvider(server, new CCFluids.CCBucketModels(output, MOD_ID));
         gen.addProvider(client, new FluidBlockstateModelProvider(output, MOD_ID));
+        gen.addProvider(client, new CCModifierModelMapProvider(output));
         gen.addProvider(server, new CCFluids.Tags(output, provider, MOD_ID, fileHelper));
         gen.addProvider(server, new CCFluids.Tags.CCFluidTooltipProvider(output, MOD_ID));
         gen.addProvider(server, new CCRecipes(output, provider));

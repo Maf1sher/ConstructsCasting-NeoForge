@@ -11,10 +11,6 @@
     "large_guard":   "constructs_casting:item/tool/flamberge/large/guard",
     "large_handle":   "constructs_casting:item/tool/flamberge/large/handle"
   },
-  "modifier_roots": {
-    "small": ["constructs_casting:item/flamberge/modifiers/"],
-    "large": ["constructs_casting:item/flamberge/large/modifiers/"]
-  },
   "parts": [
     { "name": "blade",   "index": 0 },
     { "name": "guard", "index": 1 },
