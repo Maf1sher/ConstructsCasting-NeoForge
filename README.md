@@ -1,7 +1,5 @@
 # Construct's Casting
 
-![All Rights Reserved](https://img.shields.io/badge/license-All--Rights--Reserved-red.svg?longCache=true&style=flat)
-
 Unofficial NeoForge 1.21.1 port of [Construct's Casting](https://github.com/snackerpirater/ConstructsCasting),
 originally by [SnackPirate](https://github.com/snackerpirater).
 
@@ -85,4 +83,3 @@ The jar is written to `build/libs/constructs_casting-2.3.0.jar`.
 
 - Original mod and author: [SnackPirate](https://github.com/snackerpirater/ConstructsCasting)
 - NeoForge 1.21.1 port: [Maf1sher/ConstructsCasting-NeoForge](https://github.com/Maf1sher/ConstructsCasting-NeoForge)
-- License: All Rights Reserved (see [LICENSE](LICENSE))
